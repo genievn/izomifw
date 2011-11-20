@@ -1,0 +1,71 @@
+<?php
+// This is a poo on the face of logic seperation, but needs must!
+if(!function_exists('render_treeitem_child'))
+{
+	function render_treeitem_child( $treeitem, $selected_id, $level = 0 ) {		
+		foreach( $treeitem->getChildren() as $child ) {
+			$space = str_repeat('---', $level);
+			//$string.= "<option value=\"{$child->getMenuitem_id()}\">$space{$child->getTitle()}</option>";
+			$string .= "<option value=\"{$child->getTreeitem_id()}\" ";
+			if ($child->getTreeitem_id()==$selected_id)
+				$string .= "selected=\"true\" >";
+			else
+				$string .= ">";
+			$string .= "$space{$child->getTitle()}</option>";
+			if(count($child->getChildren()))
+				$string.= render_treeitem_child( $child, $selected_id, $level + 1 );
+		}		
+		return $string;
+	}
+	function create_treeitem_lb($treeitem, $selected_id, $name = "parent_id"){		
+		$string = '<select class="treeitem_parent" name="'.$name.'">';
+		$string .= '<option value="0"><iz:lang id="treeitem.root">'.config('lang.common.select_root','Parent ').'</iz:lang></option>';
+		$string .= render_treeitem_child($treeitem, $selected_id);
+		$string .= '</select>';
+		return $string;
+	}
+}
+?>    
+    <?php if ($this->getEdit()):?>
+    	<form id="frm_treeitem" action="<iz:insert:uri /><?php echo $this->getTreeitem()->getClass_name();?>/update/" method="post">
+    	<span class="form_title"><h3>Edit <?php echo $this->getSubclass()->getTitle();?></h3></span>
+    <?php else:?>
+        <form id="frm_treeitem" action="<iz:insert:uri /><?php echo $this->getTreeitem()->getClass_name();?>/save/" method="post">
+        <span class="form_title"><h3>Create <?php echo $this->getSubclass()->getTitle();?></h3></span>
+    <?php endif?>
+        <div class="form_fixed_width">        	
+        	<input type="hidden" name="treeitem_id" id="treeitem_id" value="<?php echo $this->getTreeitem()->getTreeitem_id(); ?>"/>
+        	<input type="hidden" name="class_name" id="class_name" value="<?php echo $this->getTreeitem()->getClass_name();?>"/>
+            <div>
+                <?php if($this->getValidate() && !$this->getTreeitem()->isValid()):?>
+                    <h2><iz:lang id="treeitem.error">Sorry, there was a problem creating the treeitem.</iz:lang></h2>
+                <?php endif?>
+            </div>
+            <div class="container">
+                <label for="treeitem_title"><span class="form_control_title"><iz:lang id="treeitem.title">Title</iz:lang></span></label>
+                <?php if($this->getValidate() && !$this->getTreeitem()->isValid('title')):?>
+                <div class="container_error">                	
+                    <iz:lang id="treeitem.section_rules">
+                        Please check your treeitem name is between 6 and 30 characters long and contains only letters and numbers (A-Z, 0-9)..
+                    </iz:lang>
+                </div>
+                <?php endif?>
+                <input class="input_box_required" type="text" id="treeitem_title" name="title" value="<?php echo $this->getTreeitem()->getTitle();?>" />                
+            </div>
+            <div class="container">
+            	<label for="treeitem_published"><span class="form_control_title"><iz:lang id="treeitem.published">Published</iz:lang></span></label>
+            	<input class="check_box" type="radio" id="treeitem_cb0" name="published" value="0" <?php if ($this->getTreeitem()->getPublished()==='0'): ?> checked="checked" <?php endif?> />
+            	<label for="treeitem_cb0">No</label>
+            	<input class="check_box" type="radio" id="treeitem_cb1" name="published" value="1" <?php if ($this->getTreeitem()->getPublished()==='1'): ?> checked="checked" <?php endif?> />
+            	<label for="treeitem_cb1">Yes</label>
+            </div>
+            <div class="container">
+            	<label for="treeitem_parent"><span class="form_control_title"><iz:lang id="treeitem.parent">Parent</iz:lang></span></label>
+            	<?php echo create_treeitem_lb($this->getTreeitems(), $this->getTreeitem()->getParent_id());?>            	
+            </div>
+            <div class="container">
+            	<label for="treeitem_submit"><span class="form_control_title">&nbsp;</span></label>
+            	<input type="submit" class="submit_button" id="treeitem_submit" name="submit" value="<iz:lang id="treeitem.submit">Submit</iz:lang>" />
+            </div>            
+        </div>
+        </form>

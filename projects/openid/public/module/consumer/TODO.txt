@@ -1,0 +1,6 @@
+***
+##TODO##
+***
+* If user doesn't exist (tested by loadByOpenID) - create an account
+* If they're new - send them to an activate page with appropriate captcha logic
+* If they existed already, redirect to their home page

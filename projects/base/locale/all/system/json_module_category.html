@@ -1,0 +1,13 @@
+<?php
+$nodes = array();
+$menuActions = $this->getMenuActions();
+foreach ($menuActions as $a)
+{
+    $item = array();
+    $item['id'] = $a['codename'];
+    $item['text'] = $a['title'];
+    $item['leaf'] = true;
+    $nodes[] = $item;
+}
+echo json_encode($nodes);
+?>

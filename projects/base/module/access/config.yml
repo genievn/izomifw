@@ -1,0 +1,17 @@
+title: Access
+author: Nguyễn Hữu Thành
+version: 1.0
+date: 10/02/2011
+avatar: images/access.png
+actions:
+    listAccess:
+        title: List all the access rule
+        icon: images/list_access.png
+        menu:
+            position: 1
+        locales:
+            vi-VN:
+                title: Liệt kê tất cả quyền truy cập
+locales:
+    vi-VN:
+        title: Phân Quyền

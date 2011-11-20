@@ -1,0 +1,44 @@
+/* ------------------------------------------------------------------
+
+This file should not be edited for your project, or at least edited at your own risk.  Override anything you need to in your project.css so that if you need to get an updated version of this due to a bug fix or feature enhancement you won't have to try and find all the changes.
+
+------------------------------------------------------------------ */
+
+/* Form Layout Defaults
+------------------------------------------------------------------ */
+form dl { padding: 5px 0; margin: 0; clear:both; overflow:hidden; }
+form dt, 
+form dd { padding: 0; margin: 0; float: left; }
+form dt { float: left; width: 15em; margin-right: 10px; text-align: right; font-weight: bold; }
+form samp { font-size: 85%; color: #666; }
+form .options-vertical .option { display:block; }
+.inline-help { text-align: left; }
+.highlight-error dt { color: #E33030; }
+dl.error dt { color:red; background:none; }
+dl.error { background:none; border:none; padding:0; margin:0; } /* Fixes IE6 error that displays background image from alert boxes */
+
+/* Horizontal Form 1 (Labels on the top)
+------------------------------------------------------------------ */
+.form-h1 dl { padding: 5px 20px 5px 0; float: left; clear:none; overflow:hidden; }
+.form-h1 dd,.form-h1 dt { float:none; text-align: left; width: auto; }
+
+/* Horizontal Form 2 (Labels on the left)
+------------------------------------------------------------------ */
+.form-h2 dl { padding: 5px 20px 5px 0; float: left; clear:none; overflow:hidden; }
+.form-h2 dt { float: left; margin-right: 5px; width: auto;  }
+.form-h2 dd { float: left; width: auto;  }
+/
+/* Vertical Form 1 (Labels on the top)
+------------------------------------------------------------------ */
+.form-v1 dl { padding: 5px 0; }
+.form-v1 dd,.form-v1 dt { float:none; text-align: left; width: auto; }
+
+/* Vertical Form 2 (Labels on the left) - To align labels on right, just do it in the project.css
+------------------------------------------------------------------ */
+.form-v2 dt { text-align: left; }	
+
+/* Misc stuff
+
+/* This is for hiding things visually, but will still be there for screen readers. */
+.visual-hide { position:absolute !important; left:-5000px !important;	 } /* Removed "top" due to tabbing to a link with this would cause a jump up on the page */
+legend.visual-hide, x:-moz-any-link { display:none; }  /* legend has issues in firefox (https://bugzilla.mozilla.org/show_bug.cgi?id=292736), so we need to fully hide it for FF only (http://pornel.net/firefoxhack) */

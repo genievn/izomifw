@@ -1,0 +1,148 @@
+/**
+ * @Entity
+ */
+class Memtest
+{
+    /**
+     * @Id
+     * @Column(name="id", type="integer")
+     * @GeneratedValue(strategy="AUTO")
+     */
+    public $id;
+
+    /**
+     * @OneToMany(targetEntity="Memtest", mappedBy="Anything")
+     */
+    public $Children;
+
+    /**
+     * @Column(name="createdAt", type="datetime", nullable="true")
+     */
+    public $created;
+
+    public function __construct()
+    {
+        $this->Children = new \Doctrine\Common\Collections\ArrayCollection;
+        //$this->created = new \DateTime;
+    }
+}
+
+// BULK INSERT
+
+for ($i = 0; $i < 100000; $i++) {
+    $memtest = new Memtest();
+    $em->persist($memtest);
+
+    if ($i % 1000 == 0) {
+        gc_collect_cycles();
+        printf('----- Memory usage after %d Entities: %2.2f MB -----' .
+            PHP_EOL, $i, memory_get_peak_usage() / 1024 / 1024);
+        echo "<br/>";
+        $em->flush();
+        $em->clear();
+    }
+}
+
+// OUTPUT
+
+323.75390625 KB ----- Memory usage after 0 Entities: 0.68 MB -----
+----- Memory usage after 1000 Entities: 1.57 MB -----
+----- Memory usage after 2000 Entities: 4.00 MB -----
+----- Memory usage after 3000 Entities: 4.17 MB -----
+----- Memory usage after 4000 Entities: 4.24 MB -----
+----- Memory usage after 5000 Entities: 4.25 MB -----
+----- Memory usage after 6000 Entities: 4.26 MB -----
+----- Memory usage after 7000 Entities: 4.26 MB -----
+----- Memory usage after 8000 Entities: 4.26 MB -----
+----- Memory usage after 9000 Entities: 4.26 MB -----
+----- Memory usage after 10000 Entities: 4.26 MB -----
+----- Memory usage after 11000 Entities: 4.26 MB -----
+----- Memory usage after 12000 Entities: 4.26 MB -----
+----- Memory usage after 13000 Entities: 4.26 MB -----
+----- Memory usage after 14000 Entities: 4.26 MB -----
+----- Memory usage after 15000 Entities: 4.26 MB -----
+----- Memory usage after 16000 Entities: 4.26 MB -----
+----- Memory usage after 17000 Entities: 4.26 MB -----
+----- Memory usage after 18000 Entities: 4.26 MB -----
+----- Memory usage after 19000 Entities: 4.26 MB -----
+----- Memory usage after 20000 Entities: 4.26 MB -----
+----- Memory usage after 21000 Entities: 4.26 MB -----
+----- Memory usage after 22000 Entities: 4.26 MB -----
+----- Memory usage after 23000 Entities: 4.26 MB -----
+----- Memory usage after 24000 Entities: 4.26 MB -----
+----- Memory usage after 25000 Entities: 4.26 MB -----
+----- Memory usage after 26000 Entities: 4.26 MB -----
+----- Memory usage after 27000 Entities: 4.26 MB -----
+----- Memory usage after 28000 Entities: 4.26 MB -----
+----- Memory usage after 29000 Entities: 4.26 MB -----
+----- Memory usage after 30000 Entities: 4.26 MB -----
+----- Memory usage after 31000 Entities: 4.26 MB -----
+----- Memory usage after 32000 Entities: 4.26 MB -----
+----- Memory usage after 33000 Entities: 4.26 MB -----
+----- Memory usage after 34000 Entities: 4.26 MB -----
+----- Memory usage after 35000 Entities: 4.26 MB -----
+----- Memory usage after 36000 Entities: 4.26 MB -----
+----- Memory usage after 37000 Entities: 4.26 MB -----
+----- Memory usage after 38000 Entities: 4.26 MB -----
+----- Memory usage after 39000 Entities: 4.26 MB -----
+----- Memory usage after 40000 Entities: 4.26 MB -----
+----- Memory usage after 41000 Entities: 4.26 MB -----
+----- Memory usage after 42000 Entities: 4.26 MB -----
+----- Memory usage after 43000 Entities: 4.26 MB -----
+----- Memory usage after 44000 Entities: 4.26 MB -----
+----- Memory usage after 45000 Entities: 4.26 MB -----
+----- Memory usage after 46000 Entities: 4.26 MB -----
+----- Memory usage after 47000 Entities: 4.26 MB -----
+----- Memory usage after 48000 Entities: 4.26 MB -----
+----- Memory usage after 49000 Entities: 4.26 MB -----
+----- Memory usage after 50000 Entities: 4.26 MB -----
+----- Memory usage after 51000 Entities: 4.26 MB -----
+----- Memory usage after 52000 Entities: 4.26 MB -----
+----- Memory usage after 53000 Entities: 4.26 MB -----
+----- Memory usage after 54000 Entities: 4.26 MB -----
+----- Memory usage after 55000 Entities: 4.26 MB -----
+----- Memory usage after 56000 Entities: 4.26 MB -----
+----- Memory usage after 57000 Entities: 4.26 MB -----
+----- Memory usage after 58000 Entities: 4.26 MB -----
+----- Memory usage after 59000 Entities: 4.26 MB -----
+----- Memory usage after 60000 Entities: 4.26 MB -----
+----- Memory usage after 61000 Entities: 4.26 MB -----
+----- Memory usage after 62000 Entities: 4.26 MB -----
+----- Memory usage after 63000 Entities: 4.26 MB -----
+----- Memory usage after 64000 Entities: 4.26 MB -----
+----- Memory usage after 65000 Entities: 4.26 MB -----
+----- Memory usage after 66000 Entities: 4.26 MB -----
+----- Memory usage after 67000 Entities: 4.26 MB -----
+----- Memory usage after 68000 Entities: 4.26 MB -----
+----- Memory usage after 69000 Entities: 4.26 MB -----
+----- Memory usage after 70000 Entities: 4.26 MB -----
+----- Memory usage after 71000 Entities: 4.26 MB -----
+----- Memory usage after 72000 Entities: 4.26 MB -----
+----- Memory usage after 73000 Entities: 4.26 MB -----
+----- Memory usage after 74000 Entities: 4.26 MB -----
+----- Memory usage after 75000 Entities: 4.26 MB -----
+----- Memory usage after 76000 Entities: 4.26 MB -----
+----- Memory usage after 77000 Entities: 4.26 MB -----
+----- Memory usage after 78000 Entities: 4.26 MB -----
+----- Memory usage after 79000 Entities: 4.26 MB -----
+----- Memory usage after 80000 Entities: 4.26 MB -----
+----- Memory usage after 81000 Entities: 4.26 MB -----
+----- Memory usage after 82000 Entities: 4.26 MB -----
+----- Memory usage after 83000 Entities: 4.26 MB -----
+----- Memory usage after 84000 Entities: 4.26 MB -----
+----- Memory usage after 85000 Entities: 4.26 MB -----
+----- Memory usage after 86000 Entities: 4.26 MB -----
+----- Memory usage after 87000 Entities: 4.26 MB -----
+----- Memory usage after 88000 Entities: 4.26 MB -----
+----- Memory usage after 89000 Entities: 4.26 MB -----
+----- Memory usage after 90000 Entities: 4.26 MB -----
+----- Memory usage after 91000 Entities: 4.26 MB -----
+----- Memory usage after 92000 Entities: 4.26 MB -----
+----- Memory usage after 93000 Entities: 4.26 MB -----
+----- Memory usage after 94000 Entities: 4.26 MB -----
+----- Memory usage after 95000 Entities: 4.26 MB -----
+----- Memory usage after 96000 Entities: 4.26 MB -----
+----- Memory usage after 97000 Entities: 4.26 MB -----
+----- Memory usage after 98000 Entities: 4.26 MB -----
+----- Memory usage after 99000 Entities: 4.26 MB ----- 
+

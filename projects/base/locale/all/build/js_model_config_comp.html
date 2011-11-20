@@ -1,0 +1,142 @@
+<?php
+$suffixID = $this->getCmpSuffixID();
+?>
+{
+	jsLoad: function(){
+		var host_modules = new Ext.data.SimpleStore({
+			fields: ['module_name','module_path'],
+			data : [
+				<?php
+					$modules = array();
+					foreach ($this->getHostModules() as $key => $value) {
+						$modules[] = "['".$key."','".addslashes($value)."']";
+					}
+					echo implode(",",$modules);
+				?>
+			]
+		});
+		
+		var all_models = new Ext.data.SimpleStore({
+			fields: ['order','model_name'],
+			data : [
+				<?php
+					$models = array();
+					foreach ($this->getAllModels() as $key => $value) {
+						$models[] = "['".$key."','".$value."']";
+					}
+					echo implode(",",$models);
+				?>
+			]
+		});
+		var combo_modules = new Ext.form.ComboBox({
+					name:"host_module",
+					fieldLabel:"Host Module",
+					store: host_modules,
+					displayField:'module_path',
+					typeAhead: true,
+					mode: 'local',
+					triggerAction: 'all',
+					emptyText:'Select a host module folder...',
+					selectOnFocus: true,
+					readOnly: true,
+					allowBlank: false,
+					width: 500,
+					blankText: "Please select host module folder"
+				});
+				
+		var combo_models = new Ext.form.ComboBox({
+					name:"model_config_name",
+					fieldLabel:"Model Name",
+					store: all_models,
+					displayField:'model_name',
+					typeAhead: true,
+					mode: 'local',
+					triggerAction: 'all',
+					emptyText:'Select a model...',
+					selectOnFocus: true,
+					readOnly: true,
+					allowBlank: false,
+					width: 500,
+					blankText: "Please select a model"
+				});
+				
+		
+			
+		var model_config = new Ext.FormPanel({
+			//isTab: true,
+			id: 'build-form-model-config',
+			//title: 'Application',
+			
+			labelAlign: 'right',
+			labelWidth: 75,
+			closable: true,
+			url:'<iz:insert:url/><iz:insert:config path="root.response.json" />build/buildModelConfig',	
+			monitorValid:true,
+			bodyStyle:'padding:5px 5px 0',
+			items:[
+				combo_modules,
+				combo_models,
+				{
+					xtype:'checkbox',
+					fieldLabel: 'Admin Model Config',
+					name: 'admin_model_config'					
+				},
+				{
+					xtype: 'checkbox',
+					fieldLabel: 'Public Model Config',
+					name: 'public_model_config'
+				}
+				/*
+				new Ext.form.TextField({
+					id:"model-config",
+					name:"model_config_name",
+					fieldLabel:"Model Name",
+					//width:275,
+					allowBlank:false,
+					blankText:"Please enter model name"
+				})*/
+			],
+		
+			buttons:[{
+				text:'Create',
+				formBind: true,
+				handler:function(){
+					model_config.getForm().submit({
+						method:'POST',
+						waitTitle:'Connecting',
+						waitMsg:'Sending data...',
+						success:function(form, action){
+							Ext.Msg.alert("Success","Model config has been generated successfully");
+						},
+						failure:function(form, action){
+							Ext.Msg.alert("Failure","<strong>Some errors occurred, please check back manually<strong><br/><hr/><ul><li>- Model config has already been generated</li><li>- Some internal errors, please report to Dev Team</li></ul>");
+						}
+					});
+				}				
+			},
+			{
+				text: 'Close'
+				,handler:function() {
+					var tab = Ext.getCmp('build-window-model-config');
+					tab.close();
+				}
+			}]
+		});
+		
+		var win = new Ext.Window({
+			id: 'build-window-model-config',
+			layout:'fit',
+			width:700,
+			height:300,
+			closable: true,
+			resizable: false,
+			plain: true,
+			border: false,
+			title: 'Model Configuration Template Creation',
+			iconCls: 'build-button-model',
+			items: [model_config]
+		});
+		win.show();
+		return model_config;
+	}
+}

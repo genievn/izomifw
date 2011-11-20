@@ -1,0 +1,86 @@
+
+<script type="text/javascript">
+Ext.onReady(function(){	
+    var fp = new Ext.FormPanel({
+        labelWidth:  100,
+        renderTo: 'entity-treetype',
+        frame: true,
+        title: 'Create Tree Type',
+        bodyStyle:'padding:10px 10px 0',
+        //width: 800,
+        defaults: {width: 250},
+        defaultType: 'textfield',
+        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />tree/saveTreeType/', 
+        method: 'POST',
+        id: 'form-treetype',
+        items: [
+            {
+                fieldLabel: 'Code name',
+                helpText: 'The internal code of the TreeType', 
+                name: 'codename',
+                allowBlank: false,
+            },
+            {
+                fieldLabel: 'Title',
+                name: 'title',
+                allowBlank: false, 
+                helpText: 'The title should be a string without spaces'
+            }/*,{ 
+                xtype: 'ckeditor', 
+                fieldLabel: 'Description', 
+                name: 'description',
+                width: 500,
+                CKConfig: { 
+                    // Enter your CKEditor config paramaters here or define a custom CKEditor config file.
+                    //customConfig : ckeditorConfig,         
+                    toolbar: 'Full', 
+                    skin: 'office2003',
+                    height : 200,
+                    filebrowserBrowseUrl: "<iz:insert:uri/>/files/filemanager/"
+                } 
+            }*/ 
+            
+            ,{
+                fieldLabel: 'Description',
+                xtype: 'textarea',
+                name: 'description'
+            }
+        ],
+
+        buttons: [{
+            text: 'Save'
+            , handler: function()
+            {
+                var form = Ext.getCmp('form-treetype').getForm();
+                if(form.isValid()){
+                    form.submit({
+                        waitMsg:'Loading...',
+                        success: function(form,action) {
+                            window.location = '<iz:insert:uri/>' + action.result.redirect;
+                        },
+                        failure: function(form,action){
+                            Ext.MessageBox.alert('Error',action.result.msg);
+                        }
+                    });
+                }
+            }
+        },{
+            text: 'Cancel'
+            , handler: function()
+            {
+                location.href = '<iz:insert:uri/>tree/listTreeType/';
+            }
+        }]
+    });
+
+	
+});
+</script>
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-treetype">
+        
+    </div>
+</div>

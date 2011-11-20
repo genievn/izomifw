@@ -1,0 +1,40 @@
+Ext.ns("IzomiExt");
+IzomiExt.OFC = {
+	name: "pure DOM",
+    version: function(src) { return Ext.getDom(src).get_version() },
+    rasterize: function (src, dst) {
+      var _dst = Ext.getDom(dst);
+      e = document.createElement("div");
+      e.innerHTML = IzomiExt.OFC.image(src);
+      _dst.up().dom.replaceChild(e, _dst);
+    },
+    image: function(src) {return "<img src='data:image/png;base64," + document.getElementById(src).get_img_binary() + "' />";},
+    popup: function(src) {
+		var _ofc = document.getElementById(src).get_img_binary();
+		console.log(_ofc);
+		var _img = "<img src='data:image/png;base64," + _ofc + "' />";
+        var img_win = window.open('', 'Charts: Export as Image');
+        with(img_win.document) {
+            write("<html><head><title>Charts: Export as Image<\/title><\/head><body>" + _img + "<\/body><\/html>"); }
+    },
+	post_image: function(src) {
+		var url = "<iz:insert:url/><iz:insert:config path="root.response.json"/>files/upload/upload.php";
+		var ofc = Ext.get(src);
+		
+		x = ofc.post_image(url,'save_image_completed');
+		console.log(x);
+	}
+}
+
+// interface to OFC save image
+function save_image(src) {
+	//IzomiExt.OFC.post_image(src);
+	
+	IzomiExt.OFC.popup(src);
+}
+function save_image_completed(src) {
+	alert('okie');
+}
+function ofc_export_image_base64(src) {
+	return "<img src='data:image/png;base64," + Ext.get(src).dom.get_img_binary() + "' />";
+}

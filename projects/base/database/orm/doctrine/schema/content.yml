@@ -1,0 +1,40 @@
+---
+package: content
+options:
+  type: INNODB
+  collate: utf8_unicode_ci
+  charset: utf8
+Category:
+  actAs:
+    NestedSet:
+      hasManyRoots: true
+      rootColumnName: root_id
+    I18n:
+      fields: [name, description]
+    Timestampable:
+      created:
+        name: created_at
+        type: timestamp
+        format: Y-m-d H
+      updated:
+        name: updated_at
+        type: timestamp
+        format: Y-m-d H
+  columns:
+    name:
+      type: string(255)
+    description:
+      type: string
+    app_id:
+      type: string(50)
+Article:
+  actAs:
+    I18n:
+      fields: [title, body]
+  columns:
+    title:
+      type: string(255)
+    body:
+      type: string
+    avatar:
+      type: string(255)

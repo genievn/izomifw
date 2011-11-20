@@ -1,0 +1,13 @@
+<?php
+$success = $this->getSuccess();
+$redirect = $this->getRedirect();
+if ($success) {
+?>
+<script type="text/javascript">
+window.location = "<?php echo $redirect;?>"
+</script>
+<?php } else { ?>
+<script type="text/javascript">
+window.location = "<iz:insert:uri/>auth/loginForm/?msg=Invalid login";
+</script>
+<?php } ?>

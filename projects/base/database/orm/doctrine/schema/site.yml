@@ -1,0 +1,20 @@
+---
+Site:
+    columns:
+        site_name: string(255)
+    relations:
+        SiteInfos:
+            class: SiteInfo
+            local: id
+            foreign: site_id
+            type: many
+SiteInfo:
+    columns:
+        site_id: integer
+        site_key: string(255)
+        site_value: string(255)
+    relations:
+        Sites:
+            class: Site
+            local: site_id
+            foreign: id

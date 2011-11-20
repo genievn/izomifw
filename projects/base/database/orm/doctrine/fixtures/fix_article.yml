@@ -1,0 +1,10 @@
+---
+NewsItem:
+    item_1:
+        Translation:
+            en:
+                title: Here we are
+                content: Yep!!!
+            vi:
+                title: That's true
+                content: Why not?	

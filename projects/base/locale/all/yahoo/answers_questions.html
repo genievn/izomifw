@@ -1,0 +1,9 @@
+<div>
+    <?foreach($this->getQuestions() as $question):?>
+    <div class="question">
+        <img src="<?=$question->getUserPhotoURL()?>" />
+        <h3><a href="<?=$question->getLink()?>" target="answers"><?=$question->getSubject()?></a></h3>
+        <?=$question->getContent()?>
+    </div>
+    <?endforeach?>
+</div>

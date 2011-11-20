@@ -1,0 +1,7 @@
+<?php foreach($this->getLanguages() as $key=>$value):?>
+	<?php if(config('root.current_lang')==$key):?>
+	&nbsp;<strong><?php echo $value;?></strong>&nbsp;|
+	<?php else:?>
+	&nbsp;<a href="<iz:insert:url/>language/language/<?php echo $key;?>"><?php echo $value;?></a>&nbsp;|
+	<?php endif?>
+<?php endforeach?>

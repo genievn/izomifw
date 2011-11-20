@@ -1,0 +1,14 @@
+<?php
+$form = $this->getForm();
+$window = $this->getWindow();
+?>
+{
+    jsLoad:function(){
+        var form = <?php print $form->doHtml();?>;
+        var win = <?php print $window->doHtml();?>;
+        win.add(form);
+        form.ownerCt = win;
+        win.show();
+        return win;
+    }
+}

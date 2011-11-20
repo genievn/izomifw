@@ -1,0 +1,137 @@
+<script type="text/javascript">
+Ext.onReady(function(){
+    
+    var Widgets = Ext.data.Record.create([
+    {
+        name: 'id',
+        type: 'string'
+    },{
+        name: 'title',
+        type: 'string'
+    },{
+        name: 'action_title',
+        type: 'string'
+    },{
+        name: 'codename',
+        type: 'string'        
+    }]);
+    
+    var store = new Ext.data.GroupingStore({
+        reader: new Ext.data.JsonReader({root: 'widgets',fields: Widgets}),
+        proxy: new Ext.data.HttpProxy({url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>page/getWidget/',method:'GET'}),
+        autoLoad: true
+        //, sortInfo: {field: '', direction: 'ASC'}
+    });
+
+
+    var grid = new Ext.grid.GridPanel({
+        id: 'grid-access',
+        store: store,
+        layout: 'fit',
+        margins: '0 5 5 5',
+        autoExpandColumn: 'title',
+        autoHeight: true,
+        loadMask: true,
+        view: new Ext.grid.GroupingView({
+            markDirty: false
+        }),
+        stripeRows:true,
+        tbar: [
+            {
+                text: 'Create New Widget'
+                , iconCls: IconManager.getIcon('page_add')
+                , handler: function()
+                {
+                    //window.location = '<iz:insert:uri/>widget/createWidget/';
+                    Ext.getBody().mask('Processing ...');
+                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    window.location.href = '<iz:insert:uri/>page/createWidget/';
+                }
+                , scope: this
+            }
+            ,{
+                ref: '../editBtn',
+                iconCls: IconManager.getIcon('page_edit'),
+                text: 'Edit Widget',
+                disabled: true,
+                handler: function(){
+                    var s = grid.getSelectionModel().getSelections();
+                    if (s.length != 1) return false;
+                    var widgetId = s[0].data.id;
+                    window.location = '<iz:insert:uri/>page/editWidget/' + widgetId;
+                }
+            }
+            ,{
+                ref: '../deleteBtn',
+                iconCls: IconManager.getIcon('page_delete'),
+                text: 'Delete Widget',
+                disabled: true,
+                handler: function(){
+                    var s = grid.getSelectionModel().getSelections();
+                    /*
+                    for(var i = 0, r; r = s[i]; i++){
+                        store.remove(r);
+                    }*/
+                }
+            },'->',
+            {
+                text: 'View Page Template'
+                , iconCls: IconManager.getIcon('page')
+                , handler: function()
+                {
+                    //window.location = '<iz:insert:uri/>widget/createWidget/';
+                    Ext.getBody().mask('Processing ...');
+                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    window.location.href = '<iz:insert:uri/>page/listPageTemplate/';
+                }
+            }
+        ],
+        columns: [
+        new Ext.grid.RowNumberer(),
+        {
+            id: 'title',
+            header: 'Title',
+            dataIndex: 'title',
+            width: 100,
+            sortable: true
+        },
+        {
+            id: 'action-title',
+            header: 'Action Title',
+            dataIndex: 'action_title',
+            width: 100,
+            sortable: true
+        },
+        {
+            id: 'module',
+            header: 'Module',
+            dataIndex: 'codename',
+            width: 100,
+            sortable: true
+        }]
+    });
+
+    var layout = new Ext.Panel({
+        title: 'Widget',
+        layout: 'fit',
+        items: [grid],
+        iconCls: IconManager.getIcon('brick'),
+        renderTo: 'entity-widget',
+        frame: true
+    });
+
+    grid.getSelectionModel().on('selectionchange', function(sm){
+        grid.editBtn.setDisabled(sm.getCount() != 1);
+        grid.deleteBtn.setDisabled(sm.getCount() <= 0);
+    });
+});
+</script>
+
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-widget">
+        
+    </div>
+</div>

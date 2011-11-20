@@ -1,0 +1,70 @@
+{
+	jsLoad: function(){
+		var login = new Ext.FormPanel({ 
+			labelWidth:80,
+			url:'<iz:insert:url/><iz:insert:config path="root.response.json" />auth/login/', 
+			frame:true, 
+			title:'Please Login', 
+			defaultType:'textfield',
+			monitorValid:true,
+			items:[{ 
+					fieldLabel:'Username', 
+					name:'iz_user', 
+					allowBlank:false 
+				},{ 
+					fieldLabel:'Password', 
+					name:'iz_pass', 
+					inputType:'password', 
+					allowBlank:false 
+				}],
+			buttons:[{ 
+					text:'Login',
+					formBind: true,	 
+					// Function that fires when user clicks the button 
+					handler:function(){ 
+						login.getForm().submit({ 
+							method:'POST', 
+							waitTitle:'Connecting', 
+							waitMsg:'Sending data...',
+	 
+							success:function(){ 
+								Ext.Msg.alert('Status', 'Login Successful!', function(btn, text){
+									if (btn == 'ok'){
+												//var redirect = '<iz:insert:uri/>'; 
+												//window.location = redirect;
+												}
+									});
+							},
+							failure:function(form, action){ 
+								if(action.failureType == 'server'){                            	 
+									
+									
+								}else{ 
+									//Ext.Msg.alert('Warning!', 'Authentication server is unreachable : ' + action.response.responseText); 
+									obj = Ext.util.JSON.decode(action.response.responseText); 
+									Ext.Msg.alert('Login Failed!', obj.error.reason); 
+								} 
+								login.getForm().reset(); 
+							} 
+						}); 
+					} 
+				}] 
+		});
+	 
+	 
+		// This just creates a window to wrap the login form. 
+		// The login object is passed to the items collection.       
+		var win = new Ext.Window({
+			layout:'fit',
+			width:300,
+			height:150,
+			closable: false,
+			resizable: false,
+			plain: true,
+			border: false,
+			items: [login]
+		});
+		win.show();
+		return login;
+	}
+}

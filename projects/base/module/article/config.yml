@@ -1,0 +1,13 @@
+module: article
+actions:
+    createArticle:
+        default:
+            title: Add a new Article
+            params: 
+                - Category ID
+            context:
+                
+                
+    viewArticle:
+        default      
+                

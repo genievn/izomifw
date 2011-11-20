@@ -1,0 +1,15 @@
+---
+Site:
+    default:
+        site_name: izocms
+    default_lite:
+        site_name: izocms-lite
+SiteInfo:
+    si_title:
+        site_key: title
+        site_value: Default site
+        Sites: default
+    si_description:
+        site_key: description
+        site_value: This is description of default site
+        Sites: default

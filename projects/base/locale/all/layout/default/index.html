@@ -1,0 +1,39 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<iz:insert:config path="root.current_lang" />" lang="<iz:insert:config path="root.current_lang" />">
+<head>
+   <title>YUI Base Page</title>
+
+   <link rel="stylesheet" href="http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css" type="text/css">
+   <meta http-equiv="Content-type" content="text/html; charset=utf-8" /> 
+   <iz:layout:css path="~style" />
+   <iz:layout:js path="~script" />
+  
+   <iz:layout:head />
+</head>
+<body>
+<div id="doc" class="yui-t7">
+   <div id="hd">
+            <div id="account_helper">
+                <iz:layout:pos position="account" />
+            </div>
+            <div id="page_logo">
+                <iz:layout:pos position="logo" />
+            </div> 
+   </div>
+   <div id="bd">
+	<div class="yui-g">
+	<!-- YOUR DATA GOES HERE -->
+	<iz:layout:pos position="main" />
+	</div>
+
+	</div>
+   <div id="ft">
+            <div id="page_footer">
+                <iz:layout:pos position="footer" />
+            </div>
+            <iz:layout:foot />   	
+   </div>
+</div>
+</body>
+</html>

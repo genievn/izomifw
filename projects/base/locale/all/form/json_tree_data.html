@@ -1,0 +1,48 @@
+<?php
+$records = $this->getData();
+# array to hold processed data
+$items = array();
+foreach ($records as $record)
+{
+    
+    $contentitem_id = $record["contentitem"]["id"];
+    
+    $items[$contentitem_id] = array();
+    $items[$contentitem_id]["id"] = $record["contentitem"]["id"];
+    $items[$contentitem_id]["text"] = $record["title"];
+    
+    $items[$contentitem_id]["children"] = array();
+    $items[$contentitem_id]["leaf"] = true;
+    $items[$contentitem_id]["expanded"] = false;    
+    
+    
+    
+    $owner_id = $record["contentitem"]["owner"]["id"];
+    
+    
+    
+    if ($owner_id !== null)
+    {
+        # if there is owner, append it to its owner children property
+        $items[$owner_id]["children"][] = $items[$id];
+        $items[$owner_id]["leaf"] = false;
+        $items[$owner_id]["expanded"] = true;
+        # there is owner, so it's not the root level
+        $items[$contentitem_id]["root"] = false;
+    }else{
+        $items[$contentitem_id]["root"] = true;
+    }
+        
+}
+# building the tree
+$nodes = array();
+foreach ($items as $item)
+{
+    # if it's a root level node
+    if ($item["root"])
+    {
+        $nodes[] = $item;
+    }
+}
+echo json_encode($nodes);
+?>

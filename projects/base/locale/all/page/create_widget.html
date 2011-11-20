@@ -1,0 +1,155 @@
+<?php
+$widgets = $this->getWidgets();
+$modules = array();
+foreach ($widgets as $widget)
+{
+    $moduleId = (int)$widget['module']['id'];
+    if (!array_key_exists($moduleId, $widgets)) $modules[$moduleId] = $widget['module']['codename'];    
+}
+?>
+
+<script type="text/javascript">
+Ext.onReady(function(){
+    var moduleArray = [];
+    var widgetArray = [];
+    <?php
+    foreach ($modules as $id=>$codename) {
+    ?>
+        moduleArray.push(['<?php echo $id;?>','<?php echo $codename;?>']);
+    <?php
+    }
+    ?>
+    
+    <?php
+    foreach ($widgets as $widget) {
+    ?>
+        widgetArray.push(['<?php echo $widget['module']['id'];?>','<?php echo $widget['id'];?>','<?php echo $widget['title'];?>']);
+    <?php
+    } 
+    ?>
+    
+    var fp = new Ext.FormPanel({
+        iconCls: IconManager.getIcon('brick'),
+        labelWidth:  100,
+        renderTo: 'entity-widget',
+        frame: true,
+        title: 'Create Widget',
+        bodyStyle:'padding:10px 10px 0',
+        //width: 800,
+        defaults: {width: 250},
+        defaultType: 'textfield',
+        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />page/saveWidget/', 
+        method: 'POST',
+        id: 'form-widget',
+        items: [
+            
+            {
+                xtype: 'textfield',
+                id: 'title',
+                fieldLabel: 'Title',
+                name: 'title',
+                allowBlank: false
+            },
+            {
+                fieldLabel: 'Module',
+                id: 'combo-module',
+                xtype: 'combo',
+                valueField: 'id',
+                hiddenName: 'module_id',
+                displayField: 'codename',
+                triggerAction: 'all',                
+                store: new Ext.data.SimpleStore({
+                     fields:['id', 'codename']
+                    ,data: moduleArray
+                }),
+                triggerAction:'all',
+                mode:'local',
+                allowBlank: false,
+                listeners: {
+                    select: function(combo, value) {
+                        var comboAction = Ext.getCmp('combo-action');        
+                        comboAction.clearValue();
+                        //comboAction.store.filter('module_id', combo.getValue());
+                    }
+                }
+            },
+            {
+                fieldLabel: 'Widget Action',
+                id: 'combo-action',
+                xtype: 'combo',
+                valueField: 'id',
+                displayField: 'method',
+                triggerAction:'all',
+                mode:'local',
+                hiddenName: 'action_definition_id',
+                store: new Ext.data.SimpleStore({
+                     fields:['module_id', 'id', 'method']
+                    ,data: widgetArray
+                }),
+                allowBlank: false,
+                listeners: {
+                    expand: function(combo) {
+                        var comboModule = Ext.getCmp('combo-module');
+                        combo.store.filter('module_id', comboModule.getValue());
+                    }
+                }           
+            },
+            {
+                xtype: 'textfield',
+                id: 'input-params',
+                fieldLabel: 'Params',
+                name: 'params'
+            }
+        ],
+        tbar: new Ext.Toolbar({
+            items: [
+                {
+                    text: 'View All Widgets'
+                    , iconCls: IconManager.getIcon('text_list_bullets')
+                    , handler: function()
+                    {
+                        Ext.getBody().mask('Processing ...');
+                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                        window.location.href = '<iz:insert:uri/>page/listWidget/';
+                    }
+                }
+            ]
+        }),
+        buttons: [{
+            text: 'Save'
+            , iconCls: IconManager.getIcon('database_save')
+            , handler: function()
+            {
+                var form = Ext.getCmp('form-widget').getForm();
+                if(form.isValid()){
+                    form.submit({
+                        waitMsg:'Processing ...',
+                        success: function(form,action) {
+                            window.location = '<iz:insert:uri/>' + action.result.redirect;
+                        },
+                        failure: function(form,action){
+                            Ext.MessageBox.alert('Error',action.result.msg);
+                        }
+                    });
+                }
+            }
+        },{
+            text: 'Cancel'
+            , iconCls: IconManager.getIcon('cancel')
+            , handler: function()
+            {
+                location.href = '<iz:insert:uri/>registry/listLayout/';
+            }
+        }]
+    });
+
+	
+});
+</script>
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-widget">
+        
+    </div>
+</div>

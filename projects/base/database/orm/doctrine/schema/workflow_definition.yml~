@@ -1,0 +1,21 @@
+workflow:
+    name: Kiểm duyệt bài
+    start_task_id: article/save/
+    places:
+        A:
+            type: 0
+            name: A
+        B:
+            type: 1
+            name: B
+        C:
+            type: 2
+            name: C
+    transitions:
+        1:
+            transition_name: Review article
+            transition_trigger: 2
+            task_id:
+            role_id:
+        2:
+

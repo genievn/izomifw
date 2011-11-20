@@ -1,0 +1,54 @@
+attributes:
+    name: "test_form"
+    submit_url: "/<iz:insert:config path=\"root.response.json\"/>crud/save/Account"
+    submit_type: "POST"
+    width: 500
+    height: 400
+    buttons:
+        submit:
+            attributes: {type:"ExtButton", title: "Submit"}
+        close:
+            attributes: {type:"ExtButton", title: "Close"}
+tabs:
+    main:
+        attributes:
+            name: "mainpanel"
+            title: "Main Form"
+            layout: "accordion"
+            type: "ExtPanel"
+        rows:
+            rows1:
+                attributes:
+                    title: "First group"
+                columns:
+                    group1:
+                        attributes:
+                            type: "ExtLayoutColumn"
+                            title: "Column 1"
+                            columnWidth: 0.5
+                        elements:
+                            username:
+                                attributes: {type: "ExtTextField", title: "Username"}
+                            password:
+                                attributes: {type: "ExtPassword", title: "Password"}
+                            password_confirm:
+                                attributes: {type: "ExtPassword", title: "Password Confirm"}
+                            email:
+                                attributes: {type: "ExtTextField", title: "Email"}
+                            is_staff:
+                                attributes: {type: "ExtCheckbox", title: "Is staff", inputValue: "1", checked: 0}
+                            is_active:
+                                attributes: {type: "ExtCheckbox", title: "Is active", inputValue: "1", checked: 1}
+                            is_superuser:
+                                attributes: {type: "ExtCheckbox", title: "Superuser", inputValue: "1", checked: 0}
+relations:
+    Role:
+        type: "ExtSuperBoxSelect"
+        title: "Select a Role"
+        valueField: "id"
+        displayField: "name"
+        store:
+            autoLoad: true
+            url: "/<iz:insert:config path=\"root.response.json\"/>crud/retrieveLOV/Role/name/id/"
+            fields: "['id','name']"
+            root: "data"

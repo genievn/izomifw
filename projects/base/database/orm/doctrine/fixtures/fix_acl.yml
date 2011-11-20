@@ -1,0 +1,43 @@
+---
+Account:
+    admin:
+        username: admin
+        password: admin
+        first_name: Thanh
+        last_name: Nguyen
+        mid_name: Huu
+        email: nguyenhuuthanh@gmail.com
+        is_staff: true
+        is_active: true
+        is_superuser: true
+        last_login: null
+        created_on: null
+        updated_on: null
+        Roles: [administrator]
+    guest:
+        username: guest
+        password: guest
+        first_name: Guest
+        last_name: User
+        mid_name: null
+        email: guest@izomi.com
+        is_staff: false
+        is_active: true
+        is_superuser: false
+        last_login: null
+        created_on: null
+        updated_on: null
+        Roles: [anonymous]
+Role:
+    administrator: 
+        name: admin     
+    anonymous:
+        name: anonymous
+
+Profile:
+    default:
+        name: default        
+        Account: admin
+    blue:
+        name: blue
+        Account: admin

@@ -1,0 +1,410 @@
+<?php
+$window = $this->getWindow();
+$roles = $this->getRole();
+$status_bar = $this->getStatusBar();
+?>
+{
+	jsLoad:function(){
+        var images_shared_path = '/extra/shared/images/ext/';
+
+        var fn = {
+            onThemeChecked: function(item, checked)
+            {
+                Ext.util.CSS.swapStyleSheet('ext-theme', '/apps/base/locale/all/jslibs/extjs/3-0/resources/css/' + item.theme + '.css');
+                Ext.getCmp('ext-theme-switcher').setText('Giao diện: ' + item.text);
+            }
+
+            , remoteHandler: function(item)
+            {
+                alert(item.action);
+                var jsloader = new Ext.ux.JSLoader({
+					url: '<iz:insert:url/><iz:insert:config path="root.response.plain"/>' + item.action,
+					params:{lang: IZOMI.lang},
+					closable: 1,
+					waitMsg: 'Đang tải dữ liệu ...',
+					onLoad:function(comp, options){
+						//startMask.hide();
+					}
+				});
+            }
+            , redirect: function(item)
+            {
+                window.location.href = item.action;
+            }
+        };
+
+
+        var ext_theme_menu = new Ext.Toolbar.SplitButton({
+            id: 'ext-theme-switcher',
+            xtype:'tbsplit',
+            icon: images_shared_path + 'list-items.gif',
+            text:'Giao diện',
+            menuAlign: 'br-tr?',
+            menu: new Ext.menu.Menu({
+                items: [
+                    {
+                        text: 'Mặc định'
+                        , theme: 'xtheme-blue'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    }
+                    ,{
+                        text: 'Xanh da trời'
+                        , theme: 'xtheme-luna'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    },{
+                        text: 'Vàng cam'
+                        , theme: 'xtheme-human'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    },{
+                        text: 'Xám bạc 1'
+                        , theme: 'xtheme-gray'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    },{
+                        text: 'Xám bạc 2'
+                        , theme: 'xtheme-gray-extend'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    },{
+                        text: 'Xám bạc 3'
+                        , theme: 'xtheme-tp'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    },{
+                        text: 'Xám đen'
+                        , theme: 'xtheme-slate'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    },{
+                        text: 'Đen cam'
+                        , theme: 'xtheme-dcs'
+                        , checked: false
+                        , group: 'ext-theme'
+                        , checkHandler: fn.onThemeChecked
+                    }
+                ]
+            })
+        });
+
+
+        var win = <?php print $window->doHtml();?>;
+        
+        var status_bar = <?php print $status_bar->doHtml();?>;
+
+        //var status = new Ext.Toolbar.TextItem({id:'status',text:'<marquee>Tài khoản đăng nhập: ' + '<?php echo $this->getUsername();?></marquee>'});
+        var status = new Ext.Toolbar.TextItem({id:'status',text:'IZOMI Framework'});
+        var clock = new Ext.Toolbar.TextItem({id:'clock',text: '00:00:00 AM'});
+        //var themeSwitcher =
+
+        status_bar.add(status);
+        status_bar.add('->');
+        status_bar.add(new Date().format('n/d/Y'));
+        status_bar.add(ext_theme_menu);
+        //status_bar.add('->');
+        //status_bar.doLayout();
+
+        win.getBottomToolbar().add(status_bar);
+        
+        main_menu = new Ext.menu.Menu({
+            id: 'mainMenu',
+            style: {
+                overflow: 'visible'     // For the Combo popup
+            },
+            items: [
+                
+                {
+                    text: 'Tài khoản người dùng'
+                    , action: 'form/create/Entities\\Base\\Account'
+                    , handler: fn.remoteHandler
+                    , iconCls: IconManager.getIcon('user')
+                    , menu: {        // <-- submenu by nested config object
+                        items: [
+                            {
+                                text: 'Thêm tài khoản người dùng'
+                                , action: 'form/create/'+escape('Entities\\Base\\Account')
+                                , handler: fn.remoteHandler
+                                , iconCls: IconManager.getIcon('bullet_edit')
+                            },{
+                                text: 'Danh sách tài khoản người dùng'
+                                , action: 'form/grid/Entities\\Base\\Account'
+                                , handler: fn.remoteHandler
+                                , iconCls: IconManager.getIcon('bullet_database')
+                            }
+
+                        ]
+                    }
+                },{
+                    text: 'Cán bộ An toàn - Sức khỏe - Môi trường',
+                    iconCls: IconManager.getIcon('group')
+                    , menu: {        // <-- submenu by nested config object
+                        items: [
+                            <?php if ($isAdmin){?>
+                            {
+                                text: 'Thêm thông tin cán bộ ATSKMT'
+                                , action: 'hseuser/create/'
+                                , handler: fn.remoteHandler
+                                , iconCls: IconManager.getIcon('bullet_edit')
+                            },<?php }?>{
+                                text: 'Danh sách cán bộ ATSKMT'
+                                , action: 'hseuser/grid/'
+                                , handler: fn.remoteHandler
+                                , iconCls: IconManager.getIcon('bullet_database')
+                            }
+
+                        ]
+                    }
+                    //,menu: dateMenu // <-- submenu by reference
+                },{
+                    text: 'Công ty thành viên'
+                    , iconCls: IconManager.getIcon('map')
+                    , menu: {
+                        items:[
+                            <?php if ($isAdmin){?>
+                            {
+                                text: 'Thêm mới công ty thành viên'
+                                , iconCls: IconManager.getIcon('bullet_edit')
+                                , action: 'crud/create/PvnCompany/'
+                                , handler: fn.remoteHandler
+                            },<?php }?>{
+                                text: 'Xem / Tìm kiếm công ty thành viên'
+                                , iconCls: IconManager.getIcon('bullet_database')
+                                , action: 'pvnaccidentreport/grid/PvnCompany/'
+                                , handler: fn.remoteHandler
+                            }
+                        ]
+                    }
+                    //,menu: colorMenu // <-- submenu by reference
+                }
+            ]
+        });
+
+
+        report_menu = new Ext.menu.Menu({
+            id: 'reportMenu',
+            items: [
+                {
+                    text: 'Quản lý chuyên mục'
+                    , iconCls: IconManager.getIcon('bell')
+                    , menu: {
+                        items: [
+                            '<b class="menu-title">Thông báo</b>',
+                            {
+                                text: 'Thêm chuyên mục'
+                                , iconCls: IconManager.getIcon('bullet_add')
+                                , action: 'crud/edit/Category/12/'
+                                , handler: fn.remoteHandler
+                            },
+                            {
+                                text: 'Xem / Tìm kiếm chuyên mục'
+                                , action: 'crud/grid/category/'
+                                , handler: fn.remoteHandler
+                                , iconCls: IconManager.getIcon('bullet_database')
+                            }
+                        ]
+                    }
+                }
+            ]
+        });
+
+        system_menu = new Ext.menu.Menu({
+            id: 'systemMenu'
+            , items: [
+                {
+                    text: 'Nhật ký hệ thống'
+                    , iconCls: IconManager.getIcon('user')
+                    , action: 'files/jsFileManager/'
+                    , handler: fn.remoteHandler
+                },
+                {
+                    text: 'Cấu hình hệ thống'
+                    , iconCls: IconManager.getIcon('wrench')
+                }
+            ]
+
+        })
+
+        help_menu = new Ext.menu.Menu({
+            id: 'helpMenu'
+            , items:[
+                {
+                    text: 'Hướng dẫn sử dụng'
+                    , iconCls: IconManager.getIcon('book')
+                    , action: 'hsetutor/index/'
+                    , handler: fn.remoteHandler
+                },{
+                    text: 'Giới thiệu hệ thống'
+                    , iconCls: IconManager.getIcon('information')
+                    , action: 'about/about/'
+                    , handler: fn.remoteHandler
+                }
+            ]
+        });
+
+        session_menu = new Ext.menu.Menu({
+
+            id: 'sessionMenu'
+            , items: [
+                {
+                    text: 'Hồ sơ cá nhân'
+                    , iconCls: IconManager.getIcon('user_edit')
+                    , action: 'hseuser/profile/'
+                    , handler: fn.remoteHandler
+                }
+                , {
+                    text: 'Thoát'
+                    , iconCls: IconManager.getIcon('house_go')
+                    , action: location.href + '/?iz_logout=1'
+                    , handler: fn.redirect
+                }
+            ]
+        })
+
+        main_menu_toolbar = new Ext.Toolbar({border: false, width: '100%'});
+
+        main_menu_toolbar.add(
+            {
+                text: 'Danh mục'
+                , iconCls: IconManager.getIcon('book_tabs')
+                , menu: main_menu
+            },{
+                text: 'Quản lý báo cáo'
+                , iconCls: IconManager.getIcon('report')
+                , menu: report_menu
+            },{
+                text: 'Hệ thống'
+                , iconCls: IconManager.getIcon('computer')
+                , menu: system_menu
+            },{
+                text: 'Trợ giúp'
+                , iconCls: IconManager.getIcon('help')
+                , menu: help_menu
+            },
+            '->'
+            ,{
+                text: '<?php echo $this->getUsername();?>'
+                , iconCls: IconManager.getIcon('user')
+                , menu: session_menu
+                , tooltip: 'Quản lý tài khoản cá nhân & đăng xuất hệ thống'
+            }
+        );
+        top_toolbar_panel = new Ext.Panel({region: 'north', autoHeight: true, border: false})
+
+        top_toolbar = new Ext.Toolbar({border: false});
+        top_toolbar.add(
+            {
+                xtype: 'buttongroup'
+                , title: 'Sự cố'
+                , autoWidth: true
+                , columns: 2
+                , defaults: {
+                    xtype: 'button'
+                    ,scale: 'large'
+                    ,width: '100%'
+                    //,iconAlign: 'left'
+                }
+                , items:[
+                    {
+                        text: 'Thông báo sự cố'
+                        , action: 'incidentnotification/create/'
+                        , iconAlign: 'top'
+                        , handler: fn.remoteHandler
+                        , iconCls: 'hse_life_saver'
+                        , tooltip: 'Gửi thông báo sự cố cho Tập đoàn'
+                    }
+                ]
+            },
+            {
+                xtype: 'buttongroup'
+                , title: 'Báo cáo thống kê'
+                , autoWidth: true
+                , columns: 2
+                , defaults: {
+                    xtype: 'button'
+                    ,width: '100%'
+                }
+                , items:[
+                    {
+                        rowspan: 3
+                        , scale: 'large'
+                        , iconAlign: 'top'
+                        , iconCls: 'hse_report'
+                    },
+                    {
+                        text: 'Tai nạn'
+                        , menu: {
+
+                            items:[
+                                {
+                                    text: 'Báo cáo tai nạn thống kê theo năm'
+                                    , action: 'pvnaccidentreport/statistic/2009/'
+                                    , handler: fn.remoteHandler
+                                }
+
+                            ]
+                        }
+                    },{
+
+                        text: 'Sự cố'
+                    },{
+
+                        text: 'Môi trường'
+                    }
+                ]
+            },
+            {
+                xtype: 'buttongroup'
+                , title: 'Biểu đồ'
+                , autoWidth: true
+                , columns: 2
+                , defaults: {
+                    xtype: 'button'
+                    ,width: '100%'
+                }
+                , items:[
+                    {
+                        rowspan: 3
+                        , scale: 'large'
+                        , iconAlign: 'top'
+                        , iconCls: 'hse_pie_chart'
+                    },
+                    {
+                        text: 'Tai nạn'
+                        , menu: {
+                            items:[
+                                {
+                                    text: 'Biểu đồ báo cáo tai nạn theo năm'
+                                    , action: 'pvnaccidentreport/graphAccidentByYear/'
+                                    , handler: fn.remoteHandler
+                                    , iconCls: IconManager.getIcon('chart_bar')
+                                },{
+                                    text: 'Biểu đồ báo cáo tai nạn loại tai nạn'
+                                    , action: 'pvnaccidentreport/ofcAccidentByType/'
+                                    , handler: fn.remoteHandler
+                                    , iconCls: IconManager.getIcon('chart_bar')
+                                },{
+                                    text: 'Biểu đồ tai nạn do hành động không đúng theo quy định'
+                                    , action: 'pvnaccidentreport/ofcAccidentByCause/100/'
+                                    , handler: fn.remoteHandler
+                                    , iconCls: IconManager.getIcon('chart_bar')
+                                },{
+                                    text: 'Biểu đồ tai nạn do điều kiện làm việc không đủ tiêu chuẩn'
+                                    , action: 'pvnaccidentreport/ofcAccidentByCause/101/'
+                                    , handler: fn.remoteHandler
+                                    , iconCls: IconManager.getIcon('chart_bar')
+                                },{
+                                    text: 'Biểu đồ tai nạn do yếu tố con người'
+                                    , action: 'pvnaccidentreport/ofcAccidentByCause/200/'
+                                    , handler: fn.remoteHandler
+                                    , iconCls: IconManager.getIcon('chart_bar')
+                                },{
+                                    text: 'Biểu đồ

@@ -1,0 +1,19 @@
+attributes:
+    type: "ExtGridPanel"
+    pageSize: 2
+    cm: "[{header: 'Username', dataIndex: 'username'},{header: 'Email', dataIndex: 'email'}]"
+    lm: "Loading ... Please wait!"
+    filters: "{type: 'string',  dataIndex: 'username'},{type: 'string', dataIndex: 'email'}"
+    ds:
+        type: "ExtGroupingStore"
+        autoLoad: "{params:{start:0, limit:2}}"
+        #autoLoad: 1
+        url: "/<iz:insert:config path=\"root.response.json\"/>crud/retrieve/Account/"
+        reader:
+            type: "ExtJsonReader"
+            idProperty: "id"
+            totalProperty: "meta.total"
+            root: "data"
+            record: "[{name: 'username'},{name: 'email'}]"
+        sortInfo: "{field: 'username', direction: 'ASC'}"
+        remoteSort: 

@@ -1,0 +1,37 @@
+title: Registry
+author: Nguyễn Hữu Thành
+version: 1.0
+date: 20/10/2010
+category:
+    name: section.system
+avatar: images/registry.png
+actions:
+    scanModule:
+        title: Scan available modules
+        icon: images/scan_module.png
+        menu:
+            position: 1
+    registerModule:
+        widget: 1
+        title: Register a module
+        params:
+            codename: Name of the module
+            appFolder: Application folder of the module
+        context:
+            pageSize: 5
+        locales:
+            vi-VN:
+                title: Đăng ký Module
+                params:
+            en-US:
+widgets:
+    viewModule:
+        title: View module info
+        icon: 
+        params:
+                           
+locales:
+    title: Registry
+        
+            
+    

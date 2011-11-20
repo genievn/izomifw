@@ -1,0 +1,54 @@
+<?php
+$suffixID = $this->getCmpSuffixID();
+?>
+{
+	jsLoad: function(){
+		var model = new Ext.FormPanel({
+			//isTab: true,
+			id: 'build-form-model',
+			//title: 'Application',
+			labelAlign: 'right',
+			labelWidth: 75,
+			closable: true,
+			url:'<iz:insert:url/><iz:insert:config path="root.response.json" />build/buildModel',	
+			monitorValid:true,
+			bodyStyle:'padding:5px 5px 0',
+			items:[
+				new Ext.form.TextField({
+					id:"app_name",
+					fieldLabel:"Application name",
+					//width:275,
+					allowBlank:false,
+					blankText:"Please enter application name"
+				}),
+				new Ext.form.TextField({
+					id:"domain_name",
+					fieldLabel:"Domain name",
+					//width:275,
+					allowBlank:false,
+					blankText:"Please enter domain name"
+				})
+			],
+			buttons:[
+			]
+		});
+		
+		var win = new Ext.Window({
+			id: 'build-window-model',
+			layout:'fit',
+			width:300,
+			height:150,
+			closable: true,
+			resizable: false,
+			plain: true,
+			border: false,
+			title: 'Application Creation',
+			iconCls: 'build-button-model',
+			items: [model]
+		});
+		win.show();
+		
+		return model;
+	}
+}
+?>

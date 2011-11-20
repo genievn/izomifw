@@ -1,0 +1,40 @@
+<?php
+$grid = $this->getGrid();
+?>
+{
+	jsLoad:function(){
+		var grid = <?php echo $grid->doHtml();?>;
+		var win = new Ext.Window({
+            layout:'fit',
+            width:800,
+            height:600,
+            modal : true,
+            closable: true,
+            closeAction : 'hide',
+            resizable: true,
+            plain: true,
+            minimizable : false,
+            minHeight: 100,
+            minWidth : 200,
+            maximizable : true ,
+            items: [grid],
+            tbar: new Ext.Toolbar({
+            	items:[{
+            		text: 'In dữ liệu'
+            		, iconCls: 'crud_printer'
+            		, scale: 'large'
+            		, iconAlign: 'left'
+            	},{
+            		text: 'Lưu file Excel'
+            		, iconCls: 'crud_export_excel'
+            		, scale: 'large'
+            		, iconAlign: 'left'
+            	}]
+            })
+            });
+
+		win.show();
+		return win;
+	}
+}
+

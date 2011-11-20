@@ -1,0 +1,28 @@
+<script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '<iz:insert:url/>apps/base/locale/all/jslibs/extjs/2-2/resources/images/default/s.gif';
+
+Ext.ns('Auth');
+//Ext.log();
+Auth.lang = "en";
+Auth.login = function(){
+	Ext.QuickTips.init()
+	
+	return {
+		init: function(){
+			var startMask = new Ext.LoadMask(document.body,{msg:'Setting Up...',msgCls:'ext-el-mask-msg x-mask-loading',removeMask:false});
+			startMask.show('Loading form...',true);
+
+			var jsloader = new Ext.ux.JSLoader({
+									url: '<iz:insert:url/><iz:insert:config path="root.response.plain"/>auth/jsLoginFormComponent/',
+									params:{lang: Auth.lang},
+									closable: 1,
+									waitMsg: 'Processing ... please wait',
+									onLoad:function(comp, options){
+										startMask.hide();
+									}
+								});
+		}
+	}	
+}();
+Ext.onReady(Auth.login.init, Auth.login);
+</script>

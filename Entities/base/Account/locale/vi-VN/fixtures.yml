@@ -1,0 +1,6 @@
+---
+Entities.Base.Account:
+    admin:
+        username: admin
+        password: admin
+        email: admin@example.com            

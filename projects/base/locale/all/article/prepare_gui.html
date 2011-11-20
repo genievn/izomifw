@@ -1,0 +1,9 @@
+<form action="<iz:insert:uri/>article/workItemSubmit" method="post">
+    <input type="text" name="doc"><?php echo $this->getWorkItemId();?>
+    <br/><textarea></textarea>
+    <input type="hidden" name="workitem_id" value="<?php echo $this->getWorkItemId();?>">
+    <input type="hidden" name="activity_id" value="<?php echo $this->getActivityId();?>">
+    <input type="hidden" name="process_id" value="<?php echo $this->getProcessId();?>">
+    <input type="submit" value="submit">
+</form>
+

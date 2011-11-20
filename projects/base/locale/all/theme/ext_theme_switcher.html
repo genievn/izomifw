@@ -1,0 +1,29 @@
+<script>
+Ext.ns('IzomiExtThemes');
+IzomiExtThemes.switchTheme = function(){
+    return ({
+        init: function(){
+            alert('ok');
+            // simple array store
+            var ext_theme_store = new Ext.data.SimpleStore({
+                fields: ['id', 'name'],
+                data : [
+                    ['default', 'Default'],
+                    ['human','Human Theme']
+                ]
+            });
+            var ext_theme_combo = new Ext.form.ComboBox({
+                store: ext_theme_store,
+                displayField:'name',
+                typeAhead: true,
+                mode: 'local',
+                triggerAction: 'all',
+                emptyText:'Select a theme...',
+                selectOnFocus:true,
+                applyTo: 'ext-theme-switcher'
+            });
+        }
+    })
+}
+</script>
+<div><input type="text" id="ext-theme-switcher" size="20"/></div>

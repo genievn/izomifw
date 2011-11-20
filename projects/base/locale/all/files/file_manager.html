@@ -1,0 +1,838 @@
+<script type="text/javascript">
+    
+		var fm = function() {
+			// Setup a variable for the current directory
+			this.currentDir = new Ext.form.Hidden({
+                xtype: 'hidden',
+                id: 'currentDir',
+                value: ''
+			});
+
+			this.baseUrl = '/<?php echo config("root.response.plain");?>';
+			this.baseJsonUrl = '/<?php echo config("root.response.json");?>';
+			this.uploadUrl = '/<?php echo config("root.response.json");?>files/upload/upload.php';
+			
+			this.windowGroup = new Ext.WindowGroup();
+			this.windowGroup.zseed = 13000;
+
+            
+			
+		
+			/* --- Begin Functions --- */
+			this.do_buttons = function() {
+				var row = this.grid.getSelectionModel().getSelected();
+				if (row != null) {
+					Ext.getCmp('download_button').enable();
+					Ext.getCmp('rename_button').enable();
+					Ext.getCmp('chmod_button').enable();
+					Ext.getCmp('delete_button').enable();
+					if (row.data.name.match(/\.(jpeg|jpg|gif|png)$/)) {
+						Ext.getCmp('edit_image_button').enable();
+					} else {
+						Ext.getCmp('edit_image_button').disable();
+					}
+				} else {
+					Ext.getCmp('download_button').disable();
+					Ext.getCmp('rename_button').disable();
+					Ext.getCmp('chmod_button').disable();
+					Ext.getCmp('edit_image_button').disable();
+				}
+			};
+			
+			this.do_upload = function() {
+						var upload_dialog = new Ext.ux.UploadDialog.Dialog({
+							title: 'Upload Files',
+							url: this.baseUrl +'/files/doAction/',
+							base_params: {action: 'upload', directory: this.currentDir.getValue()},
+							minWidth: 400,
+							minHeight: 200,
+							width: 400,
+							height: 350,
+							reset_on_hide: false,
+							allow_close_on_upload: false
+						});
+						upload_dialog.show('upload_button');
+						upload_dialog.on("uploadcomplete", function() {
+							this.ds.reload();
+						});
+						upload_dialog.on("hide", function() {
+							this.destroy(true);
+						});
+			};
+		
+			this.do_download = function() {
+				var row = this.grid.getSelectionModel().getSelected();
+				self.location = this.baseUrl + '/files/doAction/?action=download&directory=' + this.currentDir.getValue() + '&file=' + row.data.name;
+			};
+		
+			this.do_rename = function() {
+				var row = this.grid.getSelectionModel().getSelected();
+			
+				var rename_form = new Ext.FormPanel({
+					url: this.baseUrl +'/files/doAction/',
+					method: 'POST',
+					bodyStyle: 'padding:10px',
+					border: false,
+					items: [
+						new Ext.form.TextField({
+							fieldLabel: 'Name',
+							name: 'new_name',
+							value: row.data.name,
+							width: 'auto'
+						})
+					]
+				});
+			
+				var rename_window = new Ext.Window({
+					title: 'Rename File',
+					width: 340,
+					closable: true,
+					resizable: false,
+					buttons: [{
+						text: 'Save',
+						scope: this,
+						handler: function() {
+							rename_form.getForm().submit({
+								waitMsg: 'Processing Data, please wait...',
+								params: {action: 'rename', directory: this.currentDir.getValue(), file: row.data.name},
+								scope: this,
+								success: function() {
+									this.ds.reload({
+								        scope: this,
+										callback: this.do_buttons
+									});
+									rename_window.hide();
+								},
+								failure: function() {
+									// Set a status bar message
+									Ext.getCmp('status-bar').setStatus({
+										text: 'Error: Could not rename file',
+										iconCls: 'save_warning_icon',
+										clear: true
+									});
+								}
+							});
+						}
+					},{
+						text: 'Cancel',
+						handler: function() {
+							rename_window.hide();
+						}
+					}],
+					items: rename_form
+				});
+			
+				rename_window.show('rename_button');
+			};
+		
+			this.do_chmod = function() {
+				var row = this.grid.getSelectionModel().getSelected();
+			
+				var chmod_form = new Ext.FormPanel({
+					url: this.baseUrl +'/files/doAction/',
+					method: 'POST',
+					bodyStyle: 'padding:10px',
+					border: false,
+					items: [{
+						layout:'column',
+						border: false,
+						items: [{
+							columnWidth:.33,
+							xtype: 'fieldset',
+							title: 'Owner',
+							bodyStyle: 'padding: 5px;',
+							autoHeight: true,
+							items: [{
+								xtype: 'checkbox',
+								name: 'owner_read',
+								boxLabel: 'Read',
+								width: 'auto',
+								checked: (row.data.permissions.substr(1, 1) != "-" ? true : false),
+								hideLabel: true
+							},{
+								xtype: 'checkbox',
+								name: 'owner_write',
+								boxLabel: 'Write',
+								width: 'auto',
+								checked: (row.data.permissions.substr(2, 1) != "-" ? true : false),
+								hideLabel: true
+							},{
+								xtype: 'checkbox',
+								name: 'owner_execute',
+								boxLabel: 'Execute',
+								width: 'auto',
+								checked: (row.data.permissions.substr(3, 1) != "-" ? true : false),
+								hideLabel: true
+							}]
+						},{
+							columnWidth:.33,
+							xtype: 'fieldset',
+							title: 'Group',
+							bodyStyle: 'padding: 5px;',
+							autoHeight: true,
+							items: [{
+								xtype: 'checkbox',
+								name: 'group_read',
+								boxLabel: 'Read',
+								width: 'auto',
+								checked: (row.data.permissions.substr(4, 1) != "-" ? true : false),
+								hideLabel: true
+							},{
+								xtype: 'checkbox',
+								name: 'group_write',
+								boxLabel: 'Write',
+								width: 'auto',
+								checked: (row.data.permissions.substr(5, 1) != "-" ? true : false),
+								hideLabel: true
+							},{
+								xtype: 'checkbox',
+								name: 'group_execute',
+								boxLabel: 'Execute',
+								width: 'auto',
+								checked: (row.data.permissions.substr(6, 1) != "-" ? true : false),
+								hideLabel: true
+							}]
+						},{
+							columnWidth:.33,
+							xtype: 'fieldset',
+							title: 'Everyone',
+							bodyStyle: 'padding: 5px;',
+							autoHeight: true,
+							items: [{
+								xtype: 'checkbox',
+								name: 'everyone_read',
+								boxLabel: 'Read',
+								width: 'auto',
+								checked: (row.data.permissions.substr(7, 1) != "-" ? true : false),
+								hideLabel: true
+							},{
+								xtype: 'checkbox',
+								name: 'everyone_write',
+								boxLabel: 'Write',
+								width: 'auto',
+								checked: (row.data.permissions.substr(8, 1) != "-" ? true : false),
+								hideLabel: true
+							},{
+								xtype: 'checkbox',
+								name: 'everyone_execute',
+								boxLabel: 'Execute',
+								width: 'auto',
+								checked: (row.data.permissions.substr(9, 1) != "-" ? true : false),
+								hideLabel: true
+							}]
+						}]
+					}]
+				});
+			
+				var chmod_window = new Ext.Window({
+					title: 'Chmod File',
+					width: 340,
+					closable: true,
+					resizable: false,
+					buttons: [{
+						text: 'Save',
+						handler: function() {
+							chmod_form.getForm().submit({
+								waitMsg: 'Processing Data, please wait...',
+								params: {action: "chmod", directory: this.currentDir.getValue(), file: row.data.name},
+								success: function() {
+									ds.reload({
+										callback: this.do_buttons
+									});
+									chmod_window.hide();
+								},
+								failure: function() {
+									// Set a status bar message
+									Ext.getCmp('status-bar').setStatus({
+										text: 'Error: Could not chmod file',
+										iconCls: 'save_warning_icon',
+										clear: true
+									});
+								}
+							});
+						}
+					},{
+						text: 'Cancel',
+						handler: function() {
+							chmod_window.hide();
+						}
+					}],
+					items: chmod_form
+				});
+			
+				chmod_window.show('chmod_button');
+			};
+		
+			this.do_delete = function() {
+                
+				Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this file?', function(reponse) {
+					if (reponse == "yes") {
+						var row = this.grid.getSelectionModel().getSelected();
+					
+						var connection = new Ext.data.Connection().request({
+							url: this.baseUrl +"/files/doAction/",
+							method: "POST",
+							params: {action: "delete", directory: this.currentDir.getValue(), file: row.data.name},
+							scope: this,
+							success: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+							
+								if (response.success == true) {
+									this.ds.reload();
+								} else {
+									// Set a status bar message
+									Ext.getCmp('status-bar').setStatus({
+										text: response.message,
+										iconCls: 'save_warning_icon',
+										clear: true
+									});
+								}
+							},
+							failure: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+								// Set a status bar message
+								Ext.getCmp('status-bar').setStatus({
+									text: response.message,
+									iconCls: 'save_warning_icon',
+									clear: true
+								});
+							}
+						});
+					}
+				}, this);
+			};
+		
+			this.do_edit_image = function() {
+                var row = this.grid.getSelectionModel().getSelected();
+			
+				var edit_image_window = new Ext.ux.ImageEditor({
+					image: row.data.relative_path
+					, actionUrl: this.baseJsonUrl + 'files/doAction/'
+					, imageUrl: this.baseUrl + 'files/image/'
+				});
+	
+				edit_image_window.show('edit_image_button');
+			};
+		
+			this.do_move = function(o) {
+				for(i = 0; i < o.data.selections.length; i++){
+					var row = o.data.selections[i];
+				
+					var connection = new Ext.data.Connection().request({
+				        scope: this,
+						url: this.baseUrl +"/files/doAction/",
+						method: "POST",
+						params: {'action': 'move', 'directory': this.currentDir.getValue(), 'file': row.data.name, 'new_directory': (o.target.attributes.url ? o.target.attributes.url : '')},
+						success: function(o) {
+							var response = Ext.util.JSON.decode(o.responseText);
+						
+							if (response.success == true) {
+								this.ds.reload();
+							} else {
+								// Set a status bar message
+								Ext.getCmp('status-bar').setStatus({
+									text: response.message,
+									iconCls: 'save_warning_icon',
+									clear: true
+								});
+							}
+						},
+						failure: function(o) {
+							var response = Ext.util.JSON.decode(o.responseText);
+							// Set a status bar message
+							Ext.getCmp('status-bar').setStatus({
+								text: response.message,
+								iconCls: 'save_warning_icon',
+								clear: true
+							});
+						}
+					});
+				}
+			};
+		
+			this.do_new_directory = function() {
+				Ext.MessageBox.prompt('New Directory', 'New Directory Name', function(reponse, text) {
+					if (reponse == "ok") {
+						var connection = new Ext.data.Connection().request({
+							url: this.baseUrl +"/files/doAction/",
+							scope: this,
+							method: "POST",
+							params: {action: "new_directory", directory: this.context_menu.node.attributes.url, new_directory: text},
+							success: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+							
+								if (response.success == true) {
+									this.tree.getRootNode().reload();
+									this.tree.getRootNode().expand();
+								} else {
+									// Set a status bar message
+									Ext.getCmp('status-bar').setStatus({
+										text: response.message,
+										iconCls: 'save_warning_icon',
+										clear: true
+									});
+								}
+							},
+							failure: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+								// Set a status bar message
+								Ext.getCmp('status-bar').setStatus({
+									text: response.message,
+									iconCls: 'save_warning_icon',
+									clear: true
+								});
+							}
+						});
+					}
+				}, this);
+			};
+		
+			this.do_rename_directory = function() {
+				Ext.MessageBox.prompt('Rename Directory', 'New Directory Name', function(reponse, text) {
+					if (reponse == "ok") {
+						var connection = new Ext.data.Connection().request({
+				            scope: this,
+							url: this.baseUrl +"/files/doAction/",
+							method: "POST",
+							params: {action: "rename_directory", directory: this.context_menu.node.attributes.url, new_name: text},
+							success: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+							
+								if (response.success == true) {
+									this.tree.getRootNode().reload();
+									this.tree.getRootNode().expand();
+								} else {
+									// Set a status bar message
+									Ext.getCmp('status-bar').setStatus({
+										text: response.message,
+										iconCls: 'save_warning_icon',
+										clear: true
+									});
+								}
+							},
+							failure: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+								// Set a status bar message
+								Ext.getCmp('status-bar').setStatus({
+									text: response.message,
+									iconCls: 'save_warning_icon',
+									clear: true
+								});
+							}
+						});
+					}
+				}, this);
+			};
+		
+			this.do_chmod_directory = function() {
+				Ext.MessageBox.prompt('Chmod Directory', 'Permissions', function(reponse, text) {
+					if (reponse == "ok") {
+						var connection = new Ext.data.Connection().request({
+				            scope: this,
+							url: this.baseUrl +"/files/doAction/",
+							method: "POST",
+							params: {action: "chmod_directory", directory: this.context_menu.node.attributes.url, permissions: text},
+							success: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+							
+								if (response.success == false) {
+									// Set a status bar message
+									Ext.getCmp('status-bar').setStatus({
+										text: response.message,
+										iconCls: 'save_warning_icon',
+										clear: true
+									});
+								}
+							},
+							failure: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+								// Set a status bar message
+								Ext.getCmp('status-bar').setStatus({
+									text: response.message,
+									iconCls: 'save_warning_icon',
+									clear: true
+								});
+							}
+						});
+					}
+				}, this);
+			};
+		
+			this.do_delete_directory = function() {
+				Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this directory?', function(reponse) {
+					if (reponse == "yes") {
+						var connection = new Ext.data.Connection().request({
+				            scope: this,
+							url: this.baseUrl +"/files/doAction/",
+							method: "POST",
+							params: {action: "delete_directory", directory: this.context_menu.node.attributes.url},
+							success: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+							
+								if (response.success == true) {
+									this.tree.getRootNode().reload();
+									this.tree.getRootNode().expand();
+								} else {
+									// Set a status bar message
+									Ext.getCmp('status-bar').setStatus({
+										text: response.message,
+										iconCls: 'save_warning_icon',
+										clear: true
+									});
+								}
+							},
+							failure: function(o) {
+								var response = Ext.util.JSON.decode(o.responseText);
+								// Set a status bar message
+								Ext.getCmp('status-bar').setStatus({
+									text: response.message,
+									iconCls: 'save_warning_icon',
+									clear: true
+								});
+							}
+						});
+					}
+				}, this);
+			};
+			
+			/* ---- Begin side_navbar tree --- */
+			this.tree = new Ext.tree.TreePanel({
+				autoScroll: true,
+				animate: true,
+				containerScroll: true,
+				border: false,
+				enableDD: true,
+				ddGroup : 'fileMove',
+				loader: new Ext.tree.TreeLoader({
+					dataUrl: this.baseUrl + 'files/treeData/'
+				}),
+				root: new Ext.tree.AsyncTreeNode({
+					text: 'Files',
+					draggable: false,
+					id: 'source',
+					expanded: true
+				}),
+				listeners: {
+				    scope: this,				
+					'click': function(node, e) {
+					
+				        if (node.attributes.url != this.currentDir.getValue())
+				        {
+    						if (node.attributes.url) this.currentDir.setValue(node.attributes.url); else this.currentDir.setValue("");
+    						
+    						var upload_button = Ext.getCmp('upload_button');
+    						//console.log(upload_button);
+    						
+    						
+    						this.ds.load({
+    							params: {directory: node.attributes.url},
+    							scope: this,
+    							callback: this.do_buttons
+    						});
+    				    }
+					},
+					'contextmenu': function(node, e) {
+						node.select();
+						this.context_menu.node = node;
+						this.context_menu.show(e.getTarget());
+					}
+					,'beforenodedrop': this.do_move
+				}
+			});
+			
+			// Add a tree sorter in folder mode
+			new Ext.tree.TreeSorter(this.tree, {folderSort: true});
+			/* ---- End side_navbar tree --- */
+		
+			/* ---- Begin side_navbar context menu --- */
+			this.context_menu = new Ext.menu.Menu({
+				id: 'context_menu',
+				items: [{
+					text: 'New Directory',
+					iconCls: 'new_directory_button',
+					scope: this,
+					handler: this.do_new_directory
+				},{
+					text: 'Rename Directory',
+					iconCls: 'rename_directory_button',
+					scope: this,
+					handler: this.do_rename_directory
+				},{
+					text: 'Chmod Directory',
+					iconCls: 'chmod_directory_button',
+					scope: this,
+					handler: this.do_chmod_directory
+				},{
+					text: 'Delete Directory',
+					iconCls: 'delete_directory_button',
+					scope: this,
+					handler: this.do_delete_directory
+				}]
+			});
+			/* ---- End side_navbar context menu --- */
+		
+			/* ---- Begin grid --- */
+			this.ds = new Ext.data.GroupingStore({
+				url: this.baseJsonUrl +'/files/doAction/',
+				method: 'POST',
+				autoLoad: true,
+				sortInfo: {field: 'name', direction: 'ASC'},
+				
+				reader: new Ext.data.JsonReader({
+					root: 'data.data',
+					totalProperty: 'count'
+				},[
+					{name: 'name'},
+					{name: 'size'},
+					{name: 'type'},
+					{name: 'permissions'},
+					{name: 'ctime', type: 'date', dateFormat: 'timestamp'},
+					{name: 'mtime', type: 'date', dateFormat: 'timestamp'},
+					{name: 'owner'},
+					{name: 'group'},
+					{name: 'relative_path'},
+					{name: 'full_path'},
+					{name: 'web_path'}
+				])
+			});
+		
+			this.cm = new Ext.grid.ColumnModel({
+				defaults: {
+					sortable: true
+				},
+				columns: [
+					{header: 'Name', dataIndex: 'name'},
+					{header: 'Size', dataIndex: 'size', renderer: Ext.util.Format.fileSize},
+					{header: 'Type', dataIndex: 'type'},
+					{header: 'Permissions', dataIndex: 'permissions'},
+					{header: 'Created', dataIndex: 'ctime', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s')},
+					{header: 'Modified', dataIndex: 'mtime', renderer: Ext.util.Format.dateRenderer('Y-m-d H:i:s')},
+					{header: 'Owner', dataIndex: 'owner'},
+					{header: 'Group', dataIndex: 'group'},
+					{header: 'Relative Path', dataIndex: 'relative_path', hidden: true},
+					{header: 'Full Path', dataIndex: 'full_path', hidden: true},
+					{header: 'Web Path', dataIndex: 'web_path', hidden: true}
+				]
+			});
+		
+			this.grid = new Ext.grid.GridPanel({
+            
+				//anchor: '0 100%',
+				flex: 2,
+				border: false,
+				enableDrag: true,
+				ddGroup : 'fileMove',
+				view: new Ext.grid.GroupingView({
+					emptyText: 'This folder contains no files.',
+					forceFit: true,
+					showGroupName: false,
+					enableNoGroups: true
+				}),
+				ds: this.ds,
+				cm: this.cm,
+				loadMask: true,
+				listeners: {
+				    scope: this,
+					'rowClick': function () {
+						this.do_buttons();
+					},
+					'rowDblClick': function() {
+						this.do_callback();
+					}
+				}
+			});
+			/* ---- End grid --- */
+			this.uploadPanel = new Ext.FormPanel({
+                dockable: true,
+                fileUpload: true,
+                height: 150,
+                frame: true,
+                title: 'File Upload Form',
+                bodyStyle: 'padding: 10px 10px 0 10px;',
+                labelWidth: 50,
+                defaults: {
+                    anchor: '95%',
+                    allowBlank: false,
+                    msgTarget: 'side'
+                },
+                items: [{
+                    xtype: 'fileuploadfield',
+                    id: 'form-file',
+                    emptyText: 'Select a File to upload',
+                    fieldLabel: 'File',
+                    name: 'file',
+                    buttonCfg: {
+                        iconCls: 'upload_button'
+                    }
+                }],
+                buttons: [{
+                    text: 'Upload',
+                    scope: this,
+                    handler: function(){
+                        if(this.uploadPanel.getForm().isValid()){
+        	                this.uploadPanel.getForm().submit({
+        	                    url: this.uploadUrl,
+        	                    params: {path: this.currentDir.getValue()},
+        	                    waitMsg: 'Uploading your file...',
+        	                    scope: this,
+        	                    success: function(fp, o){
+                                    console.log(o);
+        	                        this.ds.reload();
+        	                    }
+        	                });
+                        }
+                    }
+                },{
+                    text: 'Reset',
+                    scope: this,
+                    handler: function(){
+                        this.uploadPanel.getForm().reset();
+                    }
+                }]
+			});
+			/* --- Begin Main Layout --- */
+			this.window = new Ext.Viewport({
+				layout: 'border',
+				modal: true,				
+				maximizable: true,
+				manager: this.windowGroup,
+				items: [
+				{
+                    region: 'north',
+                    xtype: 'panel',
+                    height: 50,
+                    html: 'File Manager'
+                },
+				{
+					region: 'west',
+					border: false,
+					split: true,
+					collapseMode: 'mini',
+					collapsable: true,
+					width: 200,
+					items: this.tree
+				},{
+					region: 'center',
+					layout: 'vbox',
+					border: false,
+					layoutConfig: {
+						align : 'stretch',
+						pack  : 'start'
+					},
+                    
+					tbar: new Ext.Toolbar({						
+						id: 'status-bar',
+						//statusAlign: 'right',
+						items: [new Ext.ux.swfbtn({
+							id: 'upload_button'
+							, text: 'Upload'
+							, iconCls: 'upload_button'					
+							, iconpath: '<iz:insert:url/>extra/shared/icons/'
+							, buttonimageurl: '<iz:insert:url/>projects/base/locale/all/jslibs/izojs/extjs/3-0/swfuploadbtn/images/FullyTransparent_65x29.png'
+                            , uploadurl: this.uploadUrl
+                            , flashurl: '<iz:insert:url/>extra/shared/flash/swfupload/swfupload.swf'
+                            , postparams: {path: function(){ return Ext.getCmp('currentDir').getValue()}}
+                            , hideoncomplete: true
+						}),{
+							id: 'download_button',
+							text: 'Download',
+							tooltip: 'Download Selected File',
+							iconCls: 'download_button',
+							disabled: true,
+							scope: this,
+							handler: this.do_download
+						},{
+							id: 'rename_button',
+							text: 'Rename',
+							tooltip: 'Rename Selected File',
+							iconCls: 'rename_button',
+							disabled: true,
+							scope: this,
+							handler: this.do_rename
+						},{
+							id: 'chmod_button',
+							text: 'Chmod',
+							tooltip: 'Chmod Selected File',
+							iconCls: 'chmod_button',
+							disabled: true,
+							scope: this,
+							handler: this.do_chmod
+						},{
+							id: 'delete_button',
+							text: 'Delete',
+							tooltip: 'Delete Selected File',
+							iconCls: 'delete_button',
+							disabled: true,
+							scope: this,
+							handler: this.do_delete
+						},'-',{
+							id: 'edit_image_button',
+							text: 'Edit Image',
+							tooltip: 'Edit Selected Image',
+							iconCls: 'edit_image_button',
+							disabled: true,
+							scope: this,
+							handler: this.do_edit_image
+						}]
+					}),
+					items: [this.grid, this.uploadPanel]
+				}]
+				, buttons: [{
+				    text: 'Ok',
+				    scope: this,
+				    handler: this.doCallback
+				},{
+				    text: 'Cancel',
+				    scope: this,
+				    handler: function() {
+				        this.window.hide();
+                    }
+                }]
+			});
+			
+			/* --- End Main Layout --- */			
+		};
+            
+            
+     	fm.prototype = {
+            show : function(el, callback) {
+                if (Ext.type(el) == 'object') {
+                    this.showEl = el.getEl();
+                } else {
+                    this.showEl = el;
+                }
+                this.el = el;
+                //var win = Ext.WindowMgr;
+                //win.zseed='22000';
+                //win.get(this.window).show(this.showEl);
+                this.window.show(this.showEl);
+                //this.window.toFront();
+                this.callback = callback;
+            },
+            do_callback : function() {
+                var row = this.grid.getSelectionModel().getSelected();
+                var callback = this.callback;
+                
+                var el = this.el;
+                
+                var data = row.data.web_path;
+
+                if (row)
+                {
+                    window.opener.CKEDITOR.tools.callFunction(<?php echo $this->getCkEditorCallback(); ?>,data);
+                    window.close();
+                }
+                /*
+                this.window.hide(this.showEl, function() {
+                    if (row && callback) {
+                        var data = row.data.web_path;
+                        console.log(data);
+                        callback(el, data);
+                    }
+		      });*/
+	       }
+     	};
+     	
+		 var filemanager = new fm();
+		 filemanager.show(document.body);
+</script>

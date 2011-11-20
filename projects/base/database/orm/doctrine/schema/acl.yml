@@ -1,0 +1,100 @@
+---
+package: uac
+options:
+  type: INNODB
+  collate: utf8_unicode_ci
+  charset: utf8
+Account:
+  columns:
+    guuid: string(255)
+    username: string(255)
+    password: string(255)
+    first_name: string(255)
+    last_name: string(255)
+    mid_name: string(255)
+    email: string(255)
+    is_staff:
+        type: boolean(1)
+        default: false
+    is_active:
+        type: boolean(1)
+        default: true
+    is_superuser:
+        type: boolean(1)
+        default: false
+    last_login:
+        type: timestamp
+    created_on:
+        type: timestamp
+    updated_on:
+        type: timestamp
+  relations:
+    Role:
+      class: Role
+      refClass: AccountRole
+      foreignAlias: Account
+    Permission:
+      class: Permission
+      refClass: AccountPermission
+      foreignAlias: Account
+
+Role:
+  columns:
+    guuid: string(255)
+    name: string(255)    
+  relations:
+    Permission:
+      class: Permission
+      refClass: RolePermission
+      foreignAlias: Role
+
+Permission:
+  columns:
+    guuid: string(255)
+    name: string(255)
+
+RolePermission:
+  columns:
+    role_id:
+      type: integer
+      primary: true
+    permission_id:
+      type: integer
+      primary: true
+  relations:
+    Role:
+    Permission:
+
+AccountRole:
+  columns:
+    account_id:
+      type: integer
+      primary: true
+    role_id:
+      type: integer
+      primary: true
+  relations:
+    Account:
+    Role:
+
+AccountPermission:
+  columns:
+    account_id:
+      type: integer
+      primary: true
+    permission_id:
+      type: integer
+      primary: true
+  relations:
+    Account:
+    Permission:
+    
+Profile:
+  columns:
+    account_id: integer
+    name: string(255)    
+  relations:
+    Account:
+      class: Account
+      local: account_id
+      foreign: id

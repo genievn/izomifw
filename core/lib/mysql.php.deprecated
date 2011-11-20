@@ -1,0 +1,230 @@
+<?php
+
+class izMySqlAdmin extends DumbRecord
+{
+    public function init( $dbString )
+    {
+        $this->mysql = object( 'DumbMySql' );        
+        $this->mysql->setDatabaseValues( $dbString );
+        $this->setPrefix('izo_admin_');        
+        $this->setCanCreate( config( 'root.development' ) );
+    }
+}
+
+//TODO:
+// Modify the selectJoinRecords to get a limited set of reocrds (params)
+class izMySql extends DumbRecord
+{
+    public function init( $dbString )
+    {
+        $this->mysql = object( 'DumbMySql' );        
+        $this->mysql->setDatabaseValues( $dbString );
+        $this->setPrefix('izo_');     
+        $this->setCanCreate( config( 'root.development' ) );
+    }
+    
+    /**
+     * Function to get joined record from 2 or more tables
+     *
+     * @package izomi.admin.core.lib
+     * @author Thanh H. Nguyen
+     **/
+    public function selectJoinRecords($dataObjectArray = null, $joinOn = null, $returnClass='Object', $start=0, $limit=null, $order=false, $where=array(), $groupby=null){
+    	if (!is_array($dataObjectArray)) return false;
+    	
+    	if (!is_array($joinOn)) $joinOn = array(1);
+    	
+    	$from = array();
+    	//$where = array();
+    	$selectedCols = array();
+    	foreach ($dataObjectArray as $dataObject){
+    		if (!is_a($dataObject, 'Object')) return false;    		
+    		$tableName = $this->getTableName($dataObject);
+    		$from[] = $tableName;
+    		foreach ($dataObject->getSelectedCols() as $sc){
+    			
+    			//check if the selected column is a count columns
+    			if(substr( $sc, 0, 5 )!=='count')
+    				$selectedCols[] = $tableName.'.'.$sc;
+    			else
+    				$selectedCols[] = $sc;
+    		}
+    		
+    		if (is_array($w = $dataObject->getCriterias()) && !empty($w)){
+    			$criterias = array();
+    		  	foreach ($w as $key=>$value){
+    		  		$criterias[] = $tableName.'.'.$key.'='.$this->makeSafeSQL($value);
+    		  	}
+    		  	$where[] = implode(' AND ', $criterias);
+    		}
+    		
+    	}
+    	$query  = 'SELECT '.implode(' , ', $selectedCols).' FROM '.implode(',', $from);
+    	
+    	/**
+    	 * $joinOn structure:
+    	 * $joinOn = array 	( 	"table1:column1" => "table2:column2"
+    	 *					)
+    	 *
+    	 * @author Thanh H. Nguyen
+    	 */
+    	$jo = array();
+
+    	if (!empty($joinOn)){
+    		foreach ($joinOn as $key => $value){
+    			$pair1 = split(':', $key);
+    			$pair2 = split(':', $value);
+    			$jo[] = $this->getPrefix().$pair1[0].'s.'.$pair1[1].'='.$this->getPrefix().$pair2[0].'s.'.$pair2[1];
+    		}
+    	}    
+    	
+    	if (!empty($where))
+    		$query .= ' WHERE '.implode(' AND ', $where).' AND '.implode(' AND ', $jo);
+    	else
+    		$query .= ' WHERE '.implode(' AND ', $jo);    	
+    		
+    	//if( !is_array( $order ) ) $order = array( 'created_on '.( $order ? '': 'DESC' ) );
+    	if (!is_array($order)) $order = array();
+    	
+    	$order = implode( ', ', $order );
+        if( $order ) $query = "$query ORDER BY $order";
+        
+        if($groupby !== null){
+        	$query = "$query GROUP BY $groupby";
+        }
+        
+        if( $start && $limit )
+            $query = "$query LIMIT $start, $limit";
+        elseif( $limit )
+            $query = "$query LIMIT $limit";
+        
+    	//echo $query;
+    	return $this->getDumbRecordsFromArray( $this->query( $query ), $returnClass ) ;
+    }
+    /**
+     * Function to rebuild the tree after changed in the database
+     * Table should have default ROOT with id='0'
+     * e.g: rebuildTree($dataObject, '0', 0)
+     *
+     * @return 
+     * @author Thanh H. Nguyen
+     **/
+    public function rebuildTree($dataObject, $parent, $left){
+    	$right = $left + 1;
+    	//get all chidren of this node
+    	$query = sprintf("SELECT %s FROM %s WHERE %s=\"%s\" ORDER BY checked_out_time ASC;", 
+    						$dataObject->getIdCol(),
+    							$this->getTableName($dataObject->getTableObject()),
+    								$dataObject->getParentIdCol(),
+    									$parent
+    					);    	
+    	$result = $this->query($query);    	
+    	
+    	foreach ($result as $row){
+    		//recursive execution of this function for each child of this node
+    		//$right is the current right value, which is incremented by the rebuidTree function	
+    		$right = $this->rebuildTree($dataObject, $row[$dataObject->getIdCol()], $right);
+    	}
+    	//we've got the left value, and now that we've processed the children
+    	//of this node, we also know the right value
+    	$query = sprintf("UPDATE %s SET lft=%d, rgt=%d WHERE %s=\"%s\";",    						
+    							$this->getTableName($dataObject->getTableObject()),
+    								$left, $right, $dataObject->getIdCol(), $parent
+    	);
+    	
+    	$this->query($query, null, true);
+    	return $right+1;
+    }
+    
+    public function displayTree($dataObject, $root){
+    	//Retrieve left, right of root node
+    	$query = sprintf("SELECT lft, rgt FROM %s WHERE %s=\"%s\";",
+    						$this->getTableName($dataObject->getTableObject()),
+    							$dataObject->getIdCol(), $root
+	    );
+	    //echo $query;
+    	$row = $this->query($query);
+    	$right = array();
+    	//now, retrieve all descendants of the $root node
+    	$query = sprintf("SELECT %s, lft, rgt FROM %s WHERE lft BETWEEN %d AND %d ORDER BY lft ASC",
+    						$dataObject->getTitleCol(),
+    							$this->getTableName($dataObject->getTableObject()),
+    								$row[0]['lft'], $row[0]['rgt']
+    	);
+    	//echo $query;
+    	$out_html = '';
+    	//display each row
+    	$rows = $this->query($query);
+    	foreach ($rows as $row){
+    		//echo $row[$dataObject->getTitleCol()].'-'.$row['lft'].'<br/>';
+    		//only check stack if there is one
+    		if (count($right)>0){
+    			//check if we should remove a node from the stack
+    			while ($right[count($right)-1]<$row['rgt']){
+    				array_pop($right);
+    			}
+    		}
+    		//display indented node title
+    		$out_html .= str_repeat('&nbsp;&nbsp;&nbsp;', count($right)).$row[$dataObject->getTitleCol()].'<br/>';
+    		$right[] = $row['rgt'];
+    	}
+    	echo $out_html;
+    }
+    
+    /**
+     * Update table
+     *
+     * @return void
+     * @author Thanh H. Nguyen
+     **/
+    public function bulkUpdate($dataObject, $where = array())
+    {
+    	$setArray = array();
+    	foreach( $dataObject->properties() as $key => $value )
+        {
+        	$setArray[] = $key.'='.$this->makeSafeSQL( $value );
+        }
+        $set =  implode(', ', $setArray);
+        
+	    $whereList = implode(' AND ', $where);
+    	$query = sprintf("UPDATE %s SET %s WHERE %s",    						
+    							$this->getTableName($dataObject),
+    								$set, $whereList
+    	);
+    	echo $query;
+    	return $this->query($query, null, true);
+    }
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author user
+     **/
+    public function bulkDelete($dataObject, $where = array(), $and = true)
+    {
+    	$whereList = ($and === true) ? implode(' AND ', $where) : implode(' OR ', $where) ;
+    	$query = sprintf("DELETE FROM %s WHERE %s",
+			$this->getTableName($dataObject), $whereList);
+		//return $query;
+		return $this->execute($query, null, true);					//true: return number of affected row	
+    }
+    /**
+     * undocumented function
+     *
+     * @return void
+     * @author user
+     **/
+    public function bulkInsert($dataObject, $values = array())
+    {
+    	$valuesArr = array();
+    	foreach($values as $record){
+    		$valuesArr[] = "('".implode("','",$record)."')";
+    	}
+    	$query = sprintf("INSERT INTO %s VALUES %s;",
+    						$this->getTableName($dataObject),
+	    						implode(',',$valuesArr));
+	    //return $query;
+		return $this->execute($query);
+    }
+}
+?>

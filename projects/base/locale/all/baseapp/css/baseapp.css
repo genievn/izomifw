@@ -1,0 +1,94 @@
+#app_bg{
+	position:absolute;
+	z-index: 5;				/* Place the new body above the background image */
+	overflow:auto; 			/* restore scrollbars for the content */
+	height:100%;width:100%;	/* Make the new body fill the screen */
+	background: url('/extra/shared/images/raster.png'); /* this is just a fancy raster, you can remove it; I kinda like it though */
+}
+html, body {
+	background:#3d71b8 url(/extra/shared/images/desktop.jpg) no-repeat left top;
+	margin: 0;
+	padding: 0;
+	border: 0 none;
+	overflow: hidden;
+	height: 100%;
+}
+
+.x-btn-mc {
+    text-align: left;
+}
+
+.x-fieldset legend {
+    font-size:12px;
+}
+.x-btn{
+    font-size:12px;
+}
+
+.x-btn button{
+    font-size:12px;
+}
+.x-small-editor .x-form-field {
+    font-size:12px;
+}
+.x-toolbar td,.x-toolbar span,.x-toolbar input,.x-toolbar div,.x-toolbar select,.x-toolbar label{
+    font-size:12px;
+}
+.x-grid3-hd-row td, .x-grid3-row td, .x-grid3-summary-row td{
+	font-size:12px;
+}
+.x-grid3-topbar, .x-grid3-bottombar{
+	font-size:12px;
+}
+.x-grid-empty {
+    font-size:12px;
+}
+.x-tip .x-tip-header-text {
+    font-size:12px;
+}
+
+.x-tip .x-tip-body {
+    font-size:12px;
+}
+.x-menu-list-item{
+	font-size:12px;
+}
+.x-combo-list-hd {
+    font-size:12px;
+}
+
+.x-panel-header {
+    font-size: 12px;
+}
+.x-panel-mc {
+    font-size: 12px;
+}
+
+.x-panel-tl .x-panel-header {
+    font-size: 12px;
+}
+
+.x-window-tl .x-window-header {
+    font-size: 12px;
+}
+.x-window-mc {
+    font-size: 12px;
+}
+.x-list-header-inner div em {
+    font-size: 12px;
+}
+
+.x-list-body dt em {
+    font-size: 12px;
+}
+/* style rows on mouseover */
+.x-grid3-row-over .x-grid3-cell-inner {
+    font-weight: bold;
+}
+.swfupload {
+	position: absolute;
+	z-index: 1;
+	vertical-align: top;
+	text-align: center;
+}
+

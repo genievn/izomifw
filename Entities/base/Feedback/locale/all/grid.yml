@@ -1,0 +1,63 @@
+attributes:
+    type: ExtGridPanel
+    title: Feeback Grid
+    autoExpandColumn: contact_name
+    pageSize: 20
+    cm: "[{header: 'Contact name', dataIndex: 'contact_name'},{header: 'Email', dataIndex: 'email'},{header: 'Date', dataIndex: 'created_on'}]"
+    tbar:
+        delete:
+            text: Delete
+            iconCls: IconManager.getIcon('delete')
+            handler: |
+                function()
+                {
+                    //console.log(this);
+                    var grid = this.ownerCt.ownerCt;
+                    Ext.MessageBox.confirm(
+                        '<iz:lang id="common.confirmation">Confirmation</iz:lang>',
+                        '<iz:lang id="common.are-you-sure">Are you sure</iz:lang>',
+                        function(btn, text) {
+                            
+                            if (btn=='yes') {
+                                AlertBox.show('<iz:lang id="common.loading-title">Loading</iz:lang>', '<iz:lang id="common.loading-message">Data loading, please wait!</iz:lang>', 'loading', {timeout: 3});   
+                                var recordSelModel = grid.getSelectionModel();
+                                var recordCount = recordSelModel.getCount();
+                                var recordArray = new Array();
+                                
+                                if (recordCount > 0) {
+                                    var records = recordSelModel.getSelections();
+                                    for (var i=0;i<recordCount;i++) {
+                                        recordArray[i] = records[i].get('id');
+                                    }
+                                }
+                                
+                                
+                                Ext.Ajax.request({
+                                    url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>form/delete/Entities.Base.Feedback/',
+                                    method: 'POST',
+                                    params: {
+                                        ids: Ext.encode(recordArray)
+                                    },
+                                    success: function(){                                        
+                                        grid.store.reload();
+                                    },
+                                    scope: this
+                                });
+                            }
+                        }
+                    );
+                }
+    plugins:
+        filters: "{type: 'string',  dataIndex: 'contact_name'}"
+    ds:
+        type: "ExtGroupingStore"
+        autoLoad: "{params:{start:0, limit:20}}"
+        url: "/<iz:insert:config path=\"root.response.json\"/>form/retrieve/Entities.Base.Feedback/"
+        reader:
+            type: "ExtJsonReader"
+            idProperty: "id"
+            totalProperty: "meta.total"
+            root: "data"
+            record: "['id','contact_name','business_name','email','created_on']"
+        sortInfo: "{field: 'created_on', direction: 'DESC'}"
+        remoteSort: 

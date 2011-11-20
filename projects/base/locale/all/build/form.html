@@ -1,0 +1,44 @@
+        <h1>Welcome to CopperOnion!</h1>
+        <p>
+            This tool quickly creates project directories and sample files for you to get going.
+        </p>
+        <form action="<iz:insert:uri />Build/newProject/" method="post">
+            <div>
+                <?if($this->getValidate() && !$this->getProject()->isValid() || $this->getError()):?>
+                    <h2>Sorry, there was a problem creating the project.</h2>
+                <?endif?>
+            </div>
+            <div>
+                <?if($this->getValidate() && !$this->getProject()->isValid('name')):?>
+                    <h3>There was a problem with the name provided.</h3>
+                <?endif?>
+            </div>
+            <div>
+                <label for="project_name">Folder Name (e.g. mysite, my_site)</label><br />
+                <input type="text" id="project_name" name="name" value="<?=$this->getProject()->getName()?>" />
+            </div>
+            <br />
+            <div>
+                <?if($this->getValidate() && !$this->getProject()->isValid('domain')):?>
+                    <h3>There was a problem with the Domain provided.</h3>
+                <?endif?>
+            </div>
+            <div>
+                <label for="project_domain">Domain (e.g. www.mysite.com)</label><br />
+                <input type="text" id="project_domain" name="domain" value="<?=$this->getProject()->getDomain()?>" />
+                
+            </div>
+            <br />
+            <div>
+                <label for="project_type">Project Type</label><br />
+                <select name="type" id="project_type">
+                    <option value="" <?if($this->getProject()->getType()==''):?>selected="selected"<?endif?>>Static</option>
+                    <option value="html" <?if($this->getProject()->getType()=='html'):?>selected="selected"<?endif?>>HTML</option>
+                    <option value="layout" <?if($this->getProject()->getType()=='layout'):?>selected="selected"<?endif?>>Layout</option>
+                </select>
+            </div>
+            <br />
+            <div>
+                <input type="submit" value="Create Project" />
+            </div>
+        </form>

@@ -1,0 +1,112 @@
+<?php
+$suffixID = $this->getCmpSuffixID();
+?>
+{
+	jsLoad: function(){
+		var app_folders = new Ext.data.SimpleStore({
+			fields: ['order','app_path'],
+			data : [
+				<?php
+					$appData = array();
+					foreach ($this->getApp_folders() as $key => $value) {
+						$appData[] = "['".$key."','".addslashes($value)."']";
+					}
+					echo implode(",",$appData);
+				?>
+			]
+		});
+
+		//message target
+		Ext.form.Field.prototype.msgTarget = "side";
+	
+		var module = new Ext.FormPanel({
+			//renderTo:"module_form",
+			isTab: false,
+			//title:"Module Creation Form",
+			url:'<iz:insert:url/><iz:insert:config path="root.response.json" />build/buildModule/',
+			//width:425,
+			//frame:true,
+			monitorValid:true,
+			bodyStyle:'padding:5px 5px 0',
+			items:[
+				new Ext.form.TextField({
+					id:"module_name",
+					fieldLabel:"Module name",
+					//width:275,
+					allowBlank:false,
+					blankText:"Please enter module name"
+				}),
+				new Ext.form.ComboBox({
+					name:"module_app",
+					fieldLabel:"Application",
+					store: app_folders,
+					displayField:'app_path',
+					typeAhead: true,
+					mode: 'local',
+					triggerAction: 'all',
+					emptyText:'Select a application folder...',
+					selectOnFocus: true,
+					readOnly: true,
+					allowBlank: false,
+					blankText: "Please select application folder"
+				})
+			],
+			buttons:[
+				{ 
+					text:'Create',
+					formBind: true,
+					handler:function(){
+						module.getForm().submit({
+							method:'POST',
+							waitTitle:'Connecting',
+							waitMsg:'Sending data...',
+							success:function(form, action){
+								obj = Ext.util.JSON.decode(action.response.responseText);
+								Ext.Msg.alert('Status', 'Module ' + obj.data.module_name + ' created successfully!', function(btn, text){
+									if (btn=="ok"){
+										var redirect = '<iz:insert:uri/>'+obj.data.module_name;
+										window.location = redirect;
+									}
+								});
+							},
+							failure:function(form, action){
+								if (action.failureType == "server"){
+									obj = Ext.util.JSON.decode(action.response.responseText);
+									Ext.Msg.alert('Module creation failed!', obj.error.reason);
+								}else{
+									obj = Ext.util.JSON.decode(action.response.responseText);
+									Ext.Msg.alert('Warning!', 'Error : ' + obj.error.reason);
+								}
+								//module.getForm().reset();
+							}
+						});
+					}
+				},
+			{
+				text: 'Close'
+				,handler:function() {
+					var tab = Ext.getCmp('build-window-module');
+					tab.close();
+				}
+			}
+			]
+		});
+		
+		var win = new Ext.Window({
+			id: 'build-window-module',
+			layout:'fit',
+			width:400,
+			height:200,
+			closable: false,
+			resizable: false,
+			plain: true,
+			border: false,
+			closable: true,
+			title: 'Module Creation',
+			iconCls: 'build-button-module',
+			items: [module]
+		});
+		win.show();
+		return module;
+	}
+}

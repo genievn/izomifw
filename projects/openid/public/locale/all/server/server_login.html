@@ -1,0 +1,29 @@
+<div class="form">
+	<div class="container_error">
+		<?php if($this->getError()) echo $this->getError()->getMessage(); ?>
+	</div>
+  <p>
+
+    Enter your username into this form to log in to this server.  It
+    can be anything; this is just for demonstration purposes.  For
+    example, entering USERNAME will give you the identity URL
+
+    <pre></pre>
+  </p>
+
+  <form method="post" action="<iz:insert:uri/>server/loginId/">
+    <table>
+      <tr>
+        <th><label for="openid_url">Name:</label></th>
+        <td><input type="text" name="openid_url"
+                   value="%s" id="openid_url" /></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <input type="submit" value="Log in" />
+          <input type="submit" name="cancel" value="Cancel" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>

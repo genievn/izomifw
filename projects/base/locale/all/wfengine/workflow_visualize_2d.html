@@ -1,0 +1,16 @@
+<script type="text/javascript">
+function click_node(node) {
+	$('click_output').update('You clicked "' + node + '"');
+}
+document.observe('dom:loaded', function() {
+	var canviz = new Canviz('canviz', '/<iz:insert:config path="root.response.plain"/>wfengine/workflowAsXdot/<?php echo $this->getWorkflowId();?>');
+	console.log(canviz);
+});
+</script>
+<div class="graph">
+	<div id="canviz"></div>
+</div>
+<p id="click_output"></p>
+
+<div id="debug_output"></div>
+

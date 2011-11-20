@@ -1,0 +1,20 @@
+---
+DesktopTheme:
+	tableName: desktop_themes
+	columns:
+		name: string(255)
+		author: string(255)
+		version: string(255)
+		url: string(255)
+		path_to_thumbnail: string(255)
+		path_to_file: string(255)
+
+DesktopWallpaper:
+	tableName: desktop_wallpapers
+	columns:
+		name: string(255)
+		author: string(255)
+		url: string(255)
+		path_to_thumbnail: string(255)
+		path_to_file: string(255)
+			

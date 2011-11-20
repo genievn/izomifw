@@ -1,0 +1,110 @@
+<iz:insert:module module="izojs" method="addLibExtJS" params="2.2,0" />
+
+<script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '<iz:insert:url/>apps/base/locale/all/jslibs/extjs/2-2/resources/images/default/s.gif';
+
+Ext.ns('Build');
+//Ext.log();
+Build.lang = "en";
+Build.app = function(){
+	Ext.QuickTips.init();	
+	
+	// =========================
+	// = TOPBAR BUTTON HANDLER =
+	// =========================
+	function doButtonAction (button, event) {
+		var cmpLoaded = false;
+		var cmp = Ext.getCmp('build-window-'+button.params);
+		if ( cmp != null){
+			cmpLoaded = true;
+			cmp.show();
+			return;
+		}
+		
+		
+		var jsloader = new Ext.ux.JSLoader({
+									url: '<iz:insert:url/><iz:insert:config path="root.response.plain"/>'+button.module+'/'+button.method+'/'+button.params+'/',
+									params:{lang: Build.lang, tab:'build-tab-panel'},
+									closable: 1,
+									waitMsg: 'Processing ... please wait',
+									onLoad:function(comp, options){
+										if (comp.isTab){
+											mainTab = Ext.getCmp('build-tab-panel');
+											mainTab.add(comp).show();
+											mainTab.setActiveTab(comp);
+										}
+									}
+								});
+	}
+		
+	return {
+		init : function(){
+			var vp = new Ext.Viewport({
+				id: 'build-viewport',
+				layout: 'border',				
+				items: [
+				{
+					id: 'build-toolbar',
+					region: 'north',
+					border: false,
+					tbar:[
+						{
+							id: 'build-toolbar-app',
+							text: 'Application',							
+							tooltip: 'Start up a new website',
+							handler: doButtonAction,
+							iconCls: 'build-button-app',
+							module: 'build',
+							method: 'jsLoadButtonAction',
+							params: 'app'
+						},{
+							id: 'build-toolbar-module',
+							text: 'Module',							
+							tooltip: 'Start building a module',
+							handler: doButtonAction,
+							iconCls: 'build-button-module',
+							module: 'build',
+							method: 'jsLoadButtonAction',
+							params: 'module'
+						},{
+							id: 'build-toolbar-model',
+							text: 'Model',							
+							tooltip: 'Start building a model',
+							handler: doButtonAction,
+							iconCls: 'build-button-model',
+							module: 'doctrinecp',
+							method: 'jsLoadYmlCP',
+							params: 'model'
+						},{
+							id: 'build-toolbar-model-config',
+							text: 'Model Configuration',
+							tooltip: 'Start building configuratino for model CRUD',
+							handler: doButtonAction,
+							iconCls: 'build-button-model',
+							module: 'build',
+							method: 'jsLoadButtonAction',
+							params: 'model-config'
+						}
+					]
+				},
+				{				
+					// Model Admin Tab Panel
+					id: 'build-tab-panel',
+					region: 'center',
+					xtype: 'tabpanel',
+					height: '100%',
+					activeTab: 0,
+					border: false,
+					layoutOnTabChange: true
+				}]
+			});
+			
+			doButtonAction(Ext.getCmp('build-toolbar-<?php echo $this->getBuildType();?>'));		
+		}		
+	}
+	
+	
+}();
+Ext.onReady(Build.app.init, Build.app);
+</script>
+<div id="grid-example"></div>

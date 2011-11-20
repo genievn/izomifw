@@ -1,0 +1,252 @@
+<?php
+$layouts = $this->getLayouts();
+$unregisteredLayouts = $this->getUnregistereLayouts();
+$registeredLayouts = $this->getRegisteredLayouts();
+$error = $this->getError();
+?>
+<script type="text/javascript">
+Ext.onReady(function(){
+    
+    
+    var Layout = Ext.data.Record.create([{
+        name: 'codename',
+        type: 'string'
+    }, {
+        name: 'thumbnail',
+        type: 'string'
+    }
+    , {
+        name: 'regions',
+        type: 'string'
+    }, {
+        name: 'app_folder',
+        type: 'string'
+    }, {
+        name: 'directory',
+        type: 'string'
+    },{
+        name: 'has_config',
+        type: 'bool'
+    },{
+        name: 'registered',
+        type: 'bool'
+    }]);
+    
+    var generateData = function(){
+        var data = [];
+        <?php
+        foreach ($layouts as $key => $value)
+        {
+        ?>    
+            data.push({
+                codename: '<?php echo $key;?>',
+                regions: '<?php echo $value[0];?>',
+                app_folder: '<?php echo $value[0];?>',
+                directory: '<?php echo $value[1];?>',
+                thumbnail: '<?php echo $value[3];?>',
+                has_config: <?php if ($value[2]) echo 'true'; else echo 'false'; ?>,
+                registered: <?php if (in_array($key, $registeredLayouts)) echo 'true'; else echo 'false';?>
+            });
+        <?php
+        }
+        ?>
+        return data;
+    }
+
+
+    var store = new Ext.data.GroupingStore({
+        reader: new Ext.data.JsonReader({fields: Layout}),
+        data: generateData(),
+        sortInfo: {field: 'codename', direction: 'ASC'},
+        groupField:'registered'  
+    });
+
+
+    var grid = new Ext.grid.GridPanel({
+        id: 'grid-layout',
+        store: store,
+        layout: 'fit',
+        margins: '0 5 5 5',
+        autoExpandColumn: 'directory',
+        autoHeight: true,
+        view: new Ext.grid.GroupingView({
+            markDirty: false
+        }),
+        tbar: [
+            {
+                text: 'Manage Page Templates'
+                , iconCls: IconManager.getIcon('page_add')
+                , cls: 'x-toolbar-standardbutton'
+                , handler: function()
+                {
+                    window.location.href = '<iz:insert:uri/>registry/listPageTemplate/'
+                }
+            }
+        ],
+        stripeRows:true,
+        columns: [
+        
+        {
+            id: 'codename',
+            header: 'Layout name',
+            dataIndex: 'codename',
+            width: 100,
+            sortable: true
+            
+        },{            
+            header: 'Preview',
+            dataIndex: 'thumbnail',
+            align: 'center',
+            width: 100,
+            renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                if (record.data.thumbnail.length != 0)
+                    return '<img src="' + record.data.thumbnail + '" class="thumbnail-layout"/>';
+                else return '';
+            }
+        },{
+            header: 'Application Folder',
+            dataIndex: 'app_folder',
+            width: 150,
+            sortable: true
+        },{
+            //xtype: 'booleancolumn',
+            header: 'Has config',
+            dataIndex: 'has_config',
+            align: 'center',
+            width: 100,
+            //trueText: 'Yes',
+            //falseText: 'No',
+            renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                if (record.data.has_config)
+                    return '<img src="<?php echo $this->getIzLocalePath() . 'images/yes.png';?>"/>';
+                else
+                    return '<img src="<?php echo $this->getIzLocalePath() . 'images/no.png';?>"/>';
+            }
+        },{
+            //xtype: 'booleancolumn',
+            header: 'Registered',
+            dataIndex: 'registered',
+            align: 'center',
+            width: 100,
+            //trueText: 'Yes',
+            //falseText: 'No'
+            renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                if (record.data.registered)
+                    return '<img src="<?php echo $this->getIzLocalePath() . 'images/yes.png';?>"/>';
+                else
+                    return '<img src="<?php echo $this->getIzLocalePath() . 'images/no.png';?>"/>';
+            }
+        },{
+            header: 'Install',
+            align: 'center',
+            renderer: renderInstall,
+            dataIndex: 'has_config',
+            width: 100
+        },{
+            id: 'directory',
+            header: 'Directory',
+            dataIndex: 'directory',
+            sortable: true
+        }]
+    });
+    
+    var layout = new Ext.Panel({
+        title: 'Available Layouts',
+        renderTo: 'entity-layout',
+        //height: 500,
+        layout: 'fit',
+        frame: true,
+        items: [grid]
+    });
+    
+    grid.getView().getRowClass = function(record, index){
+        if (record.data.has_config == true && record.data.registered == false)
+        {
+            return 'grid-orange-row';
+        }
+        if (record.data.registered == true)
+        {
+            return 'grid-green-row';
+        }else
+        {
+            return 'grid-red-row';
+        }
+    };
+    
+    function renderInstall(value, id, r)
+    {
+            var id = Ext.id(); // for the Install button
+            if (r.data.registered == false)
+            {
+                createGridButtonInstall.defer(1, this, ['Install', id, r]);
+                return('<div id="' + id + '"></div>');
+            }else
+            {
+                var id1 = Ext.id(); // for the UnInstall button
+                createGridButtonInstall.defer(1, this, ['ReInstall', id, r]);
+                createGridButtonDelete.defer(1, this, ['UnInstall', id1, r]);
+                return('<div id="' + id + '"></div><div id="' + id1 + '"></div>');
+            }
+    }
+    function createGridButtonInstall(value, id, record) {
+        new Ext.Button({
+            text: value
+            ,iconCls: IconManager.getIcon('package_add')
+            ,handler : function(btn, e) {                
+                Ext.Ajax.request({
+            	   url: '<iz:insert:uri/>registry/registerLayout/?codename='+record.data.codename + '&app_folder=' + escape(record.data.app_folder),
+            	   success: function(){
+            	       window.location.href = '<iz:insert:uri/>registry/scanLayout/';
+            	   },
+            	   failure: function(){},
+            	   params: {
+            	       codename: record.data.codename
+            	       , app_folder: record.data.app_folder
+            	   }
+            	});
+            	btn.disable();
+            	//window.location.href = '<iz:insert:uri/>registry/registerLayout/?codename='+record.data.codename + '&app_folder=' + escape(record.data.app_folder);
+            }
+        }).render(id);
+    }
+    
+    function createGridButtonDelete(value, id, record) {
+        new Ext.Button({
+            text: value
+            ,iconCls: IconManager.getIcon('package_add')
+            ,handler : function(btn, e) {
+                Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete the layout?', function(btn){
+                    
+                    if (btn=='yes')
+                    {
+                        
+                        Ext.Ajax.request({
+                    	   url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>registry/deleteLayoutByCodename/' + record.data.codename + '/',
+                    	   success: function(){
+                    	       window.location.href = '<iz:insert:uri/>registry/scanLayout/';
+                    	   },
+                    	   failure: function(){},
+                    	   params: {
+                    	       codename: record.data.codename
+                    	       , app_folder: record.data.app_folder
+                    	   }
+                    	});
+                    }
+                    
+                });
+                
+            	
+            	//window.location.href = '<iz:insert:uri/>registry/registerLayout/?codename='+record.data.codename + '&app_folder=' + escape(record.data.app_folder);
+            }
+        }).render(id);
+    }
+});
+</script>
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-layout">
+        
+    </div>
+</div>

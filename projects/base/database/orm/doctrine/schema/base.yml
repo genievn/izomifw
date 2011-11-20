@@ -1,0 +1,61 @@
+---
+Account:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        username: string(255)
+        password: string(255)
+        first_name: string(255)
+        last_name: string(255)
+        mid_name: string(255)
+        email: string(255)
+        is_staff:
+            type: boolean(1)
+            default: false
+        is_active:
+            type: boolean(1)
+            default: true
+        is_superuser:
+            type: boolean(1)
+            default: false
+        last_login: datetime
+        created_on: datetime
+        updated_on: datetime    
+    relations:
+        Groups:                      # Relation alias or class name
+            class: Group             # Class name. Optional if alias is the class name
+            local: account_id        # Local: User.id = UserGroup.user_id. Optional
+            foreign: group_id        # Foreign: Group.id = UserGroup.group_id. Optional
+            refClass: AccountGroup   # xRefClass for relating Users to Groups
+            foreignAlias: Accounts   # Opposite relationship alias. Group hasMany Users
+
+Group:
+    tableName: groups
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+            name: string(255)
+        name: string(255)
+        title: string(255)
+
+AccountGroup:
+    columns:
+        account_id:
+            type: integer(4)
+            primary: true
+        group_id:
+            type: integer(4)
+            primary: true
+    relations:
+        Account:
+            local: account_id        # Local key
+            foreign: id              # Foreign key
+            onDelete: CASCADE        # Database constraint
+        Group:
+            local: group_id
+            foreign: id
+            onDelete: CASCADE

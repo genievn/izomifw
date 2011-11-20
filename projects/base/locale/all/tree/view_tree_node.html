@@ -1,0 +1,146 @@
+<?php
+$type = $this->getTreeType();
+?>
+<script type="text/javascript">
+Ext.onReady(function(){
+    
+    var getNodesUrl = '<iz:insert:url/><iz:insert:config path="root.response.plain"/>tree/getTreeNodeByCodename/<?php echo $type->codename;?>';
+    var reorderUrl = '<iz:insert:url/><iz:insert:config path="root.response.json"/>tree/reorderNode';
+    var reparentUrl = '<iz:insert:url/><iz:insert:config path="root.response.json"/>tree/reparentNode';
+    
+    var context_menu = new Ext.menu.Menu({
+		id: 'context_menu',
+		items: [{
+			text: 'New node',
+			iconCls: 'new-node-button',
+			scope: this,
+			handler: function()
+			{
+			
+			}
+		},{
+			text: 'Edit node',
+			iconCls: 'edit-node-button',
+			scope: this,
+			handler: function()
+			{
+			
+			}
+		}]
+	});
+    
+    var tree = new Ext.tree.TreePanel({
+        title: 'Tree Node',
+        useArrows: true,
+        autoScroll: true,
+        animate: true,
+        enableDD: true,
+        containerScroll: true,
+        frame: true,
+        //border: false,
+        // auto create TreeLoader
+        dataUrl: getNodesUrl,
+
+        root: {
+            nodeType: 'async',
+            text: '<?php echo $type->title;?>',
+            draggable: false,
+            id: '0'
+        },
+        listeners: {
+            render: function() {
+                this.getRootNode().expand();
+            }
+            , nodedragover: {
+            	fn: function(e) {
+            		e.target.leaf = false;
+            	},
+            	scope: this
+            }
+            , contextmenu: {
+                fn: function(node, e) {
+    				node.select();
+    				context_menu.node = node;
+    				context_menu.show(e.getTarget());
+    			}
+    			, scope: this
+            }
+        }
+    });
+
+    // render the tree
+    tree.render('entity-treenode');
+    
+    // reorder the node
+    var oldPosition = null;
+    var oldNextSibling = null;
+    
+    tree.on('startdrag', function(tree, node, event){
+        oldPosition = node.parentNode.indexOf(node);
+        oldNextSibling = node.nextSibling;
+    });
+    
+    tree.on('movenode', function(tree, node, oldParent, newParent, position){
+    
+        if (oldParent == newParent){
+            var url = reorderUrl;
+            var params = {'node':node.id, 'delta':(position-oldPosition), 'position': position, 'oldPosition': oldPosition};
+        } else {
+            var url = reparentUrl;
+            var params = {'node':node.id, 'parent':newParent.id, 'position':position};
+        }
+        
+        // we disable tree interaction until we've heard a response from the server
+        // this prevents concurrent requests which could yield unusual results
+        
+        tree.disable();
+        
+        Ext.Ajax.request({
+            url:url,
+            params:params,
+            loadMask: true,
+            success:function(response, request) {
+            
+                var jsonData = Ext.util.JSON.decode(response.responseText);
+                
+                if (jsonData.success == false){
+                    request.failure();
+                } else {
+                    tree.enable();
+                }
+            },
+            failure:function() {
+            
+                // we move the node back to where it was beforehand and
+                // we suspendEvents() so that we don't get stuck in a possible infinite loop
+                
+                tree.suspendEvents();
+                oldParent.appendChild(node);
+                if (oldNextSibling){
+                    oldParent.insertBefore(node, oldNextSibling);
+                }
+                
+                if (newParent.childNodes.length == 0) {
+                    newParent.leaf = true;
+                    console.log(newParent);
+                    newParent.render();
+                }                
+                tree.resumeEvents();
+                tree.enable();
+                
+                alert("Oh no! Your changes could not be saved!");
+            }
+        
+        });
+    
+    });
+});
+</script>
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-treenode">
+        
+    </div>
+</div>

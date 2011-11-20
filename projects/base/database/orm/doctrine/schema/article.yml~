@@ -1,0 +1,24 @@
+---
+package: article
+options:
+  type: MYISAM
+  collate: utf8_unicode_ci
+  charset: utf8
+NewsItem:
+    actAs:
+        I18n:
+            fields: [title, content]
+            actAs:                
+                Searchable:
+                    fields: [title, content]
+                Sluggable:
+                    fields: [title]
+    columns:
+        id:
+            type: integer(4)
+            primary: true
+            autoincrement: true
+        title: string(255)
+        content: string
+        small_image: string(255)
+           

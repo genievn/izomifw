@@ -1,0 +1,89 @@
+
+<script type="text/javascript">
+Ext.onReady(function(){	
+    var fp = new Ext.FormPanel({
+        iconCls: IconManager.getIcon('brick'),
+        labelWidth:  100,
+        renderTo: 'entity-menu',
+        frame: true,
+        title: 'Create Menu',
+        bodyStyle:'padding:10px 10px 0',
+        //width: 800,
+        defaults: {width: 250},
+        defaultType: 'textfield',
+        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />menu/saveMenu/', 
+        method: 'POST',
+        id: 'form-menu',
+        items: [
+            {
+                fieldLabel: 'Code name',
+                helpText: 'The internal code of the Menu', 
+                name: 'codename',
+                allowBlank: false,
+            },
+            {
+                fieldLabel: 'Title',
+                name: 'title',
+                allowBlank: false, 
+                helpText: 'The title of the Menu'
+            }            
+            ,{
+                fieldLabel: 'Description',
+                xtype: 'textarea',
+                name: 'description'
+            }
+        ],
+        tbar: new Ext.Toolbar({
+            //layout: 'anchor'
+            items: [
+                {
+                    text: 'View All Menus'
+                    , iconCls: IconManager.getIcon('text_list_bullets')
+                    , handler: function()
+                    {
+                        Ext.getBody().mask();
+                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                        window.location.href = '<iz:insert:uri/>menu/listMenu/';
+                    }
+                }
+            ]
+        }),
+        buttons: [{
+            text: 'Save'
+            , iconCls: IconManager.getIcon('database_save')
+            , handler: function()
+            {
+                var form = Ext.getCmp('form-menu').getForm();
+                if(form.isValid()){
+                    form.submit({
+                        waitMsg:'Loading...',
+                        success: function(form,action) {
+                            //window.location = '<iz:insert:uri/>' + action.result.redirect;
+                        },
+                        failure: function(form,action){
+                            Ext.MessageBox.alert('Error',action.result.msg);
+                        }
+                    });
+                }
+            }
+        },{
+            text: 'Cancel'
+            , iconCls: IconManager.getIcon('cancel')
+            , handler: function()
+            {
+                location.href = '<iz:insert:uri/>menu/listMenu/';
+            }
+        }]
+    });
+
+	
+});
+</script>
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-menu">
+        
+    </div>
+</div>

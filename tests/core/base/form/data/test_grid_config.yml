@@ -1,0 +1,17 @@
+attributes:
+    pageSize: 20
+    cm: "[{header: 'Username', dataIndex: 'username'},{header: 'Email', dataIndex: 'email'}]"
+    ds:
+        type: "ExtGroupingStore"
+        autoLoad: 1
+        url: "/<iz:insert:config path="root.response.json"/>crud/retrieve"
+        reader:
+            type: "ExtJsonStore"
+            id: "id"
+            totalProperty: "meta.total"
+            root: "data"
+            record: "[{name: 'username'},{name: 'email'}]"
+        sortInfo: "{field: 'username', dir: 'ASC'}"
+        remoteSort: 1
+    
+    

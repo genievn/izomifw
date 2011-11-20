@@ -1,0 +1,28 @@
+	<h1>PHP OpenID Authentication Example</h1>
+    <p>
+      This example consumer uses the <a
+      href="http://www.openidenabled.com/openid/libraries/php/">PHP
+      OpenID</a> library. It just verifies that the URL that you enter
+      is your identity URL.
+    </p>
+    
+	<?php if ($this->getError()) echo $this->getError()->getMessage(); ?>
+	<?php if ($this->getError() && $this->getError()->getSuccess()) echo $this->getError()->getSuccess(); ?>
+	
+    <div id="verify-form">
+      <form method="get" action="<iz:insert:uri/>consumer/tryAuth/">
+        Identity&nbsp;URL:
+        <input type="hidden" name="action" value="verify" />
+        <input type="text" name="openid_identifier" value="" />
+
+        <p>Optionally, request these PAPE policies:</p>
+        <p>
+        <?php foreach ($this->getPapePolicyUri() as $i => $uri) {
+          print "<input type=\"checkbox\" name=\"policies[]\" value=\"$uri\" />";
+          print "$uri<br/>";
+        } ?>
+        </p>
+
+        <input type="submit" value="Verify" />
+      </form>
+    </div>

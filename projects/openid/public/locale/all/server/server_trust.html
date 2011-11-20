@@ -1,0 +1,10 @@
+You are logged in as <?php echo $this->getUsername(); ?> (URL: <?php echo $this->getIdentity(); ?>)
+
+<p>Do you wish to confirm your identity (<code><?php echo $this->getIdentity(); ?></code>) with <code><?php echo $this->getTrustRoot(); ?></code>?</p>
+<div class="form">
+  <form method="post" action="<iz:insert:uri/>server/trust/">
+    <input type="submit" name="trust" value="Confirm" />
+    <input type="submit" value="Do not confirm" />
+    <input type="hidden" name="postback" value="1"/>
+  </form>
+</div>

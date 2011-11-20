@@ -1,0 +1,6218 @@
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 8a714680f2b9a00e80d8690f5d4de783
+Array
+(
+    [all] => Array
+        (
+            [status] => login
+        )
+
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [all] => 1
+                    [*] => 1
+                )
+
+            [front] => Array
+                (
+                    [index] => 1
+                )
+
+        )
+
+    [*] => 1
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 8a714680f2b9a00e80d8690f5d4de783
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 8a714680f2b9a00e80d8690f5d4de783
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 796538541355b8be21435dcc93166fd3
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a1a0a67b3dca2066851a5723f86df1da
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: e35f749c1fa834b0aa62a80e48954cc0
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: e35f749c1fa834b0aa62a80e48954cc0
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: e35f749c1fa834b0aa62a80e48954cc0
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2c4adc44a3ed89551cede649f35152d7
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 92931981f517b4edf6d46e8813e5c758
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 54bcb96fcf414264e9ede4cb0df3b818
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: a440a8d50b92918252d27a173396828c
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 05796918f1b7e4e1282da913ebb009ac
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 05796918f1b7e4e1282da913ebb009ac
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 05796918f1b7e4e1282da913ebb009ac
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 05796918f1b7e4e1282da913ebb009ac
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 05796918f1b7e4e1282da913ebb009ac
+Array
+(
+    [*] => 1
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [administrators] => Array
+        (
+            [registry] => Array
+                (
+                    [scanModule] => Array
+                        (
+                            [*] => 1
+                        )
+
+                    [*] => 1
+                )
+
+            [*] => 
+            [access] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => Array
+        (
+            [status] => login
+        )
+
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => Array
+        (
+            [status] => login
+        )
+
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 
+Array
+(
+    [*] => Array
+        (
+            [status] => login
+        )
+
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2aca5490dda8c139d680a635414fde7b
+Array
+(
+    [*] => Array
+        (
+            [status] => login
+        )
+
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] getting account session
+Setting site locale in processuri plugin
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] creating account session
+[account/manager/getAccountSession] session id: 2aca5490dda8c139d680a635414fde7b
+Array
+(
+    [*] => Array
+        (
+            [status] => login
+        )
+
+    [anonymous] => Array
+        (
+            [auth] => Array
+                (
+                    [*] => 1
+                )
+
+        )
+
+    [init] => 1
+)
+
+[account/manager/getAccountSession] getting account session
+[account/manager/getAccountSession] getting account session

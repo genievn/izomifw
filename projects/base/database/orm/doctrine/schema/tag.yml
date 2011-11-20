@@ -1,0 +1,29 @@
+---
+package: tagging
+options:
+  type: INNODB
+  collate: utf8_unicode_ci
+  charset: utf8
+Tag:
+  tableName: tag
+  columns:
+    id:
+      primary: true
+      autoincrement: true
+      type: integer(10)
+    tag: string(50)
+    raw_tag: string(100)  
+TagItem:
+  tableName: tag_item
+  columns:
+    tag_id: integer(10)
+    tagger_id: integer(10)
+    item_id: integer(10)
+    item_type: string(20)
+    tagged_on: timestamp
+  relations:
+    Tags:
+      class: Tag
+      local: tag_id
+      foreign: id
+      type: many

@@ -1,0 +1,42 @@
+User:
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    username:
+      type: string(255)
+    password:
+      type: string(255)
+  attributes:
+    export: all
+    validate: true
+
+Group:
+  tableName: group_table
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    name:
+      type: string(255)
+  relations:
+    Users:
+      foreignAlias: Groups
+      class: User
+      refClass: GroupUser
+
+GroupUser:
+  columns:
+    group_id:
+      type: integer(4)
+      primary: true
+    user_id:
+      type: integer(4)
+      primary: true
+  relations:
+    Group:
+      foreignAlias: GroupUsers
+    User:
+      foreignAlias: GroupUsers

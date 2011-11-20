@@ -1,0 +1,187 @@
+<iz:insert:module module="izojs" method="formsubmit" footer="0"/>
+<iz:insert:module module="izojs" method="yuiDataTable" footer="0"/>
+<script language="javascript" type="text/javascript">
+if (typeof TREEITEMJS == "undefined") {var TREEITEMJS = {};}
+if (typeof TREEITEMJS.pagebasket == "undefined") {TREEITEMJS.pagebasket = {};}	
+if (typeof TREEITEMJS.pagebasket.treeitem_ids == "undefined") {TREEITEMJS.pagebasket.treeitem_ids = [];}
+TREEITEMJS.showrecords = function(type, args, me){
+	try{
+		var response = YAHOO.lang.JSON.parse(args[0].json);		
+	}catch(e){
+		alert('<iz:lang id="">Error loading data</iz:lang>');
+		return false;
+	}
+	TREEITEMJS.showpaging(response.object.paging);
+    TREEITEMJS.rendertable(response.object.treeitems);
+};
+
+TREEITEMJS.enterhandler = function(){
+	if (window.event && window.event.keyCode == 13)	{
+		var submitButton = YAHOO.util.Dom.get('treeitem_search');
+		submitButton.click();
+		return false;
+	}	
+	else
+		return true;
+};
+
+TREEITEMJS.rendertable = function(json){
+	YAHOO.widget.DataTable.Formatter.checkbox  = function(elCell, oRecord, oColumn, sData) {
+		var name = 'sel' + this.getId().replace(/\D/g,'');
+		var checked = 'no';
+		try{			
+			if (TREEITEMJS.pagebasket.treeitem_ids[sData][0]=='1'){
+				elCell.innerHTML = '<input name="treeitem_ids[]" type="checkbox" value="'+sData+'" checked="true">'; 
+			}else{
+				elCell.innerHTML = '<input name="treeitem_ids[]" type="checkbox" value="'+sData+'">'; 
+			}			
+		}catch(e){elCell.innerHTML = '<input name="treeitem_ids[]" type="checkbox" value="'+sData+'">';}
+		
+	};
+        
+	YAHOO.widget.DataTable.Formatter.operations  = function(elCell, oRecord, oColumn, sData) {
+		var operations = "<?php echo $this->getRecord_operations();?>";
+		var opArray = operations.split("|");
+		
+		for (var i=0;i<opArray.length;i++){
+			switch(opArray[i]){
+				case "add":
+					opArray[i] = "<a href='<iz:insert:uri/><?php echo $this->getSubclass()->getName(); ?>/add/'>add</a>";
+					break;
+				case "edit":
+					opArray[i] = "<a href='<iz:insert:uri/><?php echo $this->getSubclass()->getName(); ?>/edit/" + sData +"/'>edit</a>";
+					break;
+				case "delete":
+					opArray[i] = "<a href='<iz:insert:uri/><?php echo $this->getSubclass()->getName(); ?>/delete/" + sData +"/'>delete</a>";
+					break;
+				case "none":
+					return;
+			}
+		};
+
+		var name = 'sel' + this.getId().replace(/\D/g,'');   
+		var opStr = '';
+		
+		
+		for (i = 0;i<opArray.length;i++){
+			opStr += opArray[i] + '&nbsp;|&nbsp;';
+		};
+		elCell.innerHTML = opStr;
+    };    
+	// Add some convenience methods onto the prototype
+	YAHOO.widget.DataTable.prototype.check = function (e) {								
+		var cb = e.el.cells[0].getElementsByTagName('input')[0];
+		var title = e.el.cells[1].getElementsByTagName('div')[0].innerHTML;
+		//alert(title);
+		cb.checked = true;
+		TREEITEMJS.pagebasket.treeitem_ids[cb.value] = ['1',title];
+		TREEITEMJS.updateselected();
+		//alert(TREEITEMJS.pagebasket[cb.value]);
+	};
+	YAHOO.widget.DataTable.prototype.uncheck = function (e) {		
+		var cb = e.el.cells[0].getElementsByTagName('input')[0];
+		var title = e.el.cells[1].getElementsByTagName('div')[0].innerHTML;
+		cb.checked = false;
+		TREEITEMJS.pagebasket.treeitem_ids[cb.value] = ['0', title];
+		TREEITEMJS.updateselected();
+	};
+	YAHOO.widget.DataTable.prototype.uncheckAll = function () {
+		var name = 'sel' + this.getId().replace(/\D/g,'');
+		var checks = document.getElementsByName(name),i;
+		for (i = checks.length - 1; i >= 0; --i) {
+			checks[i].checked = false;
+		}
+	};
+
+	var myColumnDefs = [
+		{key:"treeitem_id", label:"ID", formatter: 'checkbox'},
+		{key:"title", label:"title", sortable:true},		
+		{key:"published"},
+		{key:"treeitem_id", label:"Operations", formatter: 'operations'}
+	];
+
+	this.myDataSource = new YAHOO.util.DataSource(json);
+	this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+	this.myDataSource.responseSchema = {  
+		fields: [	"treeitem_id","reference_id","code","title","published", "parent_id", "lang_id", "class_name", "site_id"
+				]
+	};
+		
+    	
+	this.myDataTable = new YAHOO.widget.DataTable("treeitems_json", myColumnDefs, this.myDataSource);
+	// Multiple select by checkbox   
+	this.myDataTable.subscribe('checkboxClickEvent',function (e) {   
+		var op = e.target.checked ? 'selectRow' : 'unselectRow';   
+		this[op](e.target);
+	});   
+	this.myDataTable.subscribe('rowSelectEvent',this.myDataTable.check);   
+	this.myDataTable.subscribe('rowUnselectEvent',this.myDataTable.uncheck);
+};
+TREEITEMJS.showpaging = function(paging){
+	var currentPage = paging.current_page;
+	var totalPage = paging.total;
+	var limit = paging.limit;
+	var baseUrl = paging.base_url;
+	var pagingHtml = '<span>';
+	var first = '';
+	var last = '';
+	if (currentPage > 1 && totalPage > 1) first = '<a onclick="javascript:return TREEITEMJS.pageclick(1,'+totalPage+','+limit+');">' + 'First&nbsp;' + '</a>';
+	if (currentPage < totalPage & totalPage > 1) last = '<a onclick="javascript:return TREEITEMJS.pageclick('+totalPage+','+totalPage+','+limit+');">' + 'Last&nbsp;' + '</a>';
+	pagingHtml += first;
+	for (var i=1;i<=totalPage;i++){
+		if (i != currentPage)
+			pagingHtml += '<a onclick="javascript:return TREEITEMJS.pageclick('+i+','+totalPage+','+limit+');">' + i + '&nbsp;' + '</a>';
+		else
+			pagingHtml += i + '&nbsp;';
+	}	
+	pagingHtml += last;
+	pagingHtml += '</span>';
+	
+	var elements = YAHOO.util.Dom.getElementsByClassName('paging', 'div');
+	for(i=0;i<elements.length;i++) {
+        elements[i].innerHTML = pagingHtml;
+    }    
+};
+
+TREEITEMJS.pageclick = function(page, totalPage, limit){
+	var hiddenPage = YAHOO.util.Dom.get('treeitem_current_page');
+	var hiddenTotalPage = YAHOO.util.Dom.get('treeitem_total_page');
+	var hiddenLimit = YAHOO.util.Dom.get('treeitem_limit');
+	var submitButton = YAHOO.util.Dom.get('treeitem_search');
+	
+	hiddenPage.value = page;
+	hiddenTotalPage = totalPage;
+	hiddenLimit = limit;
+	
+	submitButton.click();
+};
+TREEITEMJS.updateselected = function(){
+	var ids = TREEITEMJS.pagebasket.treeitem_ids;
+	var _html = '<ul>';
+	for (treeitem_id in ids){
+		if (ids[treeitem_id][0]=="1"){
+			_html += '<li>' + ids[treeitem_id][1]+'</li>';
+		}
+	}
+	_html += '</ul>';
+	//alert(_html);
+	var treeitems_selected = YAHOO.util.Dom.get('treeitems_selected');
+	treeitems_selected.innerHTML = _html;
+};
+IZOMIPORTAL.formsubmit.event.subscribe(TREEITEMJS.showrecords);
+</script>
+<form id="frm_treeitem_search" src="<iz:insert:url/><iz:insert:config path="root.response.json" /><?php echo $this->getSubclass()->getName();?>/select/">
+	Search: <input type="text" class="input_box_required" id="treeitem_search_box" name="treeitem_search_string" onkeypress="javascript: return TREEITEMJS.enterhandler();"/>
+			<input type="submit" name="search" id="treeitem_search" value="search"/>
+			<input type="hidden" name="page" id="treeitem_current_page"/>
+			<input type="hidden" name="limit" id="treeitem_limit"/>
+			<input type="hidden" name="total_page" id="treeitem_total_page"/>
+</form>
+<em class="ajax_waiting" style="display:none">Loading</em>
+
+<div class="paging"></div>
+<div class="yui-skin-sam">
+	<div id="treeitems_selected"></div>
+	<div id="treeitems_json"></div>
+	
+</div>

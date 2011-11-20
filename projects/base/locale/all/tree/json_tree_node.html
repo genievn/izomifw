@@ -1,0 +1,60 @@
+<?php
+$records = $this->getTreeNode();
+$nodes = array();
+# array to hold processed data
+$items = array();
+if (!empty($records))
+{
+    foreach ($records as $record)
+    {
+        $owner_id = null;
+        $id = $record->id;
+        
+        $items[$id] = array();
+        $items[$id]["id"] = $id;
+        $items[$id]["text"] = $record->title;
+        
+        $items[$id]["children"] = array();
+        $items[$id]["leaf"] = true;
+        $items[$id]["expanded"] = true;    
+    }
+    
+    foreach ($records as $record)
+    {
+        $owner_id = null;
+        $id = $record->id;
+        
+        $parent = $record->getParent();
+        if ($parent){
+            $owner_id = $parent->id;
+        }   
+        
+        
+        if ($owner_id !== null)
+        {
+            # if there is owner, append it to its owner children property
+            $items[$owner_id]["children"][] = $items[$id];
+            $items[$owner_id]["leaf"] = false;
+            $items[$owner_id]["expanded"] = true;
+            # there is owner, so it's not the root level
+            $items[$id]["root"] = false;
+        }else{
+            $items[$id]["root"] = true;
+        }
+            
+    }
+    #print_r($items);
+    # building the tree
+    
+    
+    foreach ($items as $item)
+    {
+        # if it's a root level node
+        if ($item["root"])
+        {
+            $nodes[] = $item;
+        }
+    }
+}
+echo json_encode($nodes);
+?>

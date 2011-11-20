@@ -1,0 +1,15 @@
+<?php
+$grid = $this->getGrid();
+$window = $this->getWindow();
+?>
+{
+    jsLoad:function(){
+        var grid = <?php print $grid->doHtml();?>;
+        var win = <?php print $window->doHtml();?>;
+        win.add(grid);
+        grid.ownerCt = win;
+        win.show();
+        return win;
+    }
+}
+

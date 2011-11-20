@@ -1,0 +1,45 @@
+<?php
+$grid = $this->getGrid();
+$title = $grid->getTitle();
+?>
+{
+	jsLoad:function(){
+		var grid = <?php echo $grid->doHtml();?>;
+		var win = new Ext.Window({
+            layout:'fit',
+            title: '<?php echo $title;?>',
+            width:800,
+            height:600,
+            modal : true,
+            closable: true,
+            //closeAction : 'hide',
+            resizable: true,
+            plain: true,
+            minimizable : false,
+            minHeight: 100,
+            minWidth : 200,
+            maximizable : true ,
+            items: [grid],
+        });
+        
+        grid.on("rowdblclick", function(g, i, e){
+            
+            var valueCmp = Ext.getCmp("<?php echo $this->getValueCmp();?>");
+            var displayCmp = Ext.getCmp("<?php echo $this->getDisplayCmp(); ?>");
+            
+            var value = g.getStore().getAt(i).get("<?php echo $this->getValueField();?>");
+            var display = g.getStore().getAt(i).get("<?php echo $this->getDisplayField();?>");
+            
+            display = "<img src=\"<iz:insert:url/>extra/shared/icons/tick.png\" valign=\"bottom\" />&nbsp;&nbsp;" + display;
+            
+            valueCmp.setValue(value);
+            displayCmp.setValue(display);
+
+            win.close();
+        })
+
+		win.show();
+		return win;
+	}
+}
+

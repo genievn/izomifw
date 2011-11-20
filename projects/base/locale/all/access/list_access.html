@@ -1,0 +1,391 @@
+
+<?php
+$modules = $this->getModules();
+$rules = $this->getRules();
+$roles = $this->getRoles();
+?>
+<script type="text/javascript">
+Ext.onReady(function(){
+    var moduleArray = [];
+    var actionArray = [];
+    var ruleArray = [];
+    var roleArray = [];
+    <?php
+    foreach ($modules as $module) {
+        $actions = $module->getActionDefinitions();
+        if ($module->codename !== '*')
+        {
+    ?>
+            moduleArray.push(['<?php echo $module->id;?>','<?php echo $module->codename;?>']);
+    <?php
+         
+            foreach($actions as $action)
+            {
+                if ($action->method !== '*')
+                {
+    ?>
+                    actionArray.push(['<?php echo $module->id;?>','<?php echo $action->id;?>','<?php echo $action->title;?>']);
+    <?php
+                }
+            }
+        }
+    } 
+    ?>
+    <?php
+    foreach ($rules as $rule) {
+    ?>
+        ruleArray.push(['<?php echo $rule->id;?>','<?php echo $rule->codename;?>']);
+    <?php
+    } 
+    ?>
+    <?php
+    foreach ($roles as $role) {
+    ?>
+        roleArray.push(['<?php echo $role->id;?>','<?php echo $role->name;?>']);
+    <?php
+    } 
+    ?>
+    var Access = Ext.data.Record.create([
+    {
+        name: 'access_id',
+        type: 'string'
+    },{
+        name: 'role_id',
+        type: 'integer'
+    }
+    ,{
+        name: 'role_name',
+        type: 'string'
+    },
+    {
+        name: 'module_id',
+        type: 'integer'
+    },
+    {
+        name: 'module_name',
+        type: 'string'
+    }, {
+        name: 'ad_id',
+        type: 'integer'
+    }, {
+        name: 'ad_title',
+        type: 'string'
+    }, {
+        name: 'ad_method',
+        type: 'string'
+    }, {
+        name: 'params',
+        type: 'string'
+    },{
+        name: 'rule_id',
+        type: 'integer'
+    },{
+        name: 'rule_name',
+        type: 'string'
+    }]);
+    var accessForm = new Ext.form.FormPanel({
+        width: 500,
+        height: 250,
+        frame: true,
+        id: 'form-access',
+        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />access/saveAccess/', 
+        method: 'POST',
+        items:[
+            {
+                fieldLabel: 'Role',
+                id: 'combo-role',
+                xtype: 'combo',
+                valueField: 'id',
+                hiddenName : 'role_id',
+                displayField: 'name',
+                allowBlank: false,
+                store: new Ext.data.SimpleStore({
+                     fields:['id', 'name']
+                    ,data: roleArray
+                }),
+                triggerAction:'all',
+                mode:'local'
+            },
+            {
+                fieldLabel: 'Module',
+                id: 'combo-module',
+                xtype: 'combo',
+                valueField: 'id',
+                hiddenName: 'module_id',
+                displayField: 'codename',
+                triggerAction: 'all',
+                allowBlank: false,
+                store: new Ext.data.SimpleStore({
+                     fields:['id', 'codename']
+                    ,data: moduleArray
+                }),
+                triggerAction:'all',
+                mode:'local',
+                listeners: {
+                    select: function(combo, value) {
+                        var comboAction = Ext.getCmp('combo-action');
+                        comboAction.reset();
+                    }
+                }
+            },
+            {
+                fieldLabel: '',
+                id: 'checkbox-all-module',
+                xtype: 'checkbox',
+                boxLabel: 'All modules',                
+                inputValue: 1,
+                name: 'all_module',
+                listeners: {
+                    check: function(checkbox, checked){
+                        if (checked)
+                        {
+                            Ext.getCmp('combo-module').disable();
+                            Ext.getCmp('combo-action').disable();
+                            Ext.getCmp('input-params').disable();                        
+                            Ext.getCmp('checkbox-all-action').disable();
+                        }else{
+                            Ext.getCmp('combo-module').enable();
+                            if (Ext.getCmp('checkbox-all-action').getValue())
+                            {
+                                Ext.getCmp('combo-action').disable();
+                                Ext.getCmp('input-params').disable();
+                            }else{
+                                Ext.getCmp('combo-action').enable();
+                                Ext.getCmp('input-params').enable();
+                            }
+                            Ext.getCmp('checkbox-all-action').enable();
+                        }
+                    }
+                }
+            },
+            {
+                fieldLabel: 'Action Definition',
+                id: 'combo-action',
+                xtype: 'combo',
+                valueField: 'id',
+                displayField: 'method',
+                triggerAction:'all',
+                mode:'local',
+                hiddenName: 'action_definition_id',
+                store: new Ext.data.SimpleStore({
+                     fields:['module_id', 'id', 'method']
+                    ,data: actionArray
+                }),
+                allowBlank: false,
+                selectOnFocus:true,
+                listeners: {
+                    expand: function(combo) {
+                        var comboModule = Ext.getCmp('combo-module');
+                        combo.store.filter('module_id', comboModule.getValue());
+                    }
+                }
+            },
+            {
+                fieldLabel: '',
+                id: 'checkbox-all-action',
+                xtype: 'checkbox',
+                boxLabel: 'All actions',
+                name: 'all_action',
+                inputValue: 1,
+                listeners: {
+                    check: function(checkbox, checked){
+                        if (checked)
+                        {
+                            Ext.getCmp('combo-action').disable();
+                            Ext.getCmp('input-params').disable();                        
+                        }else{
+                            Ext.getCmp('combo-action').enable();
+                            Ext.getCmp('input-params').enable();                        
+                        }
+                    }
+                }
+            },
+            {
+                xtype: 'textfield',
+                id: 'input-params',
+                fieldLabel: 'Params',
+                name: 'params'
+            },
+            {
+                id: 'combo-rule',
+                hiddenName: 'rule_id',
+                valueField: 'id',
+                displayField: 'codename',
+                xtype: 'combo',
+                fieldLabel: 'Rule',
+                triggerAction: 'all',
+                mode:'local',
+                allowBlank: false,
+                store: new Ext.data.SimpleStore({
+                     fields:['id', 'codename']
+                    ,data: ruleArray
+                })
+            }
+        ],
+        buttons: [{
+            text: 'Save'
+            , iconCls: IconManager.getIcon('database_save')
+            , handler: function()
+            {
+                var form = Ext.getCmp('form-access').getForm();
+                if(form.isValid()){
+                    form.submit({
+                        loadMask: true,
+                        success: function(form,action) {
+                            
+                        },
+                        failure: function(form,action){
+                            Ext.MessageBox.alert('Error',action.result.msg);
+                        }
+                    });
+                }
+            }
+        }],
+        listeners: {
+            
+        }
+    });
+    
+    var popup = new Ext.Window({
+        items: [accessForm],
+        frame: true,
+        title: 'Add an Access Rule',
+        closeAction:'hide'
+    });
+    
+    var store = new Ext.data.GroupingStore({
+        reader: new Ext.data.JsonReader({root: 'access',fields: Access}),
+        proxy: new Ext.data.HttpProxy({url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>access/getAccess/',method:'GET'}),
+        autoLoad: true,        
+        sortInfo: {field: 'role_name', direction: 'ASC'}
+    });
+
+
+    var grid = new Ext.grid.GridPanel({
+        iconCls: IconManager.getIcon('brick'),
+        id: 'grid-access',
+        store: store,
+        layout: 'fit',
+        margins: '0 5 5 5',
+        autoExpandColumn: 'action',
+        autoHeight: true,
+        loadMask: true,
+        view: new Ext.grid.GroupingView({
+            markDirty: false
+        }),
+        tbar: [
+            {
+                text: 'Add New Rule'
+                , iconCls: IconManager.getIcon('package_add')
+                , handler: function()
+                {
+                    popup.show();
+                }
+                , scope: this
+            }
+            ,{
+                ref: '../deleteBtn',
+                iconCls: IconManager.getIcon('package_remove'),
+                text: 'Delete Access Rule',
+                disabled: true,
+                handler: function(){
+                    
+                    var s = grid.getSelectionModel().getSelections();
+                    /*
+                    for(var i = 0, r; r = s[i]; i++){
+                        store.remove(r);
+                    }*/
+                }
+            }
+        ],
+        stripeRows:true,
+
+        columns: [
+            new Ext.grid.RowNumberer(),
+            {
+                id: 'role',
+                header: 'Role',
+                dataIndex: 'role_name',
+                width: 100,
+                sortable: true
+            },
+            {
+                id: 'module',
+                header: 'Module',
+                dataIndex: 'module_name',
+                width: 100,
+                sortable: true
+            },{
+                id: 'action',
+                header: 'Action',
+                dataIndex: 'ad_title',
+                minWidth: 200
+            },{
+                id: 'params',
+                header: 'Params',
+                dataIndex: 'params',
+                width: 100
+            },{
+                id: 'rule',
+                header: 'Rule',
+                dataIndex: 'rule_name',
+                width: 100
+            }
+        ],
+        listeners: {
+            rowdblclick: function(grid, index, event){
+                popup.show();
+                var r = grid.getSelectionModel().getSelected();
+                var data = r.data;
+                var comboRole = Ext.getCmp('combo-role');
+                var comboRule = Ext.getCmp('combo-rule');
+                var comboModule = Ext.getCmp('combo-module');
+                var comboAction = Ext.getCmp('combo-action');
+                var cbAllModule = Ext.getCmp('checkbox-all-module');
+                var cbAllAction = Ext.getCmp('checkbox-all-action');
+                
+                if (comboRole) comboRole.setValue(data.role_id);
+                if (comboRule) comboRule.setValue(data.rule_id);
+                
+                if (data.module_name == '*')
+                {
+                    cbAllModule.setValue(true);
+                }else{
+                    cbAllModule.setValue(false);
+                    comboModule.setValue(data.module_id);
+                    comboAction.clearValue();
+                    comboAction.store.filter('module_id', data.module_id);
+                    if (data.ad_method == '*') cbAllAction.setValue(true);
+                    else{
+                        cbAllAction.setValue(false);
+                        
+                        comboAction.setValue(data.ad_id);
+                    }
+                }
+                
+            }
+        }
+    });
+
+    var layout = new Ext.Panel({
+        title: 'Access Rules',
+        layout: 'fit',
+        items: [grid],
+        renderTo: 'entity-access',
+        frame: true
+    });
+
+    grid.getSelectionModel().on('selectionchange', function(sm){
+        grid.deleteBtn.setDisabled(sm.getCount() >= 1);
+    });
+});
+</script>
+
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-access">
+        
+    </div>
+</div>

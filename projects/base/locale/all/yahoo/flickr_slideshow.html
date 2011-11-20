@@ -1,0 +1,23 @@
+<co:layout:css path="slimbox.css.slimbox" />
+<co:layout:js path="slimbox.js.mootools" />
+<co:layout:js path="slimbox.js.slimbox" />
+
+<div id="images">
+    <div id="square_image">
+        <?foreach($this->getImages()->getImages() as $image):?>
+        <a href="<?=$image->getUrlFull()?>" rel="lightboxset">
+            <img src="<?=$image->getUrlSquare()?>" />
+        </a>
+        <?endforeach?>
+    </div>
+    
+    <div id="page_links">
+        <?foreach(range(1,$this->getImages()->getPages()) as $page):?>
+        <?if($page==$this->getImages()->getPage()):?>
+        <span class="current"><?=$page?></span>
+        <?else:?>
+        <a href="<co:insert:url />flickr/tags/<?=$this->getTags()?>/<?=$page?>/"><?=$page?></a>
+        <?endif?>
+        <?endforeach?>
+    </div>
+</div>

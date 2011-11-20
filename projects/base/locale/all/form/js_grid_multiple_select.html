@@ -1,0 +1,208 @@
+{
+    jsLoad: function()
+    {
+        var win;
+        var ds = new Ext.data.GroupingStore({
+		        // Override default http proxy settings
+		        proxy: new Ext.data.HttpProxy({
+			        method: 'GET',
+			        url: '<?php echo $this->getDs1Url();?>',
+			        headers: { 'Content-Type': 'application/json;charset=utf-8' }
+		        })
+				, autoLoad: {params:{start:0, limit:50}}
+		        , reader: new Ext.data.JsonReader(
+                        {
+                            idProperty: 'id'
+                            , totalProperty: 'meta.total'
+                            , root: 'data'
+                        }
+                        
+                        , Ext.data.Record.create(
+                            <?php echo $this->getDs1Record();?>
+                        )                    
+                )
+				
+        });
+        
+        var dsDrawer = new Ext.data.GroupingStore({
+		        // Override default http proxy settings
+		        proxy: new Ext.data.HttpProxy({
+			        method: 'GET',
+			        url: '<?php echo $this->getDs2Url(); ?>',
+			        headers: { 'Content-Type': 'application/json;charset=utf-8' }
+		        })
+				, autoLoad: {params:{start:0, limit:50}}
+		        , reader: new Ext.data.JsonReader(
+                        {
+                            idProperty: 'id'
+                            , totalProperty: 'meta.total'
+                            , root: 'data'
+                        }
+                        
+                        , Ext.data.Record.create(
+                            <?php echo $this->getDs2Record();?>
+                        )                    
+                )
+				
+        });
+
+
+        var grid = new Ext.grid.GridPanel({
+			ddGroup          : 'grid-dd',
+			ds               : ds,
+			cm               : new Ext.grid.ColumnModel(<?php echo $this->getDs1ColumnModel();?>),
+			enableDragDrop   : true,
+			stripeRows       : true,
+			autoExpandColumn : true
+			, bbar: new Ext.PagingToolbar({
+				pageSize: 50,
+				displayInfo: true,
+				displayMsg: 'Display \{0\} - \{1\} of total \{2\}',
+				emptyMsg: 'Data not found'
+                , items:[
+                    '-',{
+                        text: 'Clear filters',
+                        handler: function () {
+                            //var parentGrid = Ext.getCmp('{$this->getId()}');
+                            grid.filters.clearFilters();
+                        }
+                    }
+                ]
+			})
+		});
+		
+		var gridDrawer = new Ext.grid.GridPanel({
+            ddGroup          : 'grid-dd',
+			ds               : dsDrawer,
+			cm               : new Ext.grid.ColumnModel(<?php echo $this->getDs2ColumnModel();?>),
+			enableDragDrop   : true,
+			stripeRows       : true
+		}); 
+		
+		var rightDrawer = new Ext.ux.plugins.WindowDrawer({
+			width     : 200,
+			resizable : true,
+			maxWidth  : 400,
+			side      : 'e', // Can be n e s w (North, East, South, West)
+			animate   : true,
+			closable	  : false,
+			plain     :  true,
+			border    : false,
+			title     : 'Roles selected',
+			layout    : 'fit',
+			items     : gridDrawer,
+			bbar      : ['->',
+                {
+                    text: 'Save'
+                    , handler: function()
+                    {                        
+                                                
+                        var recordCount = dsDrawer.getCount();
+                        
+                        var recordArray = new Array();
+                        
+                        if (recordCount > 0) {
+                            var records = dsDrawer.data.items;
+                            for (var i=0;i<recordCount;i++) {
+                                recordArray[i] = records[i].get('id');
+                            }
+                        }
+                        // submitting the selected value in the right drawer
+                        Ext.Ajax.request({
+                            url: '<?php echo $this->getSubmitUrl();?>',
+                            method: 'POST',
+                            params: {
+                                ids: Ext.encode(recordArray)
+                            },
+                            success: function(){
+                                AlertBox.show('Success', 'Assignment saved!', 'success', {timeout: 3});
+                                win.close()
+                            },
+                            failure: function(){
+                                AlertBox.show('Error', 'Operation failed!', 'error', {timeout: 3});
+                                win.close();
+                            },
+                            scope: this
+                        });
+                    }
+                }
+			]
+		});
+		
+		grid.on('rowclick', function(grid, rowIndex, eventObj) {
+			var record = grid.getStore().getAt(rowIndex);
+			win.drawers.e.show();
+		});
+		
+        win = new Ext.Window({
+            title: '<?php echo $this->getTitle(); ?>'
+            , maximizable: 1, width: 500, height: 400
+            , plain: true
+            , iconCls: IconManager.getIcon('application_osx')
+            , layout: 'fit'
+            , items: grid
+            , plugins : [rightDrawer]
+            , loadMask: new Ext.LoadMask(Ext.getBody(), {msg:'Loading ... please wait'})
+            , modal: true
+			, listeners: {
+                "afterrender": function()
+                {
+                    var target1 =  grid.getView().el.dom.childNodes[0].childNodes[1];
+        			var dt1 = new Ext.dd.DropTarget(target1, {
+        				ddGroup    : 'grid-dd',
+        				notifyDrop : function(ddSource, e, data){
+        					
+        					// Generic function to add records.
+        					function addRow(record, index, allItems) {
+        						
+        						// Search for duplicates
+        						var foundItem = ds.find('id', record.data.id);
+        						// if not found
+        						if (foundItem  == -1) {
+        							ds.add(record);       							
+        							
+        						}
+        						//Remove Record from the source
+        				        ddSource.grid.store.remove(record);
+        					}
+        		
+        					// Loop through the selections
+        					Ext.each(ddSource.dragData.selections ,addRow);
+        					return(true);
+        				}
+        			});
+        			var target2 = gridDrawer.getView().el.dom.childNodes[0].childNodes[1];
+                    var dt2 = new Ext.dd.DropTarget(target2, {
+            			ddGroup    : 'grid-dd',
+            			notifyDrop : function(ddSource, e, data){
+            				
+            				// Generic function to add records.
+            				function addRow(record, index, allItems) {
+            					//console.log(record);
+            					// Search for duplicates
+            					var foundItem = dsDrawer.find('id', record.data.id);
+            					// if not found
+            					if (foundItem  == -1) {            					   
+            						gridDrawer.store.add(record);
+            						// Call a sort dynamically
+            						//secondGridStore.sort('username', 'ASC');
+            					}
+            					//Remove Record from the source
+            					ddSource.grid.store.remove(record);
+            				}
+            				// Loop through the selections
+            				Ext.each(ddSource.dragData.selections ,addRow);
+            				return(true);
+            			}
+            		});
+            		grid.getBottomToolbar().bind(grid.store);            		
+                }
+			}
+                                
+        });
+        AlertBox.show('Loading', 'Data loading, please wait!', 'loading', {timeout: 3}); 
+        win.show();
+        return win;
+
+    }
+}

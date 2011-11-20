@@ -1,0 +1,208 @@
+<?php
+$menu = $this->getMenu();
+?>
+<script type="text/javascript">
+Ext.onReady(function(){
+    
+    var getNodesUrl = '<iz:insert:url/><iz:insert:config path="root.response.plain"/>menu/getMenuItemByMenuCodename/<?php echo $menu->codename;?>';
+    var reorderUrl = '<iz:insert:url/><iz:insert:config path="root.response.json"/>menu/reorderNode';
+    var reparentUrl = '<iz:insert:url/><iz:insert:config path="root.response.json"/>menu/reparentNode';
+    
+    var context_menu = new Ext.menu.Menu({
+		id: 'context_menu',
+		items: [{
+			text: 'Insert child node',
+			iconCls: 'new-node-button',
+			id: 'new-node'
+		},{
+			text: 'Edit node',
+			iconCls: 'edit-node-button',
+			id: 'edit-node'
+		}],
+		listeners: {
+            itemclick: function(item) {
+                var n = item.parentMenu.contextNode;
+                
+                
+                switch (item.id) {
+                    case 'new-node':
+                        // get the context node                                                
+                        Ext.getBody().mask();
+                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                        window.location.href = '<iz:insert:uri/>menu/createMenuItemForMenuId/<?php echo $menu->id;?>/' + n.id + '/';
+                        break;
+                    case 'edit-node':
+                        
+                        Ext.getBody().mask();
+                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                        window.location.href = '<iz:insert:uri/>menu/editMenuItem/' + n.id + '/';
+                        break;
+                }
+
+            }
+        }
+		
+	});
+    
+    var tree = new Ext.tree.TreePanel({
+        iconCls: IconManager.getIcon('brick'),
+        title: 'Menu',
+        useArrows: true,
+        autoScroll: true,
+        animate: true,
+        enableDD: true,
+        containerScroll: true,
+        frame: true,
+        mask: true,
+        maskConfig: {msg: 'Loading menu items ...'},
+        //border: false,
+        // auto create TreeLoader
+        dataUrl: getNodesUrl,
+        tbar: new Ext.Toolbar({
+            //layout: 'anchor'
+            items: [
+                {
+                    text: 'Add New Menu'
+                    , iconCls: IconManager.getIcon('package_add')
+                    , handler: function()
+                    {
+                        Ext.getBody().mask();
+                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                        window.location.href = '<iz:insert:uri/>menu/createMenu/';
+                    }
+                },{
+                    text: 'View All Menus'
+                    , iconCls: IconManager.getIcon('text_list_bullets')
+                    , handler: function()
+                    {
+                        Ext.getBody().mask();
+                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                        window.location.href = '<iz:insert:uri/>menu/listMenu/';
+                    }
+                }                
+            ]
+        }),
+        root: {
+            nodeType: 'async',
+            text: '<?php echo $menu->title;?>',
+            draggable: false,
+            id: '0'
+        },
+        listeners: {
+            render: function() {
+                this.getRootNode().expand();
+                Ext.getBody().mask();
+                AlertBox.show('Loading', 'Retrieving menu items ...', 'smile', {timeout: 3});
+            }
+            , nodedragover: {
+            	fn: function(e) {
+            		e.target.leaf = false;
+            	},
+            	scope: this
+            }
+            , contextmenu: {
+                fn: function(node, e) {
+    				//node.select();    				
+    				//context_menu.show(e.getTarget());
+    				
+    				//Register the context node with the menu so that a Menu Item's handler function can access
+                    //it via its parentMenu property.
+                    node.select();
+                    //disable edit operation on root node
+                    if (node.id == '0')
+                    {
+                        Ext.getCmp('edit-node').disable();
+                    }else{
+                        Ext.getCmp('edit-node').enable();
+                    }
+                    context_menu.contextNode = node;
+                    context_menu.showAt(e.getXY());
+
+    			}
+    			, scope: this
+            }
+            , load: function(){
+                Ext.getBody().unmask();
+            }
+            
+            
+        }
+    });
+
+    // render the tree
+    tree.render('entity-treenode');
+    
+    // reorder the node
+    var oldPosition = null;
+    var oldNextSibling = null;
+    
+    tree.on('startdrag', function(tree, node, event){
+        oldPosition = node.parentNode.indexOf(node);
+        oldNextSibling = node.nextSibling;
+    });
+    
+    tree.on('movenode', function(tree, node, oldParent, newParent, position){
+    
+        if (oldParent == newParent){
+            var url = reorderUrl;
+            var params = {'node':node.id, 'delta':(position-oldPosition), 'position': position, 'oldPosition': oldPosition};
+        } else {
+            var url = reparentUrl;
+            var params = {'node':node.id, 'parent':newParent.id, 'position':position};
+        }
+        
+        // we disable tree interaction until we've heard a response from the server
+        // this prevents concurrent requests which could yield unusual results
+        
+        tree.disable();
+        
+        Ext.Ajax.request({
+            url:url,
+            params:params,
+            loadMask: true,
+            success:function(response, request) {
+            
+                var jsonData = Ext.util.JSON.decode(response.responseText);
+                
+                if (jsonData.success == false){
+                    request.failure();
+                } else {
+                    tree.enable();
+                }
+                AlertBox.show('Success', 'Moving item completed ...', 'success', {timeout: 3});
+            },
+            failure:function() {
+            
+                // we move the node back to where it was beforehand and
+                // we suspendEvents() so that we don't get stuck in a possible infinite loop
+                
+                tree.suspendEvents();
+                oldParent.appendChild(node);
+                if (oldNextSibling){
+                    oldParent.insertBefore(node, oldNextSibling);
+                }
+                
+                if (newParent.childNodes.length == 0) {
+                    newParent.leaf = true;
+                    console.log(newParent);
+                    newParent.render();
+                }                
+                tree.resumeEvents();
+                tree.enable();
+                
+                AlertBox.show('Warning', 'Problem occurred, please try again ...', 'warning');
+            }
+        
+        });
+    
+    });
+});
+</script>
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-treenode">
+        
+    </div>
+</div>

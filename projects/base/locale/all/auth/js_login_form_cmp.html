@@ -1,0 +1,35 @@
+{
+	jsLoad: function(){
+		var loginDialog = new Ext.ux.form.LoginDialog({
+            modal : true,
+            url : '/<?php print config('root.response.json');?>auth/login',
+            title: 'System Login',
+            message: 'Please enter your username & password',
+            failMessage: 'Invalid username or password',
+            waitMessage: 'Validating user & password, please wait!',
+            usernameField: 'iz_username',
+            usernameLabel: 'Username',
+            passwordField: 'iz_password',
+            passwordLabel: 'Password',
+            passwordVtype: '',
+            rememberMeField: 'iz_remember',
+            rememberMeLabel: 'Remember username & password',
+            forgotPasswordLink: '<iz:insert:config path="root.url"/>auth/forgotPassword',
+            languageLabel: 'Language',
+            loginButton: 'Login',
+            cancelButton: 'Exit',
+            forgotPasswordLabel: 'Forget password?',
+            basePath: '<iz:insert:url/>projects/base/locale/all/jslibs/izojs/extjs/3-0/logindialog/img/icons'
+            , listeners: {
+            	success: function(){
+            		window.location.href = '<?php echo $this->getRedirectUrl();?>';
+            	}
+            }            
+            
+        });
+
+        loginDialog.show();
+        
+		return loginDialog;		
+	}
+}

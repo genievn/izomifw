@@ -1,0 +1,55 @@
+<?php
+$records = $this->getMenuItems();
+$nodes = array();
+# array to hold processed data
+$items = array();
+if (!empty($records))
+{
+    foreach ($records as $record)
+    {
+        $owner_id = null;
+        $id = $record[0]["id"];
+        
+        $items[$id] = array();
+        $items[$id]["id"] = $id;
+        $items[$id]["text"] = $record[0]["title"];
+        
+        $items[$id]["children"] = array();
+        $items[$id]["leaf"] = true;
+        $items[$id]["expanded"] = true;    
+    }
+    
+    foreach ($records as $record)
+    {
+        $owner_id = $record["parent_id"];
+        $id = $record[0]["id"];   
+        
+        
+        if ($owner_id !== null)
+        {
+            # if there is owner, append it to its owner children property
+            $items[$owner_id]["children"][] = &$items[$id];
+            $items[$owner_id]["leaf"] = false;
+            $items[$owner_id]["expanded"] = true;
+            # there is owner, so it's not the root level
+            $items[$id]["root"] = false;
+        }else{
+            $items[$id]["root"] = true;
+        }
+            
+    }
+    # print_r($items);
+    # building the tree
+    
+    
+    foreach ($items as $item)
+    {
+        # if it's a root level node
+        if ($item["root"])
+        {
+            $nodes[] = $item;
+        }
+    }
+}
+echo json_encode($nodes);
+?>

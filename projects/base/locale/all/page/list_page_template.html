@@ -1,0 +1,135 @@
+<script type="text/javascript">
+Ext.onReady(function(){
+    
+    var PageTemplate = Ext.data.Record.create([
+    {
+        name: 'id',
+        type: 'string'
+    },{
+        name: 'title',
+        type: 'string'
+    },
+    {
+        name: 'codename',
+        type: 'string'
+    }]);
+    
+    var store = new Ext.data.GroupingStore({
+        reader: new Ext.data.JsonReader({root: 'pagetemplates',fields: PageTemplate}),
+        proxy: new Ext.data.HttpProxy({url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>page/getPageTemplate/',method:'GET'}),
+        autoLoad: true
+        //, sortInfo: {field: '', direction: 'ASC'}
+    });
+
+
+    var grid = new Ext.grid.GridPanel({
+        iconCls: IconManager.getIcon('brick'),
+        id: 'grid-access',
+        store: store,
+        layout: 'fit',
+        margins: '0 5 5 5',
+        autoExpandColumn: 'title',
+        autoHeight: true,
+        loadMask: true,
+        view: new Ext.grid.GroupingView({
+            markDirty: false
+        }),
+        stripeRows:true,
+        tbar: [
+            {
+                text: 'Add New Page Template'
+                , iconCls: IconManager.getIcon('page_add')
+                , handler: function()
+                {
+                    Ext.getBody().mask('Processing ...');
+                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    window.location.href = '<iz:insert:uri/>page/createPageTemplate/';
+                }
+                , scope: this
+            }
+            ,{
+                ref: '../editBtn',
+                iconCls: IconManager.getIcon('page_edit'),
+                text: 'Edit Page Template',
+                disabled: true,
+                handler: function(){
+                    var s = grid.getSelectionModel().getSelections();
+                    if (s.length != 1) return false;
+                    var pageTemplateId = s[0].data.id;
+                    
+                    Ext.getBody().mask('Processing ...');
+                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    window.location.href = '<iz:insert:uri/>page/editPageTemplate/' + pageTemplateId;
+                }
+            }
+            ,{
+                ref: '../deleteBtn',
+                iconCls: IconManager.getIcon('page_delete'),
+                text: 'Delete Page Template',
+                disabled: true,
+                handler: function(){
+                    var s = grid.getSelectionModel().getSelections();
+                    /*
+                    for(var i = 0, r; r = s[i]; i++){
+                        store.remove(r);
+                    }*/
+                }
+            }
+            ,{
+                ref: '../actionBtn',
+                iconCls: IconManager.getIcon('page_delete'),
+                text: 'Associate Action',
+                disabled: true,
+                handler: function(){
+                    var s = grid.getSelectionModel().getSelections();
+                    
+                    if (s.length != 1) return false;
+                    var pageTemplateId = s[0].data.id;
+                    
+                    Ext.getBody().mask('Processing ...');
+                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    window.location.href = '<iz:insert:uri/>page/createPageTemplateAction/' + pageTemplateId;
+                }
+            }
+        ],
+        columns: [
+        new Ext.grid.RowNumberer(),
+        {
+            id: 'title',
+            header: 'Title',
+            dataIndex: 'title',
+            width: 100,
+            sortable: true
+        },
+        {
+            id: 'layout',
+            header: 'Layout',
+            dataIndex: 'codename',
+            width: 100,
+            sortable: true
+        }]
+    });
+
+    var layout = new Ext.Panel({
+        title: 'Page Template',
+        layout: 'fit',
+        items: [grid],
+        renderTo: 'entity-pagetemplate',
+        frame: true
+    });
+
+    grid.getSelectionModel().on('selectionchange', function(sm){
+        grid.editBtn.setDisabled(sm.getCount() != 1);
+        grid.deleteBtn.setDisabled(sm.getCount() <= 0);
+    });
+});
+</script>
+
+
+<div class="action-container">
+    <div class="action-header">
+    </div>
+    <div class="entity-container" id="entity-pagetemplate">
+        
+    </div>
+</div>

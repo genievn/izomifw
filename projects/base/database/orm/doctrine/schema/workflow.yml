@@ -1,0 +1,238 @@
+---
+package: workflow
+options:
+  type: INNODB
+  collate: utf8_unicode_ci
+  charset: utf8
+WfWorkflow:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        wf_name:
+            type: string(255)
+            default: ""
+        wf_desc: string
+        start_task_id:
+            type: string(255)
+            default: ""
+        is_valid:
+            type: boolean(1)
+            default: false
+        wf_errors: string
+        start_date: {type: date}
+        end_date: {type: date}
+        created_date: {type: timestamp, notnull: true, default:"2000-01-01 00:00:00"}
+        created_user: integer(4)
+        revised_date: {type: timestamp, default: null}
+        revised_user: integer(4)
+    relations:
+        WfPlaces:
+            class: WfPlace
+            local: id
+            foreign: wf_id
+            type: many
+        WfTransitions:
+            class: WfTransition
+            local: id
+            foreign: wf_id
+            type: many
+        WfArcs:
+            class: WfArc
+            local: id
+            foreign: wf_id
+            type: many
+        WfCases:
+            class: WfCase
+            local: id
+            foreign: wf_id
+            type: many
+        WfTokens:
+            class: WfToken
+            local: id
+            foreign: wf_id
+            type: many
+        WfWorkitems:
+            class: WfWorkitem
+            local: id
+            foreign: wf_id
+            type: many
+
+
+WfPlace:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        wf_id: integer(4)
+        place_type: integer(2)
+        place_name: string(255)
+        place_desc: string
+        created_date: timestamp
+        created_user: integer(4)
+        revised_date: timestamp
+        revised_user: integer(4)
+    relations:
+        WfWorkflow:
+            class: WfWorkflow
+            local: wf_id
+            foreign: id
+        WfArcs:
+            class: WfArc
+            local: id
+            foreign: place_id
+            type: many
+
+WfTransition:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        wf_id: integer(4)
+        transition_name: string(255)
+        transition_desc: string
+        transition_trigger: integer(2)
+        time_limit: integer(4)
+        task_id: string(255)
+        task_gui_id: string(255)
+        role_id: integer(4)
+        created_date: timestamp
+        created_user: integer(4)
+        revised_date: timestamp
+        revised_user: integer(4)
+    relations:
+        WfWorkflow:
+            class: WfWorkflow
+            local: wf_id
+            foreign: id
+        WfArcs:
+            class: WfArc
+            local: id
+            foreign: transition_id
+            type: many
+
+WfArc:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        wf_id: integer(4)
+        transition_id: integer(4)
+        place_id: integer(4)
+        direction: integer(1)
+        arc_type: integer(2)
+        pre_condition: string(255)
+        created_date: timestamp
+        created_user: integer(4)
+        revised_date: timestamp
+        revised_user: integer(4)
+    relations:
+        WfWorkflow:
+            class: WfWorkflow
+            local: wf_id
+            foreign: id
+        WfTransition:
+            class: WfTransition
+            local: transition_id
+            foreign: id
+        WfPlace:
+            class: WfPlace
+            local: place_id
+            foreign: id
+WfCase:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        wf_id: integer(4)
+        context: string(255)
+        case_status: integer(2)
+        start_date: timestamp
+        end_date: timestamp
+        created_date: timestamp
+        created_user: integer(4)
+        revised_date: timestamp
+        revised_user: integer(4)
+    relations:
+        WfWorkflow:
+            class: WfWorkflow
+            local: wf_id
+            foreign: id
+        WfTokens:
+            class: WfToken
+            local: id
+            foreign: case_id
+            type: many
+        WfWorkitems:
+            class: WfWorkitem
+            local: id
+            foreign: case_id
+            type: many
+
+WfToken:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        wf_id: integer(4)
+        case_id: integer(4)
+        place_id: integer(4)
+        place_type: integer(2)
+        context: string(255)
+        token_status: integer(2)
+        enabled_date: timestamp
+        cancelled_date: timestamp
+        consumed_date: timestamp
+    relations:
+        WfWorkflow:
+            class: WfWorkflow
+            local: wf_id
+            foreign: id
+        WfCase:
+            class: WfCase
+            local: case_id
+            foreign: id
+        WfPlace:
+            class: WfPlace
+            local: place_id
+            foreign: id
+
+WfWorkitem:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        wf_id: integer(4)
+        case_id: integer(4)
+        transition_id: integer(4)
+        transition_trigger: integer(2)
+        task_id: string(255)
+        context: string(255)
+        workitem_status: integer(2)
+        enabled_date: timestamp
+        cancelled_date: timestamp
+        finished_date: timestamp
+        deadline: timestamp
+        role_id: integer(4)
+        user_id: integer(4)
+    relations:
+        WfWorkflow:
+            class: WfWorkflow
+            local: wf_id
+            foreign: id
+        WfTransition:
+            class: WfTransition
+            local: transition_id
+            foreign: id
+        WfCase:
+            class: WfCase
+            local: case_id
+            foreign: id
+

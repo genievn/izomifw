@@ -1,0 +1,67 @@
+blockquote {
+border : 2px solid #000;
+width: 200px;
+float: right;
+margin: 0px;
+padding: 10px;
+background-color: #ccc;
+quotes: "\201C" "\201D";
+}
+blockquote:before { content: open-quote; font-weight: bold; }
+blockquote:after { content: close-quote; font-weight: bold; }
+
+.container{
+    margin: 0.0em;
+    margin-bottom: 2.0em;    
+}
+
+.container_sub{
+    font-size: 0.95em;
+    padding: 0.8em;
+    margin-bottom: 0.8em;    
+    background: url(../images/background.png);
+    background-repeat: repeat-x;
+    background-color: white;
+}
+
+.container_help{
+    color: silver;
+    margin: 0.0em;
+    margin-bottom: 2.0em;    
+}
+
+.container_error{
+    color: red;    
+}
+
+.input_box, .input_box_required, .kfm{
+    font-size: 0.9em;
+    padding: 0.1em;
+    border: 2px solid #434D80;
+}
+
+.input_box_required{
+    background: #ffffce;    
+    background: url(../../images/background.png);
+    background-repeat: repeat-x;
+    background-color: white;
+}
+
+.input_submit{
+    font-size: 0.9em;
+    padding: 0.1em;
+}
+
+.form_control_title{
+	float: left;
+	width: 10.0em;	
+}
+.form_fixed_width{
+	width: 700px;
+}
+.float_right{
+	float: right;
+}
+.float_left{
+	float: left;
+}

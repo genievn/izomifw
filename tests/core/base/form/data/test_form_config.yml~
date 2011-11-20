@@ -1,0 +1,123 @@
+attributes:
+    name: "test_form"
+    title: "My Test Form"
+    submit_urL: "test/form_config"
+    submit_type: "POST"
+    buttons:
+        
+tabs:
+    main:
+        attributes:
+            name: "mainpanel"
+            title: "Main Form"
+            layout: "accordion"
+            type: "ExtPanel"
+        rows:
+            rows1:
+                attributes:
+                    title: "First group"
+                columns:
+                    group1:
+                        attributes:
+                            type: "ExtLayoutColumn"
+                            title: "Column 1"
+                            columnWidth: 0.5
+                        elements:
+                            name:
+                                attributes: {type: "ExtTextField", title: "Name"}
+                            age:
+                                attributes: {type: "ExtNumberField", title: "Age"}
+                    group2:
+                        attributes:
+                            type: "ExtLayoutColumn"
+                            title: "Column 2"
+                            columnWidth: 0.5
+                        elements:
+                            title:
+                                attributes: {type: "ExtTextField", title: "Title"}
+                            body:
+                                attributes: {type: "ExtTextField", title: "Body"}
+                            fieldset:
+                                attributes: {type: "ExtFieldSet", title: "FieldSet"}
+                                elements:
+                                    label:
+                                        attributes: {type: "ExtTextField", title: "Label"}
+                                    description:
+                                        attributes: {type: "ExtTextField", title: "Description"}
+            rows2:
+                attributes:
+                    title: "Second group"
+                columns:
+                    group1:
+                        attributes:
+                            type: "ExtLayoutColumn"
+                            title: "Column 1"
+                            width: 0.5
+                        elements:
+                            checkboxgroup1:
+                                attributes: {type: "ExtCheckboxGroup", title: "Checkbox Group", columns: 1}
+                                elements:
+                                    cb1:
+                                        attributes: {type: "ExtCheckbox", title: "Checkbox 1", inputValue: 1, checked: true}
+                                    cb2:
+                                        attributes: {type: "ExtCheckbox", title: "Checkbox 2"}
+                            checkboxgroup2:
+                                attributes: {type: "ExtCheckboxGroup", title: "Checkbox Group", columns: 1}
+                                elements:
+                                    column1:
+                                        attributes: {type:"ExtLayoutColumn", columnWidth: 50%}
+                                        elements:
+                                            msg:
+                                                attributes: {type: "ExtLabel", title: "This is custom checkbox header", cls: "x-form-check-group-label"}
+                                            cb1:
+                                                attributes: {type: "ExtCheckbox", name: "checkbox1", title: "Checkbox 1", inputValue: 1, checked: true}
+                                            cb2:
+                                                attributes: {type: "ExtCheckbox", name: "checkbox1", title: "Checkbox 2", inputValue: 2}
+                    group2:
+                        attributes:
+                            type: "ExtLayoutColumn"
+                            title: "Column 2"
+                            width: 0.5
+                        elements:
+                            radiogroup1:
+                                attributes: {type: "ExtRadioGroup", title: "Radio Group"}
+                                elements:
+                                    rb1:
+                                        attributes: {type: "ExtRadio", title: "Selection 1", name: "radio1", inputValue: "1", checked: true}
+                                    rb2:
+                                        attributes: {type: "ExtRadio", title: "Selection 2", name: "radio1", inputValue: "2"}
+                            dob:
+                                attributes: {type: "ExtTextField", title: "Date of Birth"}    
+                            combobox1:
+                                attributes:                                    
+                                    type: "ExtComboBox"
+                                    title: "Combox Box"
+                                    valueField: 'email'
+                                    displayField: 'name'                                    
+                                    store:
+                                        autoLoad: true
+                                        url: "/tests/data/personal-info.json"
+                                        fields: "['name','email','start','active']"
+                            
+                                        
+                                
+    Second:
+        attributes:
+            type: "ExtPanel"
+            name: "secondpanel"
+            title: "Second Panel"
+        rows:
+            rows1:
+                attributes:
+                    title: "First group"
+                columns:
+                    group1:
+                        attributes:
+                            type: "ExtLayoutColumn"
+                            title: "Column 1"
+                            width: 1.0
+                        elements:
+                            id:
+                                attributes: { type: "ExtHidden" }
+data:
+    

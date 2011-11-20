@@ -1,0 +1,9 @@
+<phpunit bootstrap="./TestHelper.php" colors="true">
+    <testsuite name="core_base_form">
+
+    </testsuite>
+    <testsuite name="core_lib_workflow">
+        <directory>./core/lib/</directory>
+    </testsuite>
+</phpunit>
+

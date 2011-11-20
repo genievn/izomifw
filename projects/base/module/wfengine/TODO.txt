@@ -1,0 +1,6 @@
+- Create workflow engine database structure
+- Create workflow plugin listens to events fired by module action
+- Create workflow control panel
+	+ Workflow CRUD (table wf_workflow)
+	+ Workflow place CRUD (wf_place)
+	+ Workflow activities (transaction) (table wf_transition)

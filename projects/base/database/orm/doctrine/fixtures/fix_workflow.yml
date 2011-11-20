@@ -1,0 +1,7 @@
+---
+WfWorkflow:
+    article:
+        wf_name: Article Approval
+        wf_desc: Approve an article
+        start_task_id: article/approve
+        is_valid: true

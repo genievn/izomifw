@@ -1,0 +1,8 @@
+<div>
+    <?foreach($this->getResults() as $item):?>
+    <div class="search_result">
+        <h3><a href="<?=$item->getClickUrl()?>" target="websearch"><?=$item->getTitle()?></a></h3>
+        <?=$item->getSummary()?>
+    </div>
+    <?endforeach?>
+</div>

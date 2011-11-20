@@ -1,0 +1,72 @@
+---
+package: wfmc
+options:
+  type: INNODB
+  collate: utf8_unicode_ci
+  charset: utf8
+WfmcProcessInstance:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        uuid:
+            type: string(255)
+            unique: true
+        instance:
+            type: string
+    relations:
+        WfmcWorkItems:
+            class: WfmcWorkItem
+            local: uuid
+            foreign: process_id
+            type: many
+WfmcWorkflowData:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        process_id:
+            type: string(255)
+        name:
+            type: string(50)
+        value:
+            type: string(255)
+WfmcProcessActivity:
+    columns:
+        id:
+            primary: true
+            autoincrement: true
+            type: integer(4)
+        process_id:
+            type: string(255)
+        activity_id:
+            type: string(50)
+        process_definition_id:
+            type: string(255)
+        activity_definition_id:
+            type: string(255)
+WfmcWorkItem:
+    columns:
+        id:
+            primary: true
+            type: integer(4)
+            autoincrement: true
+        workitem_id:
+            type: string(50)
+        process_id:
+            type: string(255)
+        process_definition_id:
+            type: string(255)
+        activity_id:
+            type: string(50)
+        activity_definition_id:
+            type: string(255)
+        instance:
+            type: string
+        role:
+            type: string(255)
+        status:
+            type: string(20)
+

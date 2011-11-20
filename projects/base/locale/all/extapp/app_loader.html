@@ -1,0 +1,29 @@
+<script type="text/javascript">
+Ext.BLANK_IMAGE_URL = '<iz:insert:url/>projects/base/locale/all/jslibs/extjs/3-0/resources/images/default/s.gif';
+
+Ext.ns('IZOMI');
+IZOMI.lang = "<iz:insert:config path="root.current_lang" />";
+IZOMI.appLoader = function(){
+	Ext.QuickTips.init();
+	
+	return {
+		init: function(){
+
+			
+			var startMask = new Ext.LoadMask(document.body,{msg:'Setting Up...',msgCls:'ext-el-mask-msg x-mask-loading',removeMask:false});
+			startMask.show('<iz:lang id="common.loading-message">System loading, please wait!</iz:lang>',true);
+
+			var jsloader = new Ext.ux.JSLoader({
+									url: '<iz:insert:url/><iz:insert:config path="root.response.plain"/><?echo $this->getModule();?>/<?php echo $this->getMethod()?>/<?php echo $this->getParams();?>',
+									params:{lang: IZOMI.lang},
+									closable: 1,
+									onLoad:function(comp, options){}
+								});
+		}
+	}
+}();
+
+Ext.onReady(IZOMI.appLoader.init, IZOMI.appLoader);
+
+</script>
+<div id="app_bg"></div>
