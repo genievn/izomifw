@@ -27,7 +27,9 @@ class izDoctrine extends Object
 	public function init($dbConfig)
 	{	
 		$this->signature = md5(serialize($dbConfig));
-		
+		/**
+		 * Check if the connection exists
+		 */
 		if (!empty(self::$connections[$this->signature])) return self::$connections[$this->signature];
 
 		if (!self::$entityLoader)
@@ -36,7 +38,7 @@ class izDoctrine extends Object
 		    self::$entityLoader->register();
 		}
 		$this->config = new Configuration;
-		$this->config->addCustomStringFunction('YEAR', 'DoctrineExtensions\Query\MySql\Year');
+		//$this->config->addCustomStringFunction('YEAR', 'DoctrineExtensions\Query\MySql\Year');
 		
 		$cache = new ArrayCache;
 		$driverImpl = $this->config->newDefaultAnnotationDriver(array(config('root.abs').'Entities'));
@@ -48,7 +50,7 @@ class izDoctrine extends Object
 		$this->config->setProxyNamespace('Proxies');
 		$this->em = EntityManager::create($dbConfig, $this->config);
 		$this->em->getEventManager()->addEventSubscriber(new MysqlSessionInit('utf8', 'utf8_unicode_ci'));
-		$this->em->getEventManager()->addEventSubscriber(new VersionListener()); 
+		//$this->em->getEventManager()->addEventSubscriber(new VersionListener()); 
 		
 		self::$connections[$this->signature] = $this;
 		return $this;

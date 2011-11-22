@@ -65,11 +65,6 @@ class Comment
      */
     protected $updated_on;
     /**
-     * @ManyToOne(targetEntity="ContentItem", inversedBy="comments")
-     * @JoinColumn(name="contentitem_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $contentitem;
-    /**
      * @ManyToOne(targetEntity="Account")
      * @JoinColumn(name="account_id", referencedColumnName="id", onDelete="CASCADE")
      */

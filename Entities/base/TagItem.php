@@ -26,11 +26,6 @@ class TagItem
      * @JoinColumn(name="tag_id", referencedColumnName="id", onDelete="CASCADE")
      */
     protected $tag;
-    /**
-     * @ManyToOne(targetEntity="ContentItem", inversedBy="tagitems")
-     * @JoinColumn(name="contentitem_id", referencedColumnName="id", onDelete="CASCADE")
-     */
-    protected $contentitem;
     
     public function __construct()
     {

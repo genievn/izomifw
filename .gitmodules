@@ -1,3 +1,6 @@
 [submodule "libs/doctrine2"]
 	path = libs/doctrine2
 	url = git://github.com/doctrine/doctrine2.git
+[submodule "projects/base/locale/all/jslibs/dojo"]
+	path = projects/base/locale/all/jslibs/dojo
+	url = git://git.freelock.com/git/dojo.git

@@ -1,17 +1,29 @@
 <?php
-require_once '../../libs/doctrine2/lib/Doctrine/Common/ClassLoader.php';
 
-$classLoader = new \Doctrine\Common\ClassLoader('Doctrine', realpath(__DIR__.'/../../libs/doctrine2/lib'));
+require_once '../../libs/doctrine2/lib/vendor/doctrine-common/lib/Doctrine/Common/ClassLoader.php';
+
+$classLoader = new \Doctrine\Common\ClassLoader('Doctrine\ORM', realpath(__DIR__ . '/../../libs/doctrine2/lib'));
+$classLoader->register();
+$classLoader = new \Doctrine\Common\ClassLoader('Doctrine\DBAL', realpath(__DIR__ . '/../../libs/doctrine2/lib/vendor/doctrine-dbal/lib'));
+$classLoader->register();
+$classLoader = new \Doctrine\Common\ClassLoader('Doctrine\Common', realpath(__DIR__ . '/../../libs/doctrine2/lib/vendor/doctrine-common/lib'));
 $classLoader->register();
 $classLoader = new \Doctrine\Common\ClassLoader('Symfony', realpath(__DIR__ . '/../../libs/doctrine2/lib/vendor'));
 $classLoader->register();
-// Variable $configuration is defined inside cli-config.php
+$classLoader = new \Doctrine\Common\ClassLoader('Entities', __DIR__);
+$classLoader->register();
+$classLoader = new \Doctrine\Common\ClassLoader('Proxies', __DIR__);
+$classLoader->register();
+
+// Variable $helperSet is defined inside cli-config.php
 require __DIR__ . '/cli-config.php';
 
-
-$cli = new \Symfony\Components\Console\Application('Doctrine Command Line Interface', Doctrine\Common\Version::VERSION);
+$cli = new \Symfony\Component\Console\Application('Doctrine Command Line Interface', Doctrine\Common\Version::VERSION);
 $cli->setCatchExceptions(true);
-$cli->setHelperSet($helperSet);
+$helperSet = $cli->getHelperSet();
+foreach ($helpers as $name => $helper) {
+    $helperSet->set($helper, $name);
+}
 $cli->addCommands(array(
     // DBAL Commands
     new \Doctrine\DBAL\Tools\Console\Command\RunSqlCommand(),
@@ -31,6 +43,7 @@ $cli->addCommands(array(
     new \Doctrine\ORM\Tools\Console\Command\GenerateProxiesCommand(),
     new \Doctrine\ORM\Tools\Console\Command\ConvertMappingCommand(),
     new \Doctrine\ORM\Tools\Console\Command\RunDqlCommand(),
+    new \Doctrine\ORM\Tools\Console\Command\ValidateSchemaCommand(),
 
 ));
 $cli->run();
