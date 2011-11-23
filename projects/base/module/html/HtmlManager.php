@@ -141,8 +141,8 @@ class HtmlManager extends Object
         $cssList = config( 'html.css', array() );
 
         // Add the Default Reset.css style to the document
-        $reset = locale( 'html'.DIRECTORY_SEPARATOR.'reset.css', true );
-        array_unshift( $cssList, $reset );
+        // $reset = locale( 'html'.DIRECTORY_SEPARATOR.'reset.css', true );
+        // array_unshift( $cssList, $reset );
 
         foreach( $cssList as $css ){
 			if (! is_array($css))

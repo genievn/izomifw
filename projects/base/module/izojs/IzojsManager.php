@@ -172,7 +172,7 @@ class IzojsManager extends Object
 				break;
 		}
 	}
-
+	
 	// ===================
 	// = YUI JAVASCRIPTS =
 	// ===================
@@ -455,6 +455,14 @@ class IzojsManager extends Object
 	public function addLibPure($version = '', $footer = false)
 	{
 		$this->getManager( 'html' )->addJs( locale( 'jslibs/pure/js/purePacked.js', true ), false);
+	}
+	// ========
+	// = DOJO =
+	// ========
+	public function addLibDojo($version = '', $footer = false)
+	{
+		$this->getManager('html')->addJs(locale('jslibs/dojo/dojo/dojo.js', true), false);
+		$this->getManager( 'html' )->addCss( locale( 'jslibs/dojo/dijit/themes/claro/claro.css', true ));
 	}
 }
 ?>

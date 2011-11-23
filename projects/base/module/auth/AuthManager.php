@@ -36,24 +36,10 @@
 		
 		public function includeResources($method = null, $footer = false)
 		{
-			$this->getManager('izojs')->addLibExtJS($version='3.0',$footer=false);
+			$this->getManager('izojs')->addLibDojo();
 			
 			switch ($method) {
 				case 'loginForm':
-				    $this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/md5/md5.js', true ), true );
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/ajaxcache/ajaxcache.js', true ), true );
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/2-2/jsloader/jsloader.js', true ), true );
-					
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/logindialog/js/overrides.js', true ), false );
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/logindialog/js/virtualkeyboard.js', true ), false );
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/logindialog/js/plugins/virtualkeyboard.js', true ), false );
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/logindialog/js/Ext.ux.Crypto.SHA1.js', true ), false );
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/logindialog/js/Ext.ux.form.IconCombo.js', true ), false );
-					$this->getManager( 'html' )->addJs( locale( 'jslibs/izojs/extjs/3-0/logindialog/js/Ext.ux.form.LoginDialog.js', true ), false );
-					# extra css
-					$this->getManager( 'html' )->addCss( locale( 'jslibs/izojs/extjs/3-0/logindialog/css/overrides.css', true ));
-					$this->getManager( 'html' )->addCss( locale( 'jslibs/izojs/extjs/3-0/logindialog/css/flags.css', true ));
-					$this->getManager( 'html' )->addCss( locale( 'jslibs/izojs/extjs/3-0/logindialog/css/virtualkeyboard.css', true ));
 					break;
 				
 				default:

@@ -82,17 +82,12 @@ if( config( 'root.development' ) )
     config( '.root.action.method', 'default' );
     config( '.root.action.params', array() );
 }
-/*
- * append access control
- */
-//require('access.php');
 
 /**
- * Base application to run
+ * Output generator url, remember the trailing slash
  */
-config( '.root.plugins.100', 'Layout' );
-config( '.root.response.json','@json.base/' );			//output to json
-config( '.root.response.plain','@plain.base/' );		//output to raw template, without layout
+config( '.root.url_json', '@json/' );
+
 /**
  * Base application database connection
  */
@@ -105,6 +100,7 @@ config( '.root.data_reader_string', array(
     'password' => 'izomi'
     ) 
 );
+
 config( '.root.data_writer', config( 'root.data_reader'));
 config( '.root.data_writer_string', config( 'root.data_reader_string'));
 /**

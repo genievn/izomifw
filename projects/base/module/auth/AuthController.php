@@ -94,6 +94,11 @@
 		
 		public function loginForm($username = null, $remember = null, $nextAction = null)
 		{
+			/**
+			 * Using login template
+			 */
+			config('.layout.template','login');
+			
 			$this->getManager('auth')->includeResources("loginForm");
 			
 			$render = $this->getTemplate('login_form');
