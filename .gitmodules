@@ -4,3 +4,6 @@
 [submodule "projects/base/locale/all/jslibs/dojo"]
 	path = projects/base/locale/all/jslibs/dojo
 	url = git://git.freelock.com/git/dojo.git
+[submodule "libs/gedmo"]
+	path = libs/gedmo
+	url = git://github.com/l3pp4rd/DoctrineExtensions.git
