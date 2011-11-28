@@ -1,0 +1,54 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+	/*background-image: url("../images/bg.png");*/
+	font-family: "HelveticaNeue-Light","HelveticaNeue",Helvetica,Arial,sans-serif;
+}
+
+#loginPanel {
+	width: 500px;
+	height: 200px;
+	margin: 0 auto;
+	
+	line-height: 1.8;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	background-color: #1f687b;
+	background-repeat: repeat-x;
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#1f687b), to(#ddd));
+	background-image: -moz-linear-gradient(top, #1f687b, #ddd);
+	background-image: -ms-linear-gradient(top, #1f687b, #ddd);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1f687b), color-stop(100%, #ddd));
+	background-image: -webkit-linear-gradient(top, #1f687b, #ddd);
+	background-image: -o-linear-gradient(top, #1f687b, #ddd);
+	background-image: linear-gradient(top, #1f687b, #ddd);
+	-moz-box-shadow: 10px 10px 5px #333;
+	-webkit-box-shadow: 10px 10px 5px #333;
+	box-shadow: 10px 10px 5px #333;
+	
+	padding-top: 100px;
+	
+} 
+#loginBanner {
+	margin: 0 auto;
+	margin-top: 100px;
+	background: url("../images/o2.png") no-repeat;
+	width: 127px;
+	height: 200px;
+}
+#loginContent {
+	margin: 0 auto;
+	width: 300px;
+}
+#appLayout {
+    height: 100%;
+}
+
+.iconLogin {
+	background: url("../images/icon_login.png") no-repeat;
+	width: 16px;
+	height: 16px;
+}
