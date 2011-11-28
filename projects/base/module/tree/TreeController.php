@@ -35,7 +35,7 @@ class TreeController extends Object
             return $render;
         }
         # otherwise, saving new instance
-        $i = new Entities\Base\TreeType();
+        $i = new Entity\Base\TreeType();
         $i->title = $r["title"];
         $i->codename = $r["codename"];
         $i->description = $r["description"];
@@ -96,7 +96,7 @@ class TreeController extends Object
             $p = $m->existTreeNode(array('id'=>$r["parent_id"]));
         
         # otherwise, saving new instance
-        $i = new Entities\Base\TreeNode();
+        $i = new Entity\Base\TreeNode();
         $i->title = $r["title"];
         if ($t) $i->codename = $t->codename;
         $i->description = $r["description"];
@@ -261,7 +261,7 @@ class TreeController extends Object
             $em->persist($node);
             $em->flush();
             # select all the children of parent node, except the current node
-            $children = $em->createQuery('SELECT u FROM Entities\Base\TreeNode u JOIN u.parent p WHERE p.id = '.$parentId.' AND u.id != '.$id.' ORDER BY u.sequence')->getResult();
+            $children = $em->createQuery('SELECT u FROM Entity\Base\TreeNode u JOIN u.parent p WHERE p.id = '.$parentId.' AND u.id != '.$id.' ORDER BY u.sequence')->getResult();
             $sequence = 0;
             if (!empty($children))
             {

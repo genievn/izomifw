@@ -1,9 +1,25 @@
 <?php
 define('_YUI_VERSION_', '2.5.2');
 
-
 class IzojsManager extends Object
 {
+	public function addLib($name = 'dojo')
+	{
+		switch ($name) {
+			case 'extjs':
+				# code...
+				$this->addLibExtJS();
+				break;
+			case 'dojo':
+				$this->addLibDojo();
+				break;
+			case 'jquery':
+				$this->addLibJquery();
+			default:
+				# code...
+				break;
+		}
+	}
 	// =====================
 	// = EXTJS JAVASCRIPTS =
 	// =====================
@@ -13,28 +29,16 @@ class IzojsManager extends Object
 	 * @return void
 	 * @author user
 	 **/
-	public function addLibExtJS($version = '2.2',$footer = false)
+	public function addLibExtJS($version = '4',$footer = false)
 	{
-		switch($version){
-			case '2.2':
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/2-2/adapter/ext/ext-base.js', true ), $footer );
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/2-2/ext-all.js', true ), $footer );
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/2-2/resources/css/ext-all.css', true ));
-				break;
-			case '3.0':
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/3-0/adapter/ext/ext-base.js', true ), $footer );
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/3-0/ext-all.js', true ), $footer );
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/3-0/resources/css/ext-all-notheme.css', true ));
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/3-0/resources/css/xtheme-blue.css', true ), "ext-theme");
-				break;
-            case '3.2':
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/3-2/adapter/ext/ext-base.js', true ), $footer );
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/3-2/ext-all.js', true ), $footer );
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/3-2/resources/css/ext-all-notheme.css', true ));
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/3-2/resources/css/xtheme-blue.css', true ), "ext-theme");
-				break;
-			default: break;
-		}
+		$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ext-all.js', true ), $footer );
+		$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/resources/css/ext-all.css', true ));
+		/**
+		 * Setting this if using different themes
+		 */
+		//$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/resources/css/ext-all-notheme.css', true ));
+		//$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/resources/css/xtheme-blue.css', true ), "ext-theme");
+
 	}
 	public function extjsLogin($footer = false)
 	{

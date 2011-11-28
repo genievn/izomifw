@@ -80,7 +80,7 @@ class AccessManager extends Object
                         ad.id as ad_id, ad.title as ad_title, ad.method as ad_method, 
                         a.id as action_id, a.params,
                         ru.id as rule_id, ru.codename as rule_name
-                FROM Entities\Base\Access u
+                FROM Entity\Base\Access u
                 JOIN u.action a 
                 JOIN u.rule ru 
                 JOIN u.role ro
@@ -101,7 +101,7 @@ class AccessManager extends Object
                         ad.id as ad_id, ad.title as ad_title, ad.method as ad_method, 
                         a.id as action_id, a.params,
                         ru.id as rule_id, ru.codename as rule_name
-                FROM Entities\Base\Access u
+                FROM Entity\Base\Access u
                 JOIN u.action a 
                 JOIN u.rule ru 
                 JOIN u.role ro

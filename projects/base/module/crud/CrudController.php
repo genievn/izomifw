@@ -11,7 +11,7 @@ class CrudController extends Object
 	 */
     public function save($entity = null, $update=false)
     {
-		# convert to namespace form: Entities.Base.Account => Entities\Base\Account
+		# convert to namespace form: Entity.Base.Account => Entity\Base\Account
         $entity = str_replace(".", "\\", $entity);
         $doctrine = $this->getManager('doctrine2');
         $connection = $doctrine->getConnection();
@@ -344,7 +344,7 @@ class CrudController extends Object
             {
                 if (array_key_exists($field, $_REQUEST))
                 {
-                    $instance = new Entities\Base\Translation;
+                    $instance = new Entity\Base\Translation;
                     $instance->entity = $entity;
                     $instance->entity_id = $id;
                     $instance->field = $field;

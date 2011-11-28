@@ -1,5 +1,5 @@
 <?php
-define('ROLE_ENTITY','Entities\Base\Role');
+define('ROLE_ENTITY','Entity\Base\Role');
 
 class RoleController extends Object
 {

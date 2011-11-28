@@ -1,6 +1,6 @@
 <?php
-use Entities\Base\Account,
-	Entities\Base\Role;
+use Entity\Base\Account,
+	Entity\Base\Role;
 
 /**
  * undocumented class
@@ -138,7 +138,7 @@ class AccountManager extends Object
 	{
 		$em = $this->getReader()->getEntityManager();
 
-		$q = $em->createQuery('SELECT a,r from Entities\Base\Account a LEFT JOIN a.roles r WHERE a.username = ?1');
+		$q = $em->createQuery('SELECT a,r from Entity\Base\Account a LEFT JOIN a.roles r WHERE a.username = ?1');
 		$q->setParameter(1, $username);
 		
 		izlog($q->getSql());
@@ -165,13 +165,13 @@ class AccountManager extends Object
 	{
 		$em = $this->getReader()->getEntityManager();
         
-		$q = $em->createQuery('SELECT a,r from Entities\Base\Account a LEFT JOIN a.roles r WHERE a.id = ?1');
+		$q = $em->createQuery('SELECT a,r from Entity\Base\Account a LEFT JOIN a.roles r WHERE a.id = ?1');
 		$q->setParameter(1, $id);
 		$results = $q->getResult();
 
 		if (!empty($results)) return $results[0];
 		
-		#$account = $em->find('Entities\Base\Account', $id);
+		#$account = $em->find('Entity\Base\Account', $id);
 		#if ($account) return $account;
 		else return null;
 

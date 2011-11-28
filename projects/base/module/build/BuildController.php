@@ -815,13 +815,13 @@ config( '.root.action.params','');				//params for the default method
 		$manager = $this->getManager('build');
 		$em = $manager->getReader()->getEntityManager();
 		
-		$entitiesClassLoader = new ClassLoader('Entities', config('root.abs'));
-		$entitiesClassLoader->register();
+		$EntityClassLoader = new ClassLoader('Entity', config('root.abs'));
+		$EntityClassLoader->register();
 		
 		$tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 		$classes = array(
-		  	$em->getClassMetadata('Entities\Base\Account'),
-		  	$em->getClassMetadata('Entities\Base\Role')
+		  	$em->getClassMetadata('Entity\Base\Account'),
+		  	$em->getClassMetadata('Entity\Base\Role')
 		);
 		$tool->createSchema($classes);
 	}

@@ -25,7 +25,7 @@ class TreeManager extends Object
         
         $em = $this->getWriter()->getEntityManager();
         
-        $i = $em->getRepository('Entities\Base\TreeType')->findOneBy($filterArray);
+        $i = $em->getRepository('Entity\Base\TreeType')->findOneBy($filterArray);
         
         if ($i) return $i; else return false;
     }
@@ -36,7 +36,7 @@ class TreeManager extends Object
     {
         $em = $this->getWriter()->getEntityManager();
         
-        $r = $em->createQuery("SELECT t FROM Entities\Base\TreeType t")->getArrayResult();
+        $r = $em->createQuery("SELECT t FROM Entity\Base\TreeType t")->getArrayResult();
                 
         return $r;
     }
@@ -65,7 +65,7 @@ class TreeManager extends Object
         
         $em = $this->getWriter()->getEntityManager();
         
-        $i = $em->getRepository('Entities\Base\TreeNode')->findOneBy($filterArray);
+        $i = $em->getRepository('Entity\Base\TreeNode')->findOneBy($filterArray);
         
         if ($i) return $i; else return false;
     }
@@ -75,7 +75,7 @@ class TreeManager extends Object
         $em = $this->getWriter()->getEntityManager();
         
         if ($id)
-            $r = $em->createQuery('SELECT u FROM Entities\Base\TreeNode u JOIN u.tree_type t WHERE t.id = '.$id.' ORDER BY u.sequence')->getResult();
+            $r = $em->createQuery('SELECT u FROM Entity\Base\TreeNode u JOIN u.tree_type t WHERE t.id = '.$id.' ORDER BY u.sequence')->getResult();
         else
             $r = null;
         
@@ -87,9 +87,9 @@ class TreeManager extends Object
         $em = $this->getWriter()->getEntityManager();
         
         if ($id)
-            $r = $em->createQuery('SELECT u FROM Entities\Base\TreeNode u JOIN u.parent p WHERE p.id = '.$id.' ORDER BY u.sequence')->getResult();
+            $r = $em->createQuery('SELECT u FROM Entity\Base\TreeNode u JOIN u.parent p WHERE p.id = '.$id.' ORDER BY u.sequence')->getResult();
         else
-            $r = $em->createQuery('SELECT u FROM Entities\Base\TreeNode u JOIN u.parent p WHERE p.id = NULL ORDER BY u.sequence')->getResult();
+            $r = $em->createQuery('SELECT u FROM Entity\Base\TreeNode u JOIN u.parent p WHERE p.id = NULL ORDER BY u.sequence')->getResult();
         
         return $r;
     }

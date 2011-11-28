@@ -3,7 +3,7 @@ use Doctrine\Common\ClassLoader,
     Doctrine\ORM\Configuration,
     Doctrine\ORM\EntityManager,
     Doctrine\Common\Cache\ApcCache,
-    Entities\User, Entities\Address;
+    Entity\User, Entity\Address;
     
 class SiteManager extends Object
 {
@@ -53,15 +53,15 @@ class SiteManager extends Object
 	{
 		$doctrine = $this->getReader();
 		#echo config('root.abs');
-		$entitiesClassLoader = new ClassLoader('Entities', config('root.abs'));
-		#print_r($entitiesClassLoader);
-		$entitiesClassLoader->register();
+		$EntityClassLoader = new ClassLoader('Entity', config('root.abs'));
+		#print_r($EntityClassLoader);
+		$EntityClassLoader->register();
 		$em = $doctrine->getEntityManager();
 		
 		$this->getManager('account')->loginAccount('admin', 'admin');
 /*
-		$account = new \Entities\Base\Account;
-		$role = new \Entities\Base\Role;
+		$account = new \Entity\Base\Account;
+		$role = new \Entity\Base\Role;
 		$role->setName('anonymous');
 		$em->persist($role);
 		$em->flush();
@@ -71,8 +71,8 @@ class SiteManager extends Object
 
 		$tool = new \Doctrine\ORM\Tools\SchemaTool($em);
 		$classes = array(
-		  $em->getClassMetadata('\Entities\Base\Account'),
-		  $em->getClassMetadata('\Entities\Base\Role')
+		  $em->getClassMetadata('\Entity\Base\Account'),
+		  $em->getClassMetadata('\Entity\Base\Role')
 		);
 		#$tool->createSchema($classes);
 */

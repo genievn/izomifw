@@ -8,9 +8,11 @@ $classLoader = new \Doctrine\Common\ClassLoader('Doctrine\DBAL', realpath(__DIR_
 $classLoader->register();
 $classLoader = new \Doctrine\Common\ClassLoader('Doctrine\Common', realpath(__DIR__ . '/../../libs/doctrine2/lib/vendor/doctrine-common/lib'));
 $classLoader->register();
+$classLoader = new \Doctrine\Common\ClassLoader('Gedmo', realpath(__DIR__ . '/../../libs/gedmo/lib'));
+$classLoader->register();
 $classLoader = new \Doctrine\Common\ClassLoader('Symfony', realpath(__DIR__ . '/../../libs/doctrine2/lib/vendor'));
 $classLoader->register();
-$classLoader = new \Doctrine\Common\ClassLoader('Entities', __DIR__);
+$classLoader = new \Doctrine\Common\ClassLoader('Entity', __DIR__);
 $classLoader->register();
 $classLoader = new \Doctrine\Common\ClassLoader('Proxies', __DIR__);
 $classLoader->register();

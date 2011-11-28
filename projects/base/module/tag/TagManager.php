@@ -1,11 +1,11 @@
 <?php
-use Entities\Base\Tag,
-    Entities\Base\TagItem,
-    Entities\Base\ContentItem;
+use Entity\Base\Tag,
+    Entity\Base\TagItem,
+    Entity\Base\ContentItem;
 
-define ('TAG_ENTITY','Entities\Base\Tag');
-define ('TAGITEM_ENTITY','Entities\Base\TagItem');
-define ('CONTENTITEM_ENTITY','Entities\Base\ContentItem');
+define ('TAG_ENTITY','Entity\Base\Tag');
+define ('TAGITEM_ENTITY','Entity\Base\TagItem');
+define ('CONTENTITEM_ENTITY','Entity\Base\ContentItem');
 
 class TagManager extends Object
 {

@@ -50,7 +50,7 @@ class SetupController extends Object
         {
             foreach($roles as $r)
             {
-                $role = new Entities\Base\Role();
+                $role = new Entity\Base\Role();
                 $role->name = @$r["name"];
                 $em->persist($role);
             }
@@ -66,11 +66,11 @@ class SetupController extends Object
             foreach($accounts as $a)
             {
                 $role = null;
-                $account = new Entities\Base\Account();
+                $account = new Entity\Base\Account();
                 $account->username = @$a["username"];
                 $account->password = @$a["password"];
                 $account->email = @$a["email"];
-                if (!empty($a["role"]) && $role = $em->getRepository('Entities\Base\Role')->findOneBy(array('name' => $a["role"])))
+                if (!empty($a["role"]) && $role = $em->getRepository('Entity\Base\Role')->findOneBy(array('name' => $a["role"])))
                 {
                     $account->addRole($role);
                 }
@@ -83,7 +83,7 @@ class SetupController extends Object
         {
             foreach($treetypes as $a)
             {
-                $treetype = new Entities\Base\TreeType();
+                $treetype = new Entity\Base\TreeType();
                 $treetype->codename = @$a["codename"];
                 $treetype->uuid = new_uuid();
                 $em->persist($treetype);
@@ -97,13 +97,13 @@ class SetupController extends Object
             foreach($treenodes as $a)
             {
                 $type = null;
-                $treenode = new Entities\Base\TreeNode();
+                $treenode = new Entity\Base\TreeNode();
                 $treenode->uuid = new_uuid();
                 $treenode->title = @$a["title"];
                 $treenode->codename = @$a["codename"];
                 $treenode->default_lang = config('root.default_lang');
                 $treenode->sequence = @$a["sequence"];
-                if (!empty($a["treetype"]) && $type = $em->getRepository('Entities\Base\TreeType')->findOneBy(array('codename' => $a["treetype"])))
+                if (!empty($a["treetype"]) && $type = $em->getRepository('Entity\Base\TreeType')->findOneBy(array('codename' => $a["treetype"])))
                 {
                     $treenode->addTreeType($type);
                 }
@@ -120,7 +120,7 @@ class SetupController extends Object
         {
             foreach($rules as $r)
             {
-                $rule = new Entities\Base\Rule();
+                $rule = new Entity\Base\Rule();
                 $rule->codename = @$r["codename"];
                 $rule->rule = serialize(@$r["rule"]);
                 $em->persist($rule);
@@ -135,11 +135,11 @@ class SetupController extends Object
     {
         $em = $this->getManager('doctrine2')->getEntityManager();
         $em->beginTransaction();
-        $roles = $em->getRepository('Entities\Base\Role')->findAll();
-        $accounts = $em->getRepository('Entities\Base\Account')->findAll();
-        $rules = $em->getRepository('Entities\Base\Rule')->findAll();
-        $treetypes = $em->getRepository('Entities\Base\TreeType')->findAll();
-        $treenodes = $em->getRepository('Entities\Base\TreeNode')->findAll();
+        $roles = $em->getRepository('Entity\Base\Role')->findAll();
+        $accounts = $em->getRepository('Entity\Base\Account')->findAll();
+        $rules = $em->getRepository('Entity\Base\Rule')->findAll();
+        $treetypes = $em->getRepository('Entity\Base\TreeType')->findAll();
+        $treenodes = $em->getRepository('Entity\Base\TreeNode')->findAll();
         foreach ($roles as $role) $em->remove($role);
         foreach ($accounts as $account) $em->remove($account);
         foreach ($rules as $rule) $em->remove($rule);
@@ -153,7 +153,7 @@ class SetupController extends Object
     {
         $em = $this->getManager('doctrine2')->getEntityManager();
         
-        $rules = $em->getRepository('Entities\Base\Rule')->findAll();
+        $rules = $em->getRepository('Entity\Base\Rule')->findAll();
         foreach ($rules as $rule)
         {
             var_dump($rule->codename);

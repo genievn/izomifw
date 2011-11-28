@@ -2,7 +2,7 @@
 /**
  * Master setings for the system
  */
-config( '.root.debug', false );
+config( '.root.debug', true );
 config( '.root.development', true );
 config( '.root.multisites', false );
 config( '.root.site_id', 0);
@@ -43,7 +43,7 @@ config( '.root.plugins.12', 'Access' );
 /**
  * Output Plugins to Load
  */
-config( '.root.plugins.100', 'Layout' ); 		// Place Holder for Layout, JSON, XML Plugins
+config( '.root.plugins.100', 'Layout' ); 		// Place Holder for Layout, JSON, XML Plugins. Fire on postSite
 config( '.root.plugins.200', 'Insert' );		// Fire on postDispatch, postSite
 config( '.root.plugins.300', 'Language' );		// Fire on startUp, shutDown
 config( '.root.plugins.400', 'Images' );		// Fire on postSite

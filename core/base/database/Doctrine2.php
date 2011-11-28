@@ -3,9 +3,11 @@ use Doctrine\Common\ClassLoader,
     Doctrine\ORM\Configuration,
     Doctrine\ORM\EntityManager,
     Doctrine\Common\Cache\ArrayCache,
-    Doctrine\DBAL\Event\Listeners\MysqlSessionInit,
-    DoctrineExtensions\Versionable\Versionable,
-    DoctrineExtensions\Versionable\VersionListener;
+    Doctrine\DBAL\Event\Listeners\MysqlSessionInit;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Cache\ApcCache;
 
 class izDoctrine extends Object
 {
@@ -26,6 +28,7 @@ class izDoctrine extends Object
 	 **/
 	public function init($dbConfig)
 	{	
+		global $ds;
 		$this->signature = md5(serialize($dbConfig));
 		/**
 		 * Check if the connection exists
@@ -34,23 +37,71 @@ class izDoctrine extends Object
 
 		if (!self::$entityLoader)
 		{
-		    self::$entityLoader = new ClassLoader('Entities', config('root.abs'));		
+		    self::$entityLoader = new ClassLoader('Entity', config('root.abs'));		
 		    self::$entityLoader->register();
 		}
 		$this->config = new Configuration;
+		// setting cache
+		if(ENVIRONMENT == 'development')
+            // set up simple array caching for development mode
+            $cache = new \Doctrine\Common\Cache\ArrayCache;
+        else
+            // set up caching with APC for production mode
+            $cache = new \Doctrine\Common\Cache\ApcCache;
+
 		//$this->config->addCustomStringFunction('YEAR', 'DoctrineExtensions\Query\MySql\Year');
-		
+		/*
 		$cache = new ArrayCache;
-		$driverImpl = $this->config->newDefaultAnnotationDriver(array(config('root.abs').'Entities'));
+		$driverImpl = $this->config->newDefaultAnnotationDriver(array(
+			config('root.abs').'Entity',
+			config('root.abs').'libs'.$ds.'gedmo'.$ds.'lib'.$ds.'Gedmo'.$ds.'Translatable'.$ds.'Entity'
+		));
 		$this->config->setMetadataDriverImpl($driverImpl);
 		$this->config->setMetadataCacheImpl($cache);
+		*/
+		//$reader = new \Doctrine\Common\Annotations\AnnotationReader();
+		$reader = new CachedReader(
+		    new AnnotationReader(),
+		    $cache,
+		    $debug = true
+		);
+		AnnotationRegistry::registerFile(realpath(__DIR__."/../../../libs/doctrine2/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php"));
+		AnnotationRegistry::registerAutoloadNamespace(
+		    'Gedmo\\Mapping\\Annotation',
+		    realpath(__DIR__.'/../../../libs/gedmo/lib')
+		);
+		$chain = new \Doctrine\ORM\Mapping\Driver\DriverChain();
+		$annotationDriver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array(
+		    realpath(__DIR__."/../../../Entity"),
+		    realpath(__DIR__."/../../../libs/gedmo/lib/Gedmo/Translatable/Entity"),
+			realpath(__DIR__."/../../../libs/gedmo/lib/Gedmo/Loggable/Entity"),
+			realpath(__DIR__."/../../../libs/gedmo/lib/Gedmo/Tree/Entity")
+		));
+		// drivers
+		$chain->addDriver($annotationDriver, 'Gedmo\\Translatable\\Entity');
+		$chain->addDriver($annotationDriver, 'Gedmo\\Loggable\\Entity');
+		$chain->addDriver($annotationDriver, 'Gedmo\\Tree\\Entity');
+		$chain->addDriver($annotationDriver, 'Entity');
+		$this->config->setMetadataCacheImpl($cache);
+		$this->config->setMetadataDriverImpl($chain);		
 		$this->config->setQueryCacheImpl($cache);
 		// Proxy configuration
 		$this->config->setProxyDir(config('root.abs').config('root.proxy_folder') . DIRECTORY_SEPARATOR);
 		$this->config->setProxyNamespace('Proxies');
-		$this->em = EntityManager::create($dbConfig, $this->config);
+		// auto-generate proxy classes if we are in development mode
+		$this->config->setAutoGenerateProxyClasses(ENVIRONMENT == 'development');
+		// Event Manager
+		$evm = new \Doctrine\Common\EventManager();
+		// Tranlatable Listener
+		$translatableListener = new \Gedmo\Translatable\TranslationListener();
+		$translatableListener->setTranslatableLocale('en-US');		
+		$evm->addEventSubscriber($translatableListener);
+		
+		$this->em = EntityManager::create($dbConfig, $this->config, $evm);
 		$this->em->getEventManager()->addEventSubscriber(new MysqlSessionInit('utf8', 'utf8_unicode_ci'));
 		//$this->em->getEventManager()->addEventSubscriber(new VersionListener()); 
+		
+		
 		
 		self::$connections[$this->signature] = $this;
 		return $this;

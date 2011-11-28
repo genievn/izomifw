@@ -1,6 +1,6 @@
 <?php
-use Entities\Base\Audit,
-    Entities\Base\IContentManagable;
+use Entity\Base\Audit,
+    Entity\Base\IContentManagable;
 
 class AuditManager extends Object
 {

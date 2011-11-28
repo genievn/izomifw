@@ -33,7 +33,6 @@ class LayoutManager extends Object
     public function iz_layout_pos( $position=null )
     {
         if( !$position ) return;
-        
         if( $position == 'main' ) return $this->action->getContent();
         
         $result = '';
@@ -42,8 +41,8 @@ class LayoutManager extends Object
         //print_r($positions);
         
         foreach( $positions as $position )
-        {    	
-            $action = object( 'izAction' );
+        {
+			$action = object( 'izAction' );
             $action->setModule( @$position['module'] );
             $action->setMethod( @$position['method'] );
             $action->setParams( @$position['params'] );
@@ -63,7 +62,7 @@ class LayoutManager extends Object
      * @return String
      */
     public function iz_layout_head()
-    {    	
+    {
         return $this->getManager( 'html' )->getHtmlHeader();
         
     }

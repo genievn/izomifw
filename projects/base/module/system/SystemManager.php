@@ -31,12 +31,12 @@ class SystemManager extends Object
         $em->beginTransaction();
         $menuActions = array();
         # select all the module and its category
-        $dql = 'SELECT m,t FROM Entities\Base\Module m LEFT JOIN m.treenode t';
+        $dql = 'SELECT m,t FROM Entity\Base\Module m LEFT JOIN m.treenode t';
         
         $modules = $em->createQuery($dql)->getResult();
         # check if the role has access to all the modules
         
-        $dql = 'SELECT s.id, ru.codename FROM Entities\Base\Access s JOIN s.action a JOIN s.rule ru JOIN s.role ro JOIN a.action_definition d JOIN d.module m WHERE m.codename = ?1 AND ro.name = ?2';
+        $dql = 'SELECT s.id, ru.codename FROM Entity\Base\Access s JOIN s.action a JOIN s.rule ru JOIN s.role ro JOIN a.action_definition d JOIN d.module m WHERE m.codename = ?1 AND ro.name = ?2';
         $allModuleRule = $em->createQuery($dql)
                         ->setParameter(1, '*')
                         ->setParameter(2, $role)
@@ -68,7 +68,7 @@ class SystemManager extends Object
             
             # check if there is a rule that give the role accesses to all of the actions of the module
             # means we are looking for actions that has action definition with method = '*'
-            $dql = 'SELECT s.id, ru.codename FROM Entities\Base\Access s JOIN s.action a JOIN s.rule ru JOIN s.role ro JOIN a.action_definition d JOIN d.module m WHERE d.method = ?1 AND m.codename = ?2 AND ro.name = ?3';
+            $dql = 'SELECT s.id, ru.codename FROM Entity\Base\Access s JOIN s.action a JOIN s.rule ru JOIN s.role ro JOIN a.action_definition d JOIN d.module m WHERE d.method = ?1 AND m.codename = ?2 AND ro.name = ?3';
             $allActionRule = $em->createQuery($dql)
                         ->setParameter(1, '*')
                         ->setParameter(2, $module->codename)
@@ -98,7 +98,7 @@ class SystemManager extends Object
                             if ($action->position > 0)
                             {
                                 # check if this action is allowed for the role
-                                $dql = 'SELECT a FROM Entities\Base\Access a JOIN a.action t JOIN a.role ro JOIN a.rule ru WHERE ro.name = ?1 AND t.id = ?2 AND ru.codename = ?3';
+                                $dql = 'SELECT a FROM Entity\Base\Access a JOIN a.action t JOIN a.role ro JOIN a.rule ru WHERE ro.name = ?1 AND t.id = ?2 AND ru.codename = ?3';
                                 $access = $em->createQuery($dql)
                                                 ->setParameter(1, $role)
                                                 ->setParameter(2, $action->id)

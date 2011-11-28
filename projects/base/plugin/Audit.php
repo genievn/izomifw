@@ -1,6 +1,6 @@
 <?php
 use DoctrineExtensions\Versionable\IVersionable,
-    Entities\Base\IAuditable;
+    Entity\Base\IAuditable;
     
 class AuditPlugin extends Object
 {

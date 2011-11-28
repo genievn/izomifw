@@ -1,10 +1,10 @@
 <?php
 
-use Entities\Wfmc\WfmcProcessInstance,
-    Entities\Wfms\WfmcWorkItem;
+use Entity\Wfmc\WfmcProcessInstance,
+    Entity\Wfms\WfmcWorkItem;
     
-define('WFMC_PROCESS_INSTANCE_ENTITY','Entities\Wfmc\WfmcProcessInstance');
-define('WFMC_WORKITEM_ENTITY','Entities\Wfmc\WfmcWorkItem');
+define('WFMC_PROCESS_INSTANCE_ENTITY','Entity\Wfmc\WfmcProcessInstance');
+define('WFMC_WORKITEM_ENTITY','Entity\Wfmc\WfmcWorkItem');
 
 class WfmcManager extends Object
 {
@@ -199,7 +199,7 @@ class WfmcManager extends Object
      */
     public function saveWorkItem($workitem)
     {
-        $instance = new Entities\Wfmc\WfmcWorkItem;
+        $instance = new Entity\Wfmc\WfmcWorkItem;
         $instance->process_id = $workitem->activity->process->uuid;
         $instance->activity_id = $workitem->activity->id;
         $instance->process_definition_id = $workitem->activity->process->definition->id;

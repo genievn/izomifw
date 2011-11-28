@@ -9,7 +9,7 @@ class AccessController extends Object
         $roles = $this->getManager('registry')->getRoles();
         $render->setModules($modules);
         $render->setRules($rules);
-        $render->setRoles($roles);        
+        $render->setRoles($roles);
         return $render;
     }
     /**
@@ -46,9 +46,9 @@ class AccessController extends Object
         $em = $this->getManager('doctrine2')->getEntityManager();
         $em->beginTransaction();
         # find the role
-        $role = $em->find('Entities\Base\Role', $roleId);
+        $role = $em->find('Entity\Base\Role', $roleId);
         # find the rule
-        $rule = $em->find('Entities\Base\Rule', $ruleId);
+        $rule = $em->find('Entity\Base\Rule', $ruleId);
         
         if (!$role || !$rule) {            
             $em->rollback();
@@ -61,7 +61,7 @@ class AccessController extends Object
         {
             # $em->beginTransaction();
             # find the module
-            $module = $em->getRepository('Entities\Base\Module')->findBy(array('codename' => '*'));
+            $module = $em->getRepository('Entity\Base\Module')->findBy(array('codename' => '*'));
             if (count($module) == 1) $module = $module[0];
             else if (count($module) > 1)
             {
@@ -72,14 +72,14 @@ class AccessController extends Object
             if (empty($module))
             {
                 # create the module
-                $module = new Entities\Base\Module();
+                $module = new Entity\Base\Module();
                 $module->codename = '*';
                 $module->title = 'All Modules';
                 $module->author = 'Nguyen Huu Thanh';
                 $em->persist($module);
             }
             # find the action definition
-            $dql = 'SELECT u FROM Entities\Base\ActionDefinition u JOIN u.module m WHERE m.id = ?1 AND u.method = ?2';
+            $dql = 'SELECT u FROM Entity\Base\ActionDefinition u JOIN u.module m WHERE m.id = ?1 AND u.method = ?2';
             $actionDefinition = $em->createQuery($dql)
                         ->setParameter(1, $module->id)
                         ->setParameter(2, '*')
@@ -95,7 +95,7 @@ class AccessController extends Object
             if (empty($actionDefinition))
             {
                 # create new action definition
-                $actionDefinition = new Entities\Base\ActionDefinition();
+                $actionDefinition = new Entity\Base\ActionDefinition();
                 $actionDefinition->method = '*';
                 $actionDefinition->title = 'All Methods';
                 $actionDefinition->addModule($module);
@@ -103,7 +103,7 @@ class AccessController extends Object
             }
 
             # find the action correspond to all modules
-            $dql = 'SELECT u FROM Entities\Base\Action u JOIN u.action_definition d WHERE d.id = ?1 AND u.params = ?2';
+            $dql = 'SELECT u FROM Entity\Base\Action u JOIN u.action_definition d WHERE d.id = ?1 AND u.params = ?2';
             $action = $em->createQuery($dql)
                         ->setParameter(1, $actionDefinition->id)
                         ->setParameter(2, '*')
@@ -119,14 +119,14 @@ class AccessController extends Object
             if (empty($action))
             {
                 # create new action
-                $action = new Entities\Base\Action();
+                $action = new Entity\Base\Action();
                 $action->params = '*';
                 $action->addActionDefinition($actionDefinition);
                 $em->persist($action);
             }
                 
             # check if the role has a rule to access all the module
-            $dql = 'SELECT u FROM Entities\Base\Access u JOIN u.action a WHERE a.id = ?1';
+            $dql = 'SELECT u FROM Entity\Base\Access u JOIN u.action a WHERE a.id = ?1';
             $q = $em->createQuery($dql);
             $q->setParameter(1, $action->id);
             $access = $q->getResult();
@@ -147,7 +147,7 @@ class AccessController extends Object
             
             if (empty($access))
             {
-                $access = new Entities\Base\Access();
+                $access = new Entity\Base\Access();
                 $access->addRole($role);
                 $access->addRule($rule);
                 $access->addAction($action);
@@ -170,10 +170,10 @@ class AccessController extends Object
         if ($isAllAction)
         {
             # find the module
-            $module = $em->getRepository('Entities\Base\Module')->find($moduleId);
+            $module = $em->getRepository('Entity\Base\Module')->find($moduleId);
             
             # find the action definition, if it doesn't exist, we create a new action definition for action '*'
-            $dql = 'SELECT u FROM Entities\Base\ActionDefinition u JOIN u.module m WHERE m.id = ?1 AND u.method = ?2';
+            $dql = 'SELECT u FROM Entity\Base\ActionDefinition u JOIN u.module m WHERE m.id = ?1 AND u.method = ?2';
             $actionDefinition = $em->createQuery($dql)
                         ->setParameter(1, $moduleId)
                         ->setParameter(2, '*')
@@ -190,7 +190,7 @@ class AccessController extends Object
             if (empty($actionDefinition))
             {
                 # create new action definition
-                $actionDefinition = new Entities\Base\ActionDefinition();
+                $actionDefinition = new Entity\Base\ActionDefinition();
                 $actionDefinition->method = '*';
                 $actionDefinition->title = 'All Methods';
                 $actionDefinition->addModule($module);
@@ -198,7 +198,7 @@ class AccessController extends Object
             }
             
             # find the action if it exists
-            $dql = 'SELECT u FROM Entities\Base\Action u JOIN u.action_definition d WHERE d.id = ?1 AND u.params = ?2';
+            $dql = 'SELECT u FROM Entity\Base\Action u JOIN u.action_definition d WHERE d.id = ?1 AND u.params = ?2';
             $action = $em->createQuery($dql)
                         ->setParameter(1, $actionDefinition->id)
                         ->setParameter(2, '*')
@@ -214,14 +214,14 @@ class AccessController extends Object
             if (empty($action))
             {
                 # create new action
-                $action = new Entities\Base\Action();
+                $action = new Entity\Base\Action();
                 $action->params = '*';
                 $action->addActionDefinition($actionDefinition);
                 $em->persist($action);
             }
                 
             # check if the role has a rule to access all the action of the module
-            $dql = 'SELECT u FROM Entities\Base\Access u JOIN u.action a WHERE a.id = ?1';
+            $dql = 'SELECT u FROM Entity\Base\Access u JOIN u.action a WHERE a.id = ?1';
             $q = $em->createQuery($dql);
             $q->setParameter(1, $action->id);
             $access = $q->getResult();
@@ -241,7 +241,7 @@ class AccessController extends Object
             
             if (empty($access))
             {
-                $access = new Entities\Base\Access();
+                $access = new Entity\Base\Access();
                 $access->addRole($role);
                 $access->addRule($rule);
                 $access->addAction($action);
@@ -260,7 +260,7 @@ class AccessController extends Object
         } 
         
         # check if the Action (ActionDefinition, Params) has been created
-        $dql = 'SELECT u FROM Entities\Base\Action u JOIN u.action_definition a WHERE a.id = ?1 AND u.params = ?2';
+        $dql = 'SELECT u FROM Entity\Base\Action u JOIN u.action_definition a WHERE a.id = ?1 AND u.params = ?2';
         $q = $em->createQuery($dql);
         $q->setParameter(1, $actionDefinitionId);
         $q->setParameter(2, $params);
@@ -275,9 +275,9 @@ class AccessController extends Object
         }
         if (empty($action))
         {
-            $actionDefinition = $em->find('Entities\Base\ActionDefinition', $actionDefinitionId);
+            $actionDefinition = $em->find('Entity\Base\ActionDefinition', $actionDefinitionId);
             # creat new Action (ActionDefinition, Params)
-            $action = new Entities\Base\Action();
+            $action = new Entity\Base\Action();
             $action->params = $params;
             $action->addActionDefinition($actionDefinition);
             $em->persist($action);
@@ -286,7 +286,7 @@ class AccessController extends Object
         
         # check for existing access rule of selected role
         
-        $dql = 'SELECT u FROM Entities\Base\Access u JOIN u.rule ru JOIN u.role ro JOIN u.action a WHERE ru.id = ?1 AND ro.id = ?2 AND a.id = ?3';
+        $dql = 'SELECT u FROM Entity\Base\Access u JOIN u.rule ru JOIN u.role ro JOIN u.action a WHERE ru.id = ?1 AND ro.id = ?2 AND a.id = ?3';
         
         $q = $em->createQuery($dql);
         $q->setParameter(1, $rule->id);
@@ -308,7 +308,7 @@ class AccessController extends Object
         # if the access rule has not been set, create it
         if (empty($access))
         {
-            $access = new Entities\Base\Access();
+            $access = new Entity\Base\Access();
             $access->addRole($role);
             $access->addRule($rule);
             $access->addAction($action);

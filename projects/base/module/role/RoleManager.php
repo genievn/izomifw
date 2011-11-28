@@ -1,9 +1,9 @@
 <?php
 use DoctrineExtensions\Paginate\Paginate;
 
-define('ROLE_ENTITY','Entities\Base\Role');
-define('ACCOUNT_ENTITY','Entities\Base\Account');
-define('ACTION_ENTITY','Entities\Base\Action');
+define('ROLE_ENTITY','Entity\Base\Role');
+define('ACCOUNT_ENTITY','Entity\Base\Account');
+define('ACTION_ENTITY','Entity\Base\Action');
 class RoleManager extends Object
 {
     /**

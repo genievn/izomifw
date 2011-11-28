@@ -1,6 +1,11 @@
 <?php
 class IzojsController extends Object
 {
+	public function addLib($lib='')
+	{
+		# code...
+		$this->getManager('izojs')->addLib($lib);
+	}
 	// ====================
 	// = JSON JAVASCRIPTS =
 	// ====================

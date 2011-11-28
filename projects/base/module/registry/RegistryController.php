@@ -123,7 +123,7 @@ class RegistryController extends Object
         # if the module doesn't exist
         if (!$module)
         {
-            $module = new Entities\Base\Module();
+            $module = new Entity\Base\Module();
         }
         # save or updating new value
         $settings = array();
@@ -143,7 +143,7 @@ class RegistryController extends Object
         # assign module category
         if ($moduleCategoryId)
         {
-            $category = $em->find('Entities\Base\TreeNode', $moduleCategoryId);
+            $category = $em->find('Entity\Base\TreeNode', $moduleCategoryId);
             if ($category) $module->addTreeNode($category);
         }
 
@@ -166,7 +166,7 @@ class RegistryController extends Object
                 $setting = array();
                 $setting['locales'] = @$attributes['locales'];
                 # create a new action definition
-                $a = new Entities\Base\ActionDefinition();
+                $a = new Entity\Base\ActionDefinition();
                 $a->title = @$attributes["title"];
                 $a->method = $method;
                 if (!empty($attributes["params"])){
@@ -179,7 +179,7 @@ class RegistryController extends Object
                 $a->addModule($module);
                 $em->persist($a);
                 # create a default action
-                $b = new Entities\Base\Action();
+                $b = new Entity\Base\Action();
                 $b->params = '*';
                 $b->addActionDefinition($a);
 
@@ -192,7 +192,7 @@ class RegistryController extends Object
                     if ($params)
                     {
                         # create a new action with the action definition & params;
-                        $c = new Entities\Base\Action();
+                        $c = new Entity\Base\Action();
                         $c->params = $params;
                         # set the position to indicate this action will appear on module menu actions
                         $c->position = (int)$position;
@@ -336,7 +336,7 @@ class RegistryController extends Object
         $em = $this->getManager('doctrine2')->getEntityManager();
         $em->beginTransaction();
 
-        $layout = $em->getRepository('Entities\Base\Layout')->findOneBy(array('codename'=>$codename));
+        $layout = $em->getRepository('Entity\Base\Layout')->findOneBy(array('codename'=>$codename));
 
         if ($layout)
         {
@@ -356,7 +356,7 @@ class RegistryController extends Object
         $em = $this->getManager('doctrine2')->getEntityManager();
         $em->beginTransaction();
 
-        $module = $em->getRepository('Entities\Base\Module')->findOneBy(array('codename'=>$codename));
+        $module = $em->getRepository('Entity\Base\Module')->findOneBy(array('codename'=>$codename));
 
         if ($module)
         {
@@ -410,7 +410,7 @@ class RegistryController extends Object
         # if the layout doesn't exist
         if (!$layout)
         {
-            $layout = new Entities\Base\Layout();
+            $layout = new Entity\Base\Layout();
             $layout->codename = $codename;
 
         }

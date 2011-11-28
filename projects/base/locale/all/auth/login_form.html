@@ -16,13 +16,11 @@ function SubmitLoginForm(fields) {
 }
 function FormResult(result) {
 	console.debug(result);
-    if (result.success === false) {
-        console.debug('Login success')
+    if (result.success === true) {
+        window.location = '<iz:insert:uri/>dashboard';
     }
     else {
-        //redirect.
-		console.debug(result);
-        //window.location = result;
+        alert(result.message);        
     }
 }
 

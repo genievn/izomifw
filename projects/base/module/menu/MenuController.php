@@ -20,13 +20,13 @@ class MenuController extends Object
         $render = $this->getTemplate('json');
         $em = $this->getManager('doctrine2')->getEntityManager();
         
-        $m = new Entities\Base\NavigationMenu();
+        $m = new Entity\Base\NavigationMenu();
         $m->uuid = new_uuid();
         $m->title = $_REQUEST['title'];
         $m->codename = $_REQUEST['codename'];
         
         # get the parent menu
-        $p = $em->find('Entities\Base\NavigationMenu', $_REQUEST['parent_id']);
+        $p = $em->find('Entity\Base\NavigationMenu', $_REQUEST['parent_id']);
         
         if ($p)
         {
@@ -57,7 +57,7 @@ class MenuController extends Object
         $render = $this->getTemplate('json');
         
         $em = $this->getManager('doctrine2')->getEntityManager();
-        $dql = "SELECT u FROM Entities\Base\NavigationMenu u";
+        $dql = "SELECT u FROM Entity\Base\NavigationMenu u";
         $menus = $em->createQuery($dql)->getArrayResult();
 
         $render->setMenus($menus);
@@ -70,7 +70,7 @@ class MenuController extends Object
     {
         $render = $this->getTemplate('list_menu_item');
         $em = $this->getManager('doctrine2')->getEntityManager();
-        $menu = $em->find('Entities\Base\NavigationMenu', $menu_id);
+        $menu = $em->find('Entity\Base\NavigationMenu', $menu_id);
         $render->setMenu($menu);
         return $render;
     }
@@ -80,7 +80,7 @@ class MenuController extends Object
         $em = $this->getManager('doctrine2')->getEntityManager();
         $render = $this->getTemplate('json');
         $em->beginTransaction();
-        $m = $em->find('Entities\Base\NavigationMenu', (int)$_REQUEST['menu_id']);
+        $m = $em->find('Entity\Base\NavigationMenu', (int)$_REQUEST['menu_id']);
         
         if (!$m)
         {
@@ -89,10 +89,10 @@ class MenuController extends Object
         }
         
         # find parent
-        $p = $em->find('Entities\Base\NavigationMenuItem', (int)$_REQUEST['parent_id']);
+        $p = $em->find('Entity\Base\NavigationMenuItem', (int)$_REQUEST['parent_id']);
         
-        if ($id) $i = $em->find('Entities\Base\NavigationMenuItem', (int)$id);
-        else $i = new Entities\Base\NavigationMenuItem();
+        if ($id) $i = $em->find('Entity\Base\NavigationMenuItem', (int)$id);
+        else $i = new Entity\Base\NavigationMenuItem();
         
         $i->title = $_REQUEST['title'];
         $i->sequence = (int)$_REQUEST['sequence'];
@@ -105,9 +105,9 @@ class MenuController extends Object
         }
         
         # find action definition
-        $d = $em->find('Entities\Base\ActionDefinition', (int)$_REQUEST['action_definition_id']);
+        $d = $em->find('Entity\Base\ActionDefinition', (int)$_REQUEST['action_definition_id']);
         # find action
-        $dql = 'SELECT u FROM Entities\Base\Action u JOIN u.action_definition a WHERE a.id = ?1 AND u.params = ?2';
+        $dql = 'SELECT u FROM Entity\Base\Action u JOIN u.action_definition a WHERE a.id = ?1 AND u.params = ?2';
         $q = $em->createQuery($dql);
         $q->setParameter(1, (int)$_REQUEST['action_definition_id']);
         $q->setParameter(2, $_REQUEST['params']);
@@ -118,7 +118,7 @@ class MenuController extends Object
         if (is_null($a) && $d)
         {
             # create new action
-            $a = new Entities\Base\Action();
+            $a = new Entity\Base\Action();
             $a->params = $_REQUEST['params'];
             $a->addActionDefinition($d);
             $em->persist($a);
@@ -150,7 +150,7 @@ class MenuController extends Object
         $em = $this->getManager('doctrine2')->getEntityManager();
         
         
-        $dql = 'SELECT u,p.id as parent_id FROM Entities\Base\NavigationMenuItem u JOIN u.navigation_menu n LEFT JOIN u.parent p WHERE n.codename = ?1';
+        $dql = 'SELECT u,p.id as parent_id FROM Entity\Base\NavigationMenuItem u JOIN u.navigation_menu n LEFT JOIN u.parent p WHERE n.codename = ?1';
         $q = $em->createQuery($dql)->setParameter(1, $codename);
         
         $items = $q->getArrayResult();
@@ -162,10 +162,10 @@ class MenuController extends Object
     {
         $render = $this->getTemplate('create_menu_item');
         $em = $this->getManager('doctrine2')->getEntityManager();
-        $m = $em->find('Entities\Base\NavigationMenu', $id);
+        $m = $em->find('Entity\Base\NavigationMenu', $id);
         
         # find the parent;
-        if ($parentId) $parent = $em->find('Entities\Base\NavigationMenuItem', $parentId);
+        if ($parentId) $parent = $em->find('Entity\Base\NavigationMenuItem', $parentId);
         
         $modules = $this->getManager('registry')->getModules();
         $render->setMenu($m);
@@ -179,7 +179,7 @@ class MenuController extends Object
         $render = $this->getTemplate('create_menu_item');
         $em = $this->getManager('doctrine2')->getEntityManager();
         # find the menu item
-        $i = $em->find('Entities\Base\NavigationMenuItem', $id);
+        $i = $em->find('Entity\Base\NavigationMenuItem', $id);
         # find the menu
         $m = $i->getMenu();        
         # find the parent;
@@ -221,14 +221,14 @@ class MenuController extends Object
         $em = $this->getManager('doctrine2')->getEntityManager();
         $em->beginTransaction();
         // find the node
-        $node = $em->getRepository('Entities\Base\NavigationMenuItem')->findOneBy(array('id'=>$id));
+        $node = $em->getRepository('Entity\Base\NavigationMenuItem')->findOneBy(array('id'=>$id));
         // find all the children of the parent node
         if ($node->parent) $parentId = $node->parent->id; else $parentId = null;
         
         if ($parentId)
-            $children = $em->createQuery('SELECT u FROM Entities\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = '.$parentId.' ORDER BY u.sequence')->getResult();
+            $children = $em->createQuery('SELECT u FROM Entity\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = '.$parentId.' ORDER BY u.sequence')->getResult();
         else
-            $children = $em->createQuery('SELECT u FROM Entities\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = NULL ORDER BY u.sequence')->getResult();
+            $children = $em->createQuery('SELECT u FROM Entity\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = NULL ORDER BY u.sequence')->getResult();
 
         $sequence = 0;
         
@@ -288,10 +288,10 @@ class MenuController extends Object
         $em = $this->getManager('doctrine2')->getEntityManager();
         
         # find the current node
-        $node = $em->getRepository('Entities\Base\NavigationMenuItem')->findOneBy(array('id'=>$id));
+        $node = $em->getRepository('Entity\Base\NavigationMenuItem')->findOneBy(array('id'=>$id));
         
         # find the parent node
-        $parent = $em->getRepository('Entities\Base\NavigationMenuItem')->findOneBy(array('id'=>$parentId));
+        $parent = $em->getRepository('Entity\Base\NavigationMenuItem')->findOneBy(array('id'=>$parentId));
         
         if ($node && $parent)
         {
@@ -301,7 +301,7 @@ class MenuController extends Object
             $em->persist($node);
             $em->flush();
             # select all the children of parent node, except the current node
-            $children = $em->createQuery('SELECT u FROM Entities\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = '.$parentId.' AND u.id != '.$id.' ORDER BY u.sequence')->getResult();
+            $children = $em->createQuery('SELECT u FROM Entity\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = '.$parentId.' AND u.id != '.$id.' ORDER BY u.sequence')->getResult();
             $sequence = 0;
             if (!empty($children))
             {

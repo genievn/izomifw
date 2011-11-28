@@ -26,8 +26,8 @@ class Doctrine2Controller extends Object
 
     public function test()
     {
-    	print_r($this->getManager('doctrine2')->getAssociationMappings('Entities\Hse\HseUser'));
-    	#$entity = "Entities\\Base\\Account";
+    	print_r($this->getManager('doctrine2')->getAssociationMappings('Entity\Hse\HseUser'));
+    	#$entity = "Entity\\Base\\Account";
     	#$c = 'username';
 
     	#$instance = $this->getManager('doctrine2')->createEntityFromRequest($entity);

@@ -1,15 +1,14 @@
 <?php
 use Doctrine\Common\Cache\ArrayCache,
     DoctrineExtensions\Versionable\VersionManager,
-    Entities\Base\ITranslatable,
-    Entities\Base\IContentManagable,
+    Entity\Base\IContentManagable,
     DoctrineExtensions\Paginate\Paginate,
-    Entities\Base\ContentItem,
-    Entities\Base\ContentItemTranslation;
+    Entity\Base\ContentItem,
+    Entity\Base\ContentItemTranslation;
 
-define('CONTENTITEM_ENTITY', 'Entities\Base\ContentItem');
-define('CONTENTITEM_TRANSLATION_ENTITY', 'Entities\Base\ContentItemTranslation');
-define('TRANSLATION_ENTITY','Entities\Base\Translation');
+define('CONTENTITEM_ENTITY', 'Entity\Base\ContentItem');
+define('CONTENTITEM_TRANSLATION_ENTITY', 'Entity\Base\ContentItemTranslation');
+define('TRANSLATION_ENTITY','Entity\Base\Translation');
 
 class Doctrine2Manager extends Object
 {
@@ -613,7 +612,7 @@ class Doctrine2Manager extends Object
 
 	public function getColumnNames($entity = null)
 	{
-		#$class = 'Entities\Base\Account';
+		#$class = 'Entity\Base\Account';
 		$em = $this->getReader()->getEntityManager();
 		$cm = $em->getClassMetadata($entity);
 		return $cm->getColumnNames();

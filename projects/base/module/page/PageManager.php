@@ -4,7 +4,7 @@ class PageManager extends Object {
     public function getWidgets($asArray = false)
     {
         $em = $this->getReader()->getEntityManager();
-        $dql = 'SELECT u.id, u.title, m.codename as module_codename, d.title as action_definition_title, a.params FROM Entities\Base\Widget u JOIN u.action a JOIN a.action_definition d JOIN d.module m';
+        $dql = 'SELECT u.id, u.title, m.codename as module_codename, d.title as action_definition_title, a.params FROM Entity\Base\Widget u JOIN u.action a JOIN a.action_definition d JOIN d.module m';
         $r = $em->createQuery($dql)->getResult();
         return $r;
     }
@@ -12,7 +12,7 @@ class PageManager extends Object {
     public function getLayouts($asArray = false)
     {
         $em = $this->getReader()->getEntityManager();
-        $dql = 'SELECT u FROM Entities\Base\Layout u ORDER BY u.codename';
+        $dql = 'SELECT u FROM Entity\Base\Layout u ORDER BY u.codename';
         if ($asArray)
         {
             $r = $em->createQuery($dql)->getArrayResult();
@@ -27,7 +27,7 @@ class PageManager extends Object {
     {
         $em = $this->getReader()->getEntityManager();
         # select pagetemplate id, pagetemplate title and layout codename
-        $dql = 'SELECT u.id, u.title, l.codename FROM Entities\Base\PageTemplate u JOIN u.layout l';
+        $dql = 'SELECT u.id, u.title, l.codename FROM Entity\Base\PageTemplate u JOIN u.layout l';
         if ($asArray)
         {
             $r = $em->createQuery($dql)->getArrayResult();
@@ -41,7 +41,7 @@ class PageManager extends Object {
     {
         $em = $this->getReader()->getEntityManager();
         # select id, position, region, pagetemplate title, action definition title for the widgets of the page template
-        $dql = 'SELECT w.id as widget_id, u.position, u.region, p.title as page_template_title, d.title as action_definition_title FROM Entities\Base\PageTemplateWidget u JOIN u.page_template p JOIN u.widget w JOIN w.action a JOIN a.action_definition d WHERE p.id = ?1 ORDER BY u.position';
+        $dql = 'SELECT w.id as widget_id, u.position, u.region, p.title as page_template_title, d.title as action_definition_title FROM Entity\Base\PageTemplateWidget u JOIN u.page_template p JOIN u.widget w JOIN w.action a JOIN a.action_definition d WHERE p.id = ?1 ORDER BY u.position';
         $q = $em->createQuery($dql);
         $q->setParameter(1, $id);
         return $q->getResult();
@@ -54,7 +54,7 @@ class PageManager extends Object {
         
         $em = $this->getWriter()->getEntityManager();
         
-        $i = $em->getRepository('Entities\Base\Layout')->findOneBy($filterArray);
+        $i = $em->getRepository('Entity\Base\Layout')->findOneBy($filterArray);
         
         if ($i) return $i; else return false;
     }
@@ -72,7 +72,7 @@ class PageManager extends Object {
         else $params = null;
         # search for the action;
         
-        $dql = 'SELECT u FROM Entities\Base\Action u JOIN u.action_definition d JOIN d.module m WHERE (m.codename = ?1 AND d.method = ?2 AND u.params = ?3) OR (m.codename = ?4) OR (m.codename = ?5 AND d.method = ?6)';
+        $dql = 'SELECT u FROM Entity\Base\Action u JOIN u.action_definition d JOIN d.module m WHERE (m.codename = ?1 AND d.method = ?2 AND u.params = ?3) OR (m.codename = ?4) OR (m.codename = ?5 AND d.method = ?6)';
         $q = $em->createQuery($dql);
         $q->setParameter(1, $module);
         $q->setParameter(2, $method);
@@ -125,7 +125,7 @@ class PageManager extends Object {
             # get the layouts
             $layout = $pt->getLayout();
             # get all the widgets
-            $widgets = $em->getRepository('Entities\Base\PageTemplateWidget')->findAllPageTemplateWidgets($pt->id);
+            $widgets = $em->getRepository('Entity\Base\PageTemplateWidget')->findAllPageTemplateWidgets($pt->id);
             #var_dump($widgets);
             config('.layout.template', $layout->codename);
             foreach ($widgets as $w)

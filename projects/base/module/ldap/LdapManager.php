@@ -2,7 +2,7 @@
 global $abs, $ds;
 require ($abs.$ds.'libs'.$ds.'adLDAP'.$ds.'adLDAP.php');
 
-use Entities\Base\Account;
+use Entity\Base\Account;
 
 class LdapManager extends Object
 {

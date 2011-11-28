@@ -1,11 +1,10 @@
 <?php
-use Entities\Base\ITranslatable,
-    Entities\Base\IContentManagable,
-    Entities\Base\IContentTaggable,
-    Entities\Base\ContentItem;
+use Entity\Base\IContentManagable,
+    Entity\Base\IContentTaggable,
+    Entity\Base\ContentItem;
     
-define ('CONTENTITEM_ENTITY','Entities\Base\ContentItem');
-define ('CONTENTITEM_TRANSLATION_ENTITY','Entities\Base\ContentItemTranslation');
+define ('CONTENTITEM_ENTITY','Entity\Base\ContentItem');
+define ('CONTENTITEM_TRANSLATION_ENTITY','Entity\Base\ContentItemTranslation');
 class FormController extends Object
 {
 	/**
@@ -368,7 +367,7 @@ class FormController extends Object
             {
                 if (array_key_exists($field, $_REQUEST))
                 {
-                    $instance = new Entities\Base\ContentItemTranslation;
+                    $instance = new Entity\Base\ContentItemTranslation;
                     $instance->field = $field;
                     $instance->translation = $_REQUEST[$field];
                     $instance->lang = $_REQUEST["lang"];
@@ -554,7 +553,7 @@ class FormController extends Object
 	 */
     public function save($entity = null, $update=false)
     {
-		# convert to namespace form: Entities.Base.Account => Entities\Base\Account
+		# convert to namespace form: Entity.Base.Account => Entity\Base\Account
         $entity = str_replace(".", "\\", $entity);
         $doctrine = $this->getManager('doctrine2');
         $connection = $doctrine->getConnection();
@@ -577,6 +576,7 @@ class FormController extends Object
 		}
 		
 		# if the entity implements ITranslatable interface
+		/*
 		if ($instance instanceof ITranslatable)
 		{
             izlog("Saving translation for ".$entity);
@@ -588,6 +588,7 @@ class FormController extends Object
             $errors = array_merge($errors, $translationErrors);
             
 		}
+		*/
 		if(!empty($errors))
         {
 			$render->setSuccess(false);
@@ -681,13 +682,14 @@ class FormController extends Object
             }
             
             # save the translation
+			/*
             if ($instance instanceof ITranslatable)
             {
                 # only assign translation during creation, not update
                 if (!$update) $translationInstance->addOwner($instance);
                 $em->persist($translationInstance);
             }
-            
+            */
             
             $em->flush();
             $em->commit('T3');
@@ -841,13 +843,14 @@ class FormController extends Object
 					if ($field !== "discr")
 						$instance->$field = $fieldValue;
 				}
+				/*
 				if ($instance instanceof ITranslatable)
         		{
                     # save the translated fields in Translation table
                     $r = $this->retrieveDefaultTranslation($instance);
                     $translationInstance = $r[0];                   
         		}
-				
+				*/
 				$doctrine->save($instance);
 				# save the translation
                 if ($instance instanceof ITranslatable)
@@ -861,7 +864,7 @@ class FormController extends Object
 		}	
 		$doctrine->commit();
 	}
-	public function testVersion($entity='Entities\SimpleCms\SimpleCmsArticle')
+	public function testVersion($entity='Entity\SimpleCms\SimpleCmsArticle')
 	{
         $doctrine = $this->getManager('doctrine2');
 		$instance = $doctrine->getRecordById($entity, 1);
@@ -873,7 +876,7 @@ class FormController extends Object
 		$doctrine->revert($instance,1);
 		   
 	}
-	public function test($entity='Entities\SimpleCms\SimpleCmsArticle')
+	public function test($entity='Entity\SimpleCms\SimpleCmsArticle')
 	{
 		$s = Strings::slugize(Vietnamese::unaccent("Nguyễn Hữu Thành"));
 		var_dump($s);
