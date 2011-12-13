@@ -2,7 +2,7 @@
 /**
  * Master setings for the system
  */
-config( '.root.debug', true );
+config( '.root.debug', false );
 config( '.root.development', true );
 config( '.root.multisites', false );
 config( '.root.site_id', 0);
@@ -24,6 +24,7 @@ config( '.root.proxy_folder', 'Proxies');
  */
 config( '.root.default_locale', 'all' );
 config( '.root.default_lang', 'en-US' );
+config( '.root.available_lang', array('en-US'=>'English','vi-VN'=>'Tiếng Việt'));
 
 /**
  * Boot Plugins to Load

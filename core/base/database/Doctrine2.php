@@ -92,9 +92,15 @@ class izDoctrine extends Object
 		$this->config->setAutoGenerateProxyClasses(ENVIRONMENT == 'development');
 		// Event Manager
 		$evm = new \Doctrine\Common\EventManager();
+		// timestampable
+		$evm->addEventSubscriber(new \Gedmo\Timestampable\TimestampableListener());
+		// tree
+		$evm->addEventSubscriber(new \Gedmo\Tree\TreeListener());
+		// sluggable
+		$evm->addEventSubscriber(new \Gedmo\Sluggable\SluggableListener());
 		// Tranlatable Listener
 		$translatableListener = new \Gedmo\Translatable\TranslationListener();
-		$translatableListener->setTranslatableLocale('en-US');		
+		$translatableListener->setTranslatableLocale(config('root.default_lang'));		
 		$evm->addEventSubscriber($translatableListener);
 		
 		$this->em = EntityManager::create($dbConfig, $this->config, $evm);

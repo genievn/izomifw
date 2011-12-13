@@ -1,7 +1,189 @@
 <?php
 define('CATEGORY_CODENAME','base.article.category');
+use Entity\Cms\ArticleCategory;
+use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 class ArticleController extends Object {
+	/**
+	 * Get the Submodules of this Module
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function getSubmodules()
+	{
+		$render = $this->getTemplate('submodules');
+		return $render;
+	}
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function categoryTree()
+	{
+		$render = $this->getTemplate('category_tree');
+		$this->getManager( 'html' )->addCss( locale( 'jslibs/dojo/dojox/grid/resources/claroGrid.css', true ));
+		$this->getManager( 'html' )->addCss( locale( 'jslibs/dojo/dojox/grid/resources/Grid.css', true ));
+		
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$repo = $em->getRepository('Entity\Cms\ArticleCategory');
+		$tree = $repo->childrenHierarchy(null, $direct=true,$html=true, $options=array(
+			
+		));
+		return $render;
+	}
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function categoryGrid()
+	{
+		
+	}
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function categoryTreeJsonData($lang = null)
+	{
+		if (!$lang) $lang = config('root.current_lang');
+		$render = $this->getTemplate('json');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$repo = $em->getRepository('Entity\Cms\ArticleCategory');
+		
+		$tree = $repo->childrenHierarchy();
+		$render->setText('.');
+		$render->setChildren($tree);
+		return $render;
+	}
+	/**
+	 * Form to create a category
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function createCategory()
+	{
+		$render = $this->getTemplate('create_category');
+		// include resources
+		$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ux/treecombo/treecombo.js', true ), true);
+		
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$repo = $em->getRepository('Entity\Cms\ArticleCategory');
+		$categories = $repo->children();
+		$render->setCategories($categories);
+		return $render;
+	}
+	/**
+	 * Save a new category
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function saveCategory()
+	{
+		$render = $this->getTemplate('json');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		
+		$title = $_REQUEST["title"];
+		$parentId = $_REQUEST["parentId"];
+		// find the parent category;
+		if ($parentId)
+		{
+			$parent = $em->find('Entity\Cms\ArticleCategory', $parentId);
+			// loop check
+			
+			if ($parent && $parent->getTitle() == $title) {
+				$render->setSuccess(false);
+				$render->setMessage('Category ('.$title.' existed)');
+				return $render;
+			}			
+		}
+		
+		$category = new ArticleCategory();
+		$category->setTitle($title);
+		// if a parent is specified
+		if ($parent) $category->setParent($parent);
+		
+		try {
+			$em->persist($category);
+			$em->flush();
+			$render->setSuccess(true);
+			$render->setMessage('Category ('.$title.') saved');
+		}catch(Exception $e){
+			$render->setSuccess(false);
+			$render->setMessage('Error while saving category ('.$title.'): ' . $e->getMessage());
+		}
+		return $render;
+	}
+	/**
+	 * Reorder the category, should be called to return json
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function reorderCategory()
+	{
+		$sourceId = $_REQUEST["sourceId"];
+		$targetId = $_REQUEST["targetId"];
+		$position = $_REQUEST["position"];
+		$render = $this->getTemplate('json');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$repo = $em->getRepository('Entity\Cms\ArticleCategory');
+		if ($sourceId) $source = $em->find('Entity\Cms\ArticleCategory', $sourceId);
+		if ($targetId) $target = $em->find('Entity\Cms\ArticleCategory', $targetId);
+		switch ($position) {
+			case 'append':
+				// make target to be source's parent
+				if ($target) $source->setParent($target); else $source->setParent(null);
+				try {					
+					$em->persist($source);
+					$em->flush();
+					
+					$render->setSuccess(true);
+					if ($target)
+						$render->setMessage('Category ('.$source->getTitle().') has new parent ('.$target->getTitle().')');
+					else
+						$render->setMessage('Category ('.$source->getTitle().') has new parent (root)');
+					return $render;
+				} catch (Exception $e) {
+					$render->setSuccess(false);
+					$render->setMessage('Error while setting new parent ('.$target->getTitle().') for category ('.$source->getTitle().')');
+					return $render;
+				}
+				break;
+			case 'after':
+				// move the
+				 
+				break;
+			default:
+				# code...
+				break;
+		}
+	}
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function editCategory($categoryId)
+	{
+		if (!$categoryId) return false;
+		$render = $this->getTemplate('edit_category');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$category = $em->find('Entity\Cms\ArticleCategory', $categoryId);
+		if(!$category) return false;
+		
+		$render->setCategory($category);
+		return $render;
+	}	
     public function createArticleForNodeId($id)
     {
         $render = $this->getTemplate('create_article');

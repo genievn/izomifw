@@ -45,7 +45,6 @@ $annotationDriver = new Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, ar
 $chain->addDriver($annotationDriver, 'Gedmo\\Translatable\\Entity');
 $chain->addDriver($annotationDriver, 'Gedmo\\Loggable\\Entity');
 $chain->addDriver($annotationDriver, 'Gedmo\\Tree\\Entity');
-//$chain->addDriver($annotationDriver, 'Entity\\Base');
 $chain->addDriver($annotationDriver, 'Entity');
 
 $config->setMetadataDriverImpl($chain);

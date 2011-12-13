@@ -1,5 +1,5 @@
 <?php
-config( '.layout.template','admin');
+config( '.layout.template','extjs-admin');
 #config( '.layout.banner.1',array('module'=>'theme','method'=>'extjsThemeSwitcher'));
 config( '.root.action.module', 'dashboard' );
 config( '.root.action.method', '' );

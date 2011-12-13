@@ -23,64 +23,6 @@ function FormResult(result) {
         alert(result.message);        
     }
 }
-
-var maxAjaxCalls = 5;
-var currentAjaxCalls = new Array();
- 
-function Post(path, request, callbackFunction) {
-    //increment current ajax calls.
-    currentAjaxCalls[currentAjaxCalls.length] = path;
-    //make sure hasn't gone over max ajax calls.
-    var numAjaxCall = NumAjaxCalls(path);
-    if (numAjaxCall <= maxAjaxCalls) {
-        if (numAjaxCall > 1) {
-            console.debug("Invoking " + path + " ajax call for try #" + numAjaxCall);
-        }
-        dojo.xhrPost({
-            url: '<iz:insert:url/>' + path,
-            handleAs: 'json',
-            timeout: 60000,
-            content: request,
-            contentType: "application/x-www-form-urlencoded",
-            load: function(result) { PostSuccess(result, path, callbackFunction); },
-            error: function(error, args) { AjaxError(error, args, path, request, callbackFunction); }
-        });
-    }
-    else {
-        console.debug("Tried to make " + path + " ajax call " + maxAjaxCalls + " times but failed!");
-    }
-}
- 
-function NumAjaxCalls(path) {
-    var numAjaxCalls = 0;
-    for (var k = 0; k < currentAjaxCalls.length; k++) {
-        if (currentAjaxCalls[k] == path) {
-            numAjaxCalls++;
-        }
-    }
-    return numAjaxCalls;
-}
- 
-function PostSuccess(result, path, callbackFunction) {
-    //remove path from array.
-    for (var k = 0; k < currentAjaxCalls.length; k++) {
-        if (currentAjaxCalls[k] == path) {
-            currentAjaxCalls.splice(k, 1);
-            k--;
-        }
-    }
-    //invoke callback function.
-    callbackFunction(result);
-}
- 
-function AjaxError(error, args, path, request, callbackFunction) {
-    //show error message.
-    console.debug("ajax error: " + error.message + " " + error.responseText);
-    //console.debug(error);
-    //try ajax call again in 1 second.
-    //window.setTimeout(function() { Post(path, request, callbackFunction); }, 1000);
-}
-
 </script>
 <div id="loginBanner"></div>
 <div id="loginPanel">

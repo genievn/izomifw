@@ -94,7 +94,7 @@
 		
 		public function loginForm($username = null, $remember = null, $nextAction = null)
 		{			
-			//$this->getManager('auth')->includeResources("loginForm");
+			$this->getManager('auth')->includeResources("loginForm");
 			config('.layout.template','login');
 			$render = $this->getTemplate('login_form');
 			$render->setNextAction(config("root.uri").$this->getNextActionUri($nextAction));

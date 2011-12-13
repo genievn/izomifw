@@ -10,7 +10,7 @@ class DashboardController extends Object
 	public function addMeta()
 	{
 		izlog('meta called');
-		$this->getManager('izojs')->addLib('dojo');
+		$this->getManager('izojs')->addLib('extjs');
 	}
 } // END class 
 ?>
