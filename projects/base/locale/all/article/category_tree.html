@@ -1,0 +1,65 @@
+<?php 
+function processHtmlTree($parent_node, $html_decorator, $html_output)
+{
+    if (is_array($parent_node)) {
+        $html_output .= $html_decorator['root']['open'];
+        foreach ($parent_node as $item) {
+             $html_output .= $html_decorator['child']['open'] . $item[$html_decorator['represents']];
+            if (count($item['children']) > 0) {
+                $html_output = $this->processHtmlTree($item['children'], $html_decorator, $html_output);
+            }
+            $html_output .= $html_decorator['child']['close'];
+        }
+        $html_output .= $html_decorator['root']['close'];
+    }
+
+    return $html_output;
+}
+?>
+
+<script type="text/javascript">
+	dojo.require("dojox.grid.TreeGrid");
+	dojo.require("dojo.data.ItemFileWriteStore");
+	dojo.require("dojo.parser");
+	
+	dojo.addOnLoad(function(){
+		var g = new dojox.grid.TreeGrid({
+			structure: [ 
+				{ cells: [[ 
+						{ field: "title", name: "Title" }
+					]] 
+				}					
+			],
+			store: jsonStore,
+			query: {id: '*'},
+			queryOptions: {deep: true},
+			rowSelector: true
+		}, dojo.byId("categoryTreeGrid"));
+		dojo.addClass(g.domNode, "grid");
+		g.startup();
+		dojo.connect(window, "onresize", g, "resize");
+	});
+	
+	/*
+	dojo.addOnLoad(function(){
+		var layout = [
+			{ name: "Title", field: "title", width: "auto" }
+		];
+		var treeModel = new dijit.tree.ForestStoreModel({
+			store: jsonStore,
+			query: { id: 1 },
+			rootId: 'items',
+			rootLabel: 'Root',
+			childrenAttrs: ['children']
+		});
+		var grid = new dojox.grid.TreeGrid({
+			treeModel: treeModel,
+			structure: layout,
+			defaultOpen: true
+		}, 'categoryTreeGrid');
+		grid.startup();
+		dojo.connect(window, "onresize", grid, "resize");
+	});*/
+</script>
+<span dojoType="dojo.data.ItemFileWriteStore" jsId="jsonStore" url="<iz:insert:url/><iz:insert:config path="root.url_json"/>article/categoryTreeJsonData"></span>
+<div id="categoryTreeGrid"></div>

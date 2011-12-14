@@ -1,0 +1,199 @@
+<script type="text/javascript">
+Ext.require([
+    'Ext.data.*',
+    'Ext.grid.*',
+    'Ext.tree.*'
+]);
+
+Ext.onReady(function(){
+    Ext.QuickTips.init();
+    Ext.form.Field.prototype.msgTarget = 'side';
+ 	//we want to setup a model and store instead of using dataUrl
+	Ext.define('CategoryModel', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {name: 'title',	type: 'string'}
+			,{name: 'slug',	type: 'string'}
+	    ]
+	});
+	// store for combobox
+	var store = Ext.create('Ext.data.TreeStore', {        
+		model: 'CategoryModel',
+		folderSort: true
+		, proxy: {
+			type: 'ajax',
+			url: '/<iz:insert:config path="root.url_json"/>article/categoryTreeJsonData/'
+		}
+	});
+	// store for treegrid
+	var store2 = Ext.create('Ext.data.TreeStore', {        
+		model: 'CategoryModel'
+		, root: {
+            title: '/',
+            id: 'root',
+            expanded: true
+		}
+		, proxy: {
+			type: 'ajax',
+			url: '/<iz:insert:config path="root.url_json"/>article/categoryTreeJsonData/'
+		}
+	});
+	//store.load();
+    
+	var form = new Ext.FormPanel({
+		//renderTo: 'categoryPanel',
+	    labelWidth:  85,
+		collapsible: true,
+	    frame:true,
+	    title: 'Category Form',
+	    bodyStyle:'padding:10px 10px 0',
+	    defaults: {width: 250},
+	    defaultType: 'textfield',
+		
+	    items: [{
+	            fieldLabel: 'Title',
+	            name: 'title',
+	            allowBlank:false
+	        }, {
+				xtype: 'hidden',
+				name: 'parentId',
+				id: 'parentId'
+			}, {
+	            fieldLabel: 'Parent category'
+	            , xtype: 'treecombo'				
+				, name: 'parent'
+				, width: 240
+				, treeWidth: 240
+				, store: store 
+				, displayField: 'title'
+				, valueField: 'id'	
+				, listeners:{
+				    valueSelected: function(picker, value){
+						Ext.getCmp('parentId').setValue(value);
+					}
+				 }
+	        }
+	    ],
+
+	    buttons: [{
+	        text: 'Save',
+			type: 'submit', 
+	        scope: this, 
+	        handler: function() {  
+	            form.submit({ 
+	                method: 'POST', 
+	                url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>article/saveCategory', 
+	                success: function(f, a) {
+						alert(a.result.message);
+						window.location.href = '<iz:insert:uri/>article/createCategory';
+	                },             
+	                failure: function(f, a) {  
+	                    //f.markInvalid(a.result.errors);
+						alert(a.result.message);
+	                }             
+	            }) 
+	        }
+	    },{
+	        text: 'Cancel'
+	    }]
+	});
+	form.render('categoryPanel');
+	
+	var cmenu = new Ext.menu.Menu({
+        items: [{
+            text: 'Edit'
+			,handler: function(){
+				console.log(grid.getSelectionModel().getLastSelected().data.id);
+			}
+        }]
+    });
+
+	// grid displays categories in hierachy
+	
+	var grid = Ext.create('Ext.tree.Panel', {
+        title: 'Category',
+		viewConfig: {
+            plugins: {
+                ptype: 'treeviewdragdrop'
+				, enableSort : false
+            }
+			, listeners: {
+	            drop: function (node, data, overModel, dropPosition) {
+					var sourceId = grid.getSelectionModel().getLastSelected().data.id;
+					var targetId = overModel.data.id;
+					console.log('from ' + sourceId);
+					console.log('to ' + targetId);
+					
+					Ext.Ajax.request({ 
+                        url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>article/reorderCategory',  
+                        method: 'POST', 
+                        params:{sourceId:sourceId, targetId:targetId, position: dropPosition},
+						success: function(response, opts) {
+					    	var obj = Ext.decode(response.responseText);
+					    	console.dir(obj);
+						},
+					   	failure: function(response, opts) {
+					   		console.log('server-side failure with status code ' + response.status);
+					   	}
+                    });
+                    //console.log(data.records[0].data.parentId);
+                    //console.log(grid.getSelectionModel().getLastSelected().data.id);
+					//console.log(dropId);
+
+				}
+	        }
+        },
+		dockedItems: [{
+            xtype: 'toolbar',
+            items: [{
+                text: 'Expand All',
+                handler: function(){
+                    tree.expandAll();
+                }
+            }, {
+                text: 'Collapse All',
+                handler: function(){
+                    tree.collapseAll();
+                }
+            }]
+        }],
+        collapsible: true,
+        useArrows: true,
+        rootVisible: true,
+        store: store2,
+        multiSelect: true,
+        singleExpand: false,
+		split: false,
+		expandAll: true,
+		//height: 500,
+        height: 500,
+		//autoScroll:true,
+		//the 'columns' property is now 'headers'
+        columns: [{
+            xtype: 'treecolumn', //this is so we know which column will show the tree
+            text: 'Category',
+            //flex: 2,
+            sortable: true,
+            dataIndex: 'title'
+        }]
+		,tools:[{
+			id: 'expandAll',
+			text: 'Expand All',
+			handler: function(){}
+		}]
+		
+    });
+	grid.render('categoryGrid');
+	
+	// add context menu to grid
+	
+	grid.on('itemcontextmenu', function(view, record, item, index, event){
+        cmenu.showAt(event.getXY());
+        event.stopEvent();
+    },this);
+	
+});
+</script>
+<div id="categoryPanel"></div>
+<br/>
+<div id="categoryGrid"></div>
