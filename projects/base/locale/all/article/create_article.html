@@ -1,149 +1,65 @@
-<?php
-$type = $this->getTreeType();
-?>
-
+<script type="text/javascript" src="<iz:insert:url/>libs/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<iz:insert:url/>libs/ckeditor/ckeditor_ext.js"></script>
 <script type="text/javascript">
+Ext.require([
+    'Ext.form.*',
+    'Ext.window.*'
+]);
+
 Ext.onReady(function(){
-    
-    var nodes = new Ext.ux.TreeCombo({
-			fieldLabel : 'Category',
-			treeWidth: 300,
-			hiddenName : 'parent_id',
-			rootVisible : true,  
-            root : new Ext.tree.AsyncTreeNode({  
-                        text :'/',  
-                        expanded : true,
-                        id: '0'
-                    }),
-			dataUrl : '<iz:insert:url/><iz:insert:config path="root.response.plain"/>tree/getTreeNodeByCodename/<?php echo $type->codename;?>'
-		});
-    nodes.treePanel.loader.on('beforeload', function(loader, node) {nodes.treePanel.loader.dataUrl = '<iz:insert:url/><iz:insert:config path="root.response.plain"/>tree/getTreeNode/<?php echo $type->codename;?>';});
-	nodes.treePanel.expandAll();
-	
-	
-    var fp = new Ext.FormPanel({
-        labelWidth:  100,
-        renderTo: 'entity-article',
-        frame: true,
-        title: 'Create Article',
-        bodyStyle:'padding:10px 10px 0',
+	Ext.QuickTips.init();
+    Ext.form.Field.prototype.msgTarget = 'side';
+	var form = new Ext.FormPanel({
         defaultType: 'textfield',
-        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />article/saveArticle/', 
-        method: 'POST',
-        id: 'form-article',
+        id: "articleform",
+		frame:true,
+		border: false,
         items: [
-            nodes,
             {
-                fieldLabel: 'Title',
-                name: 'title',
-                allowBlank: false
-                //, helpText: 'The title should be a string without spaces'
-            }            
-            ,{ 
-                xtype: 'ckeditor', 
-                fieldLabel: 'Summary', 
-                name: 'summary',
-                width: 500,
-                CKConfig: { 
-                    // Enter your CKEditor config paramaters here or define a custom CKEditor config file.
-                    //customConfig : ckeditorConfig,         
-                    toolbar: 'Basic', 
-                    skin: 'office2003',
-                    height : 200,
-                    filebrowserBrowseUrl: "<iz:insert:uri/>/files/filemanager/"
-                }
+                fieldLabel: "Title",
             }
-            ,{ 
-                xtype: 'ckeditor', 
-                fieldLabel: 'Body', 
-                name: 'body',
-                width: 500,
-                CKConfig: { 
-                    // Enter your CKEditor config paramaters here or define a custom CKEditor config file.
-                    //customConfig : ckeditorConfig,         
-                    toolbar: 'Full', 
-                    skin: 'office2003',
-                    height : 200,
-                    filebrowserBrowseUrl: "<iz:insert:uri/>/files/filemanager/"
-                } 
-            }
-            ,{
-                xtype:'fieldset',
-                //checkboxToggle:true,
-                title: 'Advanced',
-                autoHeight:true,
-                defaultType: 'textfield',
-                collapsed: true,
-                collapsible: true,
-                items :[
-                    {
-                        fieldLabel: 'Suptitle'
-                        , helpText: 'The title which is displayed under the main Title'
-                        , name: 'subtitle'
-                    },{
-                        fieldLabel: 'Supertitle'
-                        , helpText: 'The title which is displayed above the main Title'
-                        , name: 'supertitle'
-                    },{
-                        fieldLabel: 'Published Date',
-                        name: 'published_on',
-                        xtype: 'datefield'
-                    },{
-                        fieldLabel: 'Expired Date',
-                        name: 'expired_on'                        
-                    },{
-                        fieldLabel: 'Source',
-                        
-                        name: 'source'
-                    }, {
-                        fieldLabel: 'Email',
-                        name: 'email',
-                        vtype:'email'
-                    }
-                ]
+			,{
+                fieldLabel: "Content",
+				xtype: "ckeditor",
+				CKConfig: {
+					//customConfig : '<iz:insert:url/>libs/ckeditor/config.js', 
+					toolbar: 'Full',
+					filebrowserBrowseUrl : '<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php',
+					//filebrowserUploadUrl : '<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php',
+					skin: 'kama',
+					baseHref : "<iz:insert:url/>"
+				},
+				height: 500,
+				width: 800,
+                value: "hoi"
             }
         ],
-
-        buttons: [{
-            text: 'Save'
-            , handler: function()
-            {
-                var form = Ext.getCmp('form-article').getForm();
-                if(form.isValid()){
-                    form.submit({
-                        loadMask: true,
-                        success: function(form,action) {
-                            window.location = '<iz:insert:uri/>' + action.result.redirect;
-                        },
-                        failure: function(form,action){
-                            Ext.MessageBox.alert('Error',action.result.msg);
-                        }
-                    });
-                }
-            }
-        },{
-            text: 'Save and New'
-            , handler: function()
-            {
-                var form = Ext.getCmp('form-article').getForm();
-                form.reset();
-            }
-        },{
-            text: 'Cancel'
-            , handler: function()
-            {
-                location.href = '<iz:insert:uri/>article/listArticle/';
-            }
-        }]
-    });
-
-	
-});
+		buttons: [{
+		    text: "Save",
+		    type: 'submit',
+			scope: this,
+			handler: function() {
+		        form.submit({ 
+	                method: 'POST', 
+	                url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>article/saveArticle', 
+	                success: function(f, a) {
+						alert(a.result.message);
+						window.location.href = '<iz:insert:uri/>article/listArticle';
+	                },             
+	                failure: function(f, a) {  
+	                    //f.markInvalid(a.result.errors);
+						alert(a.result.message);
+	                }             
+	            })
+		    }
+		}]
+	});
+	form.render('articlePanel');
+})
 </script>
-<div class="action-container">
-    <div class="action-header">
-    </div>
-    <div class="entity-container" id="entity-article">
-        
-    </div>
+
+<div id="articlePanel">
+	
 </div>
+<br/>
+<div id="articleGrid"></div>

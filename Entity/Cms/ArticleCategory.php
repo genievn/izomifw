@@ -19,7 +19,6 @@ class ArticleCategory
 
     /**
 	 * @Gedmo\Translatable
-	 * @Gedmo\Sluggable
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
@@ -71,8 +70,8 @@ class ArticleCategory
 
     /**
      * @Gedmo\Translatable
-     * @Gedmo\Slug
-     * @ORM\Column(name="slug", type="string", length=128)
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
      */
     private $slug;
 

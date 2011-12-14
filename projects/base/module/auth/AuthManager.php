@@ -11,13 +11,13 @@
 				/**
 				 * file resources for LoginDialog
 				 */
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ux/logindialog/overrides.js', true ), $footer );
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ux/iconcombo/IconCombo.js', true ), $footer );
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ux/logindialog/LoginDialog.js', true ), $footer );
-				$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ux/logindialog/overrides.js', true ), $footer );
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/ux/logindialog/flags.css', true ));
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/ux/iconcombo/IconCombo.css', true ));
-				$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/ux/logindialog/LoginDialog.css', true ));
+				$this->getManager( 'html' )->addJs( config('root.url').'libs/extjs/ux/logindialog/overrides.js', $footer );
+				$this->getManager( 'html' )->addJs( config('root.url').'libs/extjs/ux/iconcombo/IconCombo.js', $footer );
+				$this->getManager( 'html' )->addJs( config('root.url').'libs/extjs/ux/logindialog/LoginDialog.js', $footer );
+				$this->getManager( 'html' )->addJs( config('root.url').'libs/extjs/ux/logindialog/overrides.js', $footer );
+				$this->getManager( 'html' )->addCss( config('root.url').'libs/extjs/ux/logindialog/flags.css');
+				$this->getManager( 'html' )->addCss( config('root.url').'libs/extjs/ux/iconcombo/IconCombo.css');
+				$this->getManager( 'html' )->addCss( config('root.url').'libs/extjs/ux/logindialog/LoginDialog.css');
 				break;
 			
 			default:

@@ -16,46 +16,73 @@ class Article
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 	/**
 	 * @Gedmo\Translatable
 	 * @ORM\Column(name="title", type="string", length=128)
 	 */
-	protected $title;
+	private $title;
 	/**
 	 * @Gedmo\Translatable
-	 * @ORM\Column(name="sub_title", type="string", length=128)
+	 * @ORM\Column(name="sub_title", type="string", length=128, nullable: true)
 	 */
-	protected $sub_title;
+	private $sub_title;
 	/**
 	 * @Gedmo\Translatable
-	 * @ORM\Column(name="description", type="text")
+	 * @ORM\Column(name="description", type="text", nullable: true)
 	 */
-	protected $description;
-	
+	private $description;
 	/**
 	 * @Gedmo\Translatable
 	 * @ORM\Column(name="content", type="text")
 	 */
-	protected $content;
-	
+	private $content;
+	/**
+	 * @ORM\Column(name="author", type="string", length=128, nullable: true)
+	 */
+	private $author;
+	/**
+     * @ORM\Column(name="status", type="integer", nullable=true)
+     */
+    private $status;
+	/**
+     * @ORM\Column(name="num_views", type="integer", nullable=true)
+     */
+    private $num_views;
+	/**
+     * @ORM\Column(name="allow_comment", type="boolean", nullable=false)
+     */
+    private $allow_comment;
 
+	/**
+     * @ORM\Column(name="num_comments", type="integer", nullable=true)
+     */
+    private $num_comments;
+	/**
+     * @ORM\Column(name="is_sticky", type="boolean", nullable=false)
+     */
+    private $is_sticky;
+	/**
+     * @ORM\Column(name="is_hot", type="boolean", nullable=false)
+     */
+    private $is_hot;
+	
 /*
-	protected $author;
-	protected $image_avatar;
-	protected $status;
-	protected $num_views;
-	protected $allow_comment;
-	protected $num_comments;
-	protected $article_type;
-	protected $is_sticky;
-	protected $published_on;
-	protected $expired_on;
-	protected $created_on;
-	protected $last_updated_on;
-	protected $created_by;
-	protected $last_updated_by;
-	protected $created_username;
+	private $author;
+	private $image_avatar;
+	private $status;
+	private $num_views;
+	private $allow_comment;
+	private $num_comments;
+	private $article_type;
+	private $is_sticky;
+	private $published_on;
+	private $expired_on;
+	private $created_on;
+	private $last_updated_on;
+	private $created_by;
+	private $last_updated_by;
+	private $created_username;
 	*/
 }
 

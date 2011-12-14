@@ -13,7 +13,7 @@ config( '.root.config_folder', 'config' );
 config( '.root.cache_folder', 'cache' );
 config( '.root.locale_folder', 'locale' );
 config( '.root.share_folder', 'extra'.DIRECTORY_SEPARATOR.'share' );
-config( '.root.upload_folder', 'extra'.DIRECTORY_SEPARATOR.'uploaded');
+config( '.root.upload_folder', 'uploaded');
 config( '.root.temp_folder','tmp' );
 config( '.root.app_folders.0', 'projects'.DIRECTORY_SEPARATOR.'base' );
 config( '.root.log_folder', 'logs');

@@ -21,6 +21,23 @@ class ArticleController extends Object {
 	 * @return void
 	 * @author Thanh Nguyen
 	 **/
+	public function createArticle($lang = null)
+	{
+		$render = $this->getTemplate('create_article');
+		
+		return $render;
+	}
+	
+	public function saveArticle()
+	{
+		
+	}
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
 	public function categoryTree()
 	{
 		$render = $this->getTemplate('category_tree');
@@ -71,8 +88,9 @@ class ArticleController extends Object {
 	public function createCategory()
 	{
 		$render = $this->getTemplate('create_category');
+		$root_url = config('root.url');
 		// include resources
-		$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ux/treecombo/treecombo.js', true ), true);
+		$this->getManager( 'html' )->addJs( $root_url . 'libs/extjs/ux/treecombo/treecombo.js', true);
 		
 		$em = $this->getManager('doctrine2')->getEntityManager();
 		$repo = $em->getRepository('Entity\Cms\ArticleCategory');
@@ -158,9 +176,26 @@ class ArticleController extends Object {
 					return $render;
 				}
 				break;
+			case 'before':
 			case 'after':
-				// move the
-				 
+				// move the				
+				try {
+					if ($position == 'after')
+						$repo->persistAsNextSiblingOf($source, $target);				
+					else 
+						$repo->persistAsPrevSiblingOf($source, $target);
+					//$em->persist($source);
+					$em->flush();
+					
+					$render->setSuccess(true);
+					if ($target)
+						$render->setMessage('Category ('.$source->getTitle().') has been moved '.$position.' ('.$target->getTitle().')');
+					return $render;
+				} catch (Exception $e) {
+					$render->setSuccess(false);
+					$render->setMessage('Error while moving ('.$source->getTitle().') '.$position.' ('.$target->getTitle().'):'.$e->toString());
+					return $render;
+				} 
 				break;
 			default:
 				# code...
@@ -192,7 +227,7 @@ class ArticleController extends Object {
         $render->setTreeType($type);
         return $render;
     }
-    
+    /*
     public function createArticle()
     {
         $render = $this->getTemplate('create_article');
@@ -201,7 +236,7 @@ class ArticleController extends Object {
         $render->setTreeType($type);
         return $render;
     }
-
+	*/
 
     public function viewProcess($id)
     {

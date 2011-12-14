@@ -31,8 +31,8 @@ class IzojsManager extends Object
 	 **/
 	public function addLibExtJS($version = '4',$footer = false)
 	{
-		$this->getManager( 'html' )->addJs( locale( 'jslibs/extjs/ext-all.js', true ), $footer );
-		$this->getManager( 'html' )->addCss( locale( 'jslibs/extjs/resources/css/ext-all.css', true ));
+		$this->getManager( 'html' )->addJs( config('root.url').'libs/extjs/ext-all.js', $footer );
+		$this->getManager( 'html' )->addCss( config('root.url').'libs/extjs/resources/css/ext-all.css');
 		/**
 		 * Setting this if using different themes
 		 */
