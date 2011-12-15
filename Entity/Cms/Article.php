@@ -24,12 +24,12 @@ class Article
 	private $title;
 	/**
 	 * @Gedmo\Translatable
-	 * @ORM\Column(name="sub_title", type="string", length=128, nullable: true)
+	 * @ORM\Column(name="sub_title", type="string", length=128, nullable=true)
 	 */
 	private $sub_title;
 	/**
 	 * @Gedmo\Translatable
-	 * @ORM\Column(name="description", type="text", nullable: true)
+	 * @ORM\Column(name="description", type="text", nullable=true)
 	 */
 	private $description;
 	/**
@@ -38,7 +38,7 @@ class Article
 	 */
 	private $content;
 	/**
-	 * @ORM\Column(name="author", type="string", length=128, nullable: true)
+	 * @ORM\Column(name="author", type="string", length=128, nullable=true)
 	 */
 	private $author;
 	/**
@@ -53,7 +53,6 @@ class Article
      * @ORM\Column(name="allow_comment", type="boolean", nullable=false)
      */
     private $allow_comment;
-
 	/**
      * @ORM\Column(name="num_comments", type="integer", nullable=true)
      */
@@ -66,6 +65,25 @@ class Article
      * @ORM\Column(name="is_hot", type="boolean", nullable=false)
      */
     private $is_hot;
+	/**
+     * @ORM\Column(name="show_comments", type="boolean", nullable=false)
+     */
+    private $show_comments;
+	/**
+     * @var datetime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime $updated
+     *
+     * @ORM\Column(type="datetime")
+     * @Gedmo\Timestampable(on="update")
+     */
+    private $updated;
 	
 /*
 	private $author;
@@ -86,3 +104,7 @@ class Article
 	*/
 }
 
+final class ArticleStatus {
+	const DRAFT = 0;
+	const PUBLISHED = 100;
+}

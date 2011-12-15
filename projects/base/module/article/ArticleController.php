@@ -24,7 +24,8 @@ class ArticleController extends Object {
 	public function createArticle($lang = null)
 	{
 		$render = $this->getTemplate('create_article');
-		
+		// include resources
+		$this->getManager( 'html' )->addJs( config('root.url') . 'libs/extjs/ux/treecombo/treecombo.js', true);
 		return $render;
 	}
 	

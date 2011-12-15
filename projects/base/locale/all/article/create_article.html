@@ -1,39 +1,205 @@
 <script type="text/javascript" src="<iz:insert:url/>libs/ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="<iz:insert:url/>libs/ckeditor/ckeditor_ext.js"></script>
 <script type="text/javascript">
+Ext.define('Ext.ux.FileSelector', {
+    extend: 'Ext.form.field.Trigger',
+    alias: 'widget.fileselector',
+    // override onTriggerClick
+    onTriggerClick: function() {
+		var me = this;
+		console.log(me.inputEl);
+		window.open ("<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php?editor=form&elementId=" + me.inputEl.id);
+    }
+});
+
 Ext.require([
     'Ext.form.*',
-    'Ext.window.*'
+    'Ext.window.*',
+	'Ext.data.*',
+    'Ext.grid.*',
+    'Ext.tree.*'
 ]);
 
 Ext.onReady(function(){
 	Ext.QuickTips.init();
     Ext.form.Field.prototype.msgTarget = 'side';
+	//model & store for look up category
+	Ext.define('CategoryModel', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {name: 'title',	type: 'string'}
+			,{name: 'slug',	type: 'string'}
+	    ]
+	});
+	var store = Ext.create('Ext.data.TreeStore', {        
+		model: 'CategoryModel',
+		folderSort: true
+		, proxy: {
+			type: 'ajax',
+			url: '/<iz:insert:config path="root.url_json"/>article/categoryTreeJsonData/'
+		}
+	});
+	
+	//article form
 	var form = new Ext.FormPanel({
         defaultType: 'textfield',
         id: "articleform",
 		frame:true,
 		border: false,
-        items: [
-            {
-                fieldLabel: "Title",
-            }
-			,{
-                fieldLabel: "Content",
-				xtype: "ckeditor",
-				CKConfig: {
-					//customConfig : '<iz:insert:url/>libs/ckeditor/config.js', 
-					toolbar: 'Full',
-					filebrowserBrowseUrl : '<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php',
-					//filebrowserUploadUrl : '<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php',
-					skin: 'kama',
-					baseHref : "<iz:insert:url/>"
+		title: 'Article',
+        items: [{
+            xtype:'fieldset',
+            title: 'Main Information',
+            defaultType: 'textfield',
+            collapsible: true,
+            layout: 'anchor',
+            defaults: {
+                anchor: '90%'
+            },
+            items :[
+				{
+					xtype: 'hidden',
+					name: 'parentId',
+					id: 'parentId'
 				},
-				height: 500,
-				width: 800,
-                value: "hoi"
-            }
-        ],
+				{
+		            fieldLabel: 'Category'
+		            , xtype: 'treecombo'				
+					, name: 'parent'
+					, anchor: '100%'
+					, treeWidth: 240
+					, store: store 
+					, displayField: 'title'
+					, valueField: 'id'	
+					, listeners:{
+					    valueSelected: function(picker, value){
+							Ext.getCmp('parentId').setValue(value);
+						}
+					 }
+		        },
+				{
+
+	                fieldLabel: "Title",
+					name: 'title',
+					anchor: '100%',
+					allowBlank: false
+	            }
+				,{
+	                fieldLabel: "Content",
+					xtype: "ckeditor",
+					name: 'content',
+					CKConfig: {
+						//customConfig : '<iz:insert:url/>libs/ckeditor/config.js', 
+						toolbar: 'Full',
+						filebrowserBrowseUrl : '<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php',
+						//filebrowserUploadUrl : '<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php',
+						skin: 'kama',
+						baseHref : "<iz:insert:url/>"
+					},
+					height: 500
+	            }]
+        },{
+			xtype: 'fieldset',
+			title: 'Thumbnail',
+			defaultType: 'textfield',
+			collapsible: true,
+			collapsed: true,
+			layout: 'anchor',
+			defaults: {
+				anchor: '100%'
+			},
+			items: [{
+				fieldLabel: 'Image',
+				name: 'image',
+				xtype: 'fileselector'
+			}]
+		
+		},{
+			xtype: 'fieldset',
+			title: 'Date & Time',
+			collapsible: true,
+			collapsed: true,
+			layout: 'column',
+			defaults: {
+				anchor: '100%'
+			},
+			items: [{
+                xtype: 'container',
+                columnWidth:.5,
+                items: [{
+                    xtype:'datefield',
+                    fieldLabel: 'Published date',
+                    name: 'published_date',
+                    anchor:'96%'
+                }, {
+                    xtype:'datefield',
+                    fieldLabel: 'Expired date',
+                    name: 'expired_date',
+                    anchor:'96%'
+                }]
+            },{
+                xtype: 'container',
+                columnWidth:.5,
+                items: [{
+                    xtype:'timefield',
+                    fieldLabel: 'Published time',
+                    name: 'published_time',
+                    anchor:'100%'
+                },{
+                    xtype:'timefield',
+                    fieldLabel: 'Expired time',
+                    name: 'expired_time',
+                    anchor:'100%'
+                }]
+            }]
+		},{
+			xtype: 'fieldset',
+			title: 'Extra information',
+			defaultType: 'textfield',
+			collapsible: true,
+			collapsed: true,
+			layout: 'anchor',
+			defaults: {
+				anchor: '100%'
+			},
+			items: [{
+				fieldLabel: 'Sub title',
+				name: 'sub_title'
+			},{
+				fieldLabel: 'Author',
+				name: 'author'
+			},{
+	            xtype      : 'fieldcontainer',
+	            fieldLabel : 'Options',
+	            defaultType: 'checkboxfield',
+				layout     : 'hbox',
+				bodyPadding: 10,
+	            items: [
+	                {
+	                    boxLabel  : 'Sticky',
+	                    name      : 'is_sticky',
+	                    inputValue: '1',
+	                    id        : 'cbSticky'
+	                },{xtype: 'splitter'}, {
+	                    boxLabel  : 'Hot',
+	                    name      : 'is_hot',
+	                    inputValue: '1',
+	                    id        : 'cbHot'
+	                },{xtype: 'splitter'}, {
+	                    boxLabel  : 'Allow comments',
+	                    name      : 'allow_comments',
+	                    inputValue: '1',
+	                    id        : 'cbAllowComments'
+	                },{xtype: 'splitter'}, {
+						boxLabel  : 'Show comments',
+						name      : 'show_comments',
+						inputValue: '1',
+						id        : 'cbShowComments'
+					}
+	            ]
+	        }]
+			
+		}],
 		buttons: [{
 		    text: "Save",
 		    type: 'submit',

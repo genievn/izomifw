@@ -13,7 +13,6 @@ function getParameterByName(name)
 
 function selectFile(url)
 {
-	console.log(url);
   if(url != '' )
   {     
       //window.opener.SetUrl( url ) ;
