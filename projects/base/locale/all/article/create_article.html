@@ -59,8 +59,8 @@ Ext.onReady(function(){
             items :[
 				{
 					xtype: 'hidden',
-					name: 'parentId',
-					id: 'parentId'
+					name: 'category_id',
+					id: 'categoryId'
 				},
 				{
 		            fieldLabel: 'Category'
@@ -73,7 +73,7 @@ Ext.onReady(function(){
 					, valueField: 'id'	
 					, listeners:{
 					    valueSelected: function(picker, value){
-							Ext.getCmp('parentId').setValue(value);
+							Ext.getCmp('categoryId').setValue(value);
 						}
 					 }
 		        },
@@ -119,35 +119,32 @@ Ext.onReady(function(){
 			title: 'Date & Time',
 			collapsible: true,
 			collapsed: true,
-			layout: 'column',
 			defaults: {
 				anchor: '100%'
 			},
 			items: [{
-                xtype: 'container',
-                columnWidth:.5,
+                xtype: 'fieldcontainer',
+                layout: 'hbox',
+				fieldLabel: 'Published date',
                 items: [{
                     xtype:'datefield',
-                    fieldLabel: 'Published date',
                     name: 'published_date',
                     anchor:'96%'
                 }, {
-                    xtype:'datefield',
-                    fieldLabel: 'Expired date',
-                    name: 'expired_date',
+                    xtype:'timefield',
+                    name: 'published_time',
                     anchor:'96%'
                 }]
             },{
-                xtype: 'container',
-                columnWidth:.5,
+                xtype: 'fieldcontainer',
+				fieldLabel: 'Expired date',
+                layout: 'hbox',
                 items: [{
-                    xtype:'timefield',
-                    fieldLabel: 'Published time',
-                    name: 'published_time',
+                    xtype:'datefield',
+                    name: 'expired_date',
                     anchor:'100%'
                 },{
                     xtype:'timefield',
-                    fieldLabel: 'Expired time',
                     name: 'expired_time',
                     anchor:'100%'
                 }]
@@ -207,14 +204,23 @@ Ext.onReady(function(){
 			handler: function() {
 		        form.submit({ 
 	                method: 'POST', 
-	                url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>article/saveArticle', 
+	                //url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>article/saveArticle',
+					url: '<iz:insert:uri/>article/saveArticle',  
 	                success: function(f, a) {
 						alert(a.result.message);
 						window.location.href = '<iz:insert:uri/>article/listArticle';
 	                },             
 	                failure: function(f, a) {  
-	                    //f.markInvalid(a.result.errors);
-						alert(a.result.message);
+	                    switch (a.failureType) {
+                            case Ext.form.action.Action.CLIENT_INVALID:
+                                Ext.Msg.alert('Failure', 'Form fields may not be submitted with invalid values');
+                                break;
+                            case Ext.form.action.Action.CONNECT_FAILURE:
+                                Ext.Msg.alert('Failure', 'Ajax communication failed');
+                                break;
+                            case Ext.form.action.Action.SERVER_INVALID:
+                                Ext.Msg.alert('Failure', action.result.msg);
+                        }
 	                }             
 	            })
 		    }

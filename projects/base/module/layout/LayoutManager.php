@@ -76,38 +76,38 @@ class LayoutManager extends Object
     {
         return $this->getManager( 'html' )->getHtmlEnd();
     }
-    
-    public function iz_layout_css( $path=null, $id=null )
+	public function iz_layout_css( $path=null, $id=null )
     {
         if( !$path ) return '';
         
         if( substr( $path, 0, 1 ) == LAYOUT_LOCAL_DIR_MARKER )
-            $path = locale( 'layout'.DIRECTORY_SEPARATOR.config( 'layout.template' ).DIRECTORY_SEPARATOR.'css'.DIRECTORY_SEPARATOR.substr( $path, 1 ).'.css', true );
+            $path = config('root.url').'themes/'.config( 'layout.template' ).'/'.'css'.'/'.substr( $path, 1 ).'.css';
         else
-            $path = locale( str_replace( '.', DIRECTORY_SEPARATOR, $path ).'.css', true );
+            $path = config('root.url').'themes/'.str_replace( '.', '/', $path ).'.css';
         
         if( $path ) $this->getManager( 'html' )->addCss( $path, $id );
         
         return '';
     }
-    
+
     public function iz_layout_js( $path=null, $foot=false )
     {
         if( !$path ) return '';
         
         if( substr( $path, 0, 1 ) == LAYOUT_LOCAL_DIR_MARKER )
-            $path = locale( 'layout'.DIRECTORY_SEPARATOR.config( 'layout.template' ).DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.substr( $path, 1 ).'.js', true );
+            $path = config('root.url').'themes/'.config( 'layout.template' ).'/js/'.substr( $path, 1 ).'.js';
         else
-            $path = locale( str_replace( '.', DIRECTORY_SEPARATOR, $path ).'.js', true );
+            $path = config('root.url').'themes/'.str_replace( '.', '/', $path ).'.js';
         
         if( $path ) $this->getManager( 'html' )->addJs( $path, $foot );
         
         return '';
     }
-    
+
     private function getTemplate()
     {
-        $path = locale( 'layout'.DIRECTORY_SEPARATOR.config( 'layout.template' ).DIRECTORY_SEPARATOR.'index.html' );        
+		global $abs;
+        $path = $abs.'themes'.DIRECTORY_SEPARATOR.config( 'layout.template' ).DIRECTORY_SEPARATOR.'index.html' ;        
         $template = '<iz:lang id="layout.template_not_found">Template not found!</iz:lang>';
         
         // If the path is empty or the file is empty we cannot continue so log a FATAL error
@@ -116,7 +116,7 @@ class LayoutManager extends Object
         
         return $template;
     }
-    
+
     /**
      * @return ReplaceHelper
      */

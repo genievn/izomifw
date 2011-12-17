@@ -42,6 +42,10 @@ class Article
 	 */
 	private $author;
 	/**
+	 * @ORM\Column(name="image", type="string", length=128, nullable=true)
+	 */
+	private $image;
+	/**
      * @ORM\Column(name="status", type="integer", nullable=true)
      */
     private $status;
@@ -50,9 +54,9 @@ class Article
      */
     private $num_views;
 	/**
-     * @ORM\Column(name="allow_comment", type="boolean", nullable=false)
+     * @ORM\Column(name="allow_comments", type="boolean", nullable=false)
      */
-    private $allow_comment;
+    private $allow_comments;
 	/**
      * @ORM\Column(name="num_comments", type="integer", nullable=true)
      */
@@ -70,21 +74,87 @@ class Article
      */
     private $show_comments;
 	/**
+     * @Gedmo\Translatable
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(name="slug", type="string", length=128, unique=true)
+     */
+    private $slug;
+	/**
      * @var datetime $created
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
      */
-    private $created;
-
+    private $created_on;
     /**
      * @var datetime $updated
      *
      * @ORM\Column(type="datetime")
      * @Gedmo\Timestampable(on="update")
      */
-    private $updated;
-	
+    private $updated_on;
+	/**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $published_on;
+	/**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $expired_on;
+	/**
+     * @ORM\ManyToOne(targetEntity="ArticleCategory", inversedBy="children")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $category;
+
+	public function setTitle($title)
+	{
+		$this->title = $title;
+	}
+	public function setContent($content)
+	{
+		$this->content = $content;
+	}
+	public function setSubTitle($sub_title)
+	{
+		$this->sub_title = $sub_title;
+	}
+	public function setImage($image)
+	{
+		$this->image = $image;
+	}
+	public function setShowComments($show_comments)
+	{
+		$this->show_comments = $show_comments;
+	}
+	public function setSticky($is_sticky)
+	{
+		$this->is_sticky = $is_sticky;
+	}
+	public function setHot($is_hot)
+	{
+		$this->is_hot = $is_hot;
+	}
+	public function setAllowComments($allow_comments)
+	{
+		$this->allow_comments = $allow_comments;
+	}
+	public function setAuthor($author)
+	{
+		$this->author = $author;
+	}
+	public function setStatus($status)
+	{
+		$this->status = $status;
+	}
+	public function setPublishedOn($published_on)
+	{
+		$this->published_on = $published_on;
+	}	
+	public function setExpiredOn($expired_on)
+	{
+		$this->expired_on = $expired_on;
+	}
 /*
 	private $author;
 	private $image_avatar;

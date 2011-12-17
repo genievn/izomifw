@@ -28,10 +28,91 @@ class ArticleController extends Object {
 		$this->getManager( 'html' )->addJs( config('root.url') . 'libs/extjs/ux/treecombo/treecombo.js', true);
 		return $render;
 	}
-	
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function listArticles()
+	{
+		$render = $this->getTemplate('list_articles');
+		return $render;
+	}
+	/**
+	 * undocumented function
+	 *
+	 * @return void
+	 * @author Thanh Nguyen
+	 **/
+	public function articleJsonData($categoryId = null)
+	{
+		$limit = @$_REQUEST['limit'];
+		$start = @$_REQUEST['start'];
+		
+		$render = $this->getTemplate('json');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$query = $em->createQuery('SELECT COUNT(a.id) FROM Entity\Cms\Article a');;
+		$count = $query->getSingleScalarResult();
+		
+		$query = $em->createQuery('SELECT a.id,a.title,a.description FROM Entity\Cms\Article a ORDER BY a.id DESC');
+		$query->setMaxResults($limit);
+		$query->setFirstResult($start);
+		$result = $query->getArrayResult();
+		$render->setTotalCount($count);
+		$render->setArticles($result);
+		return $render;		
+	}
 	public function saveArticle()
 	{
+		$title = @$_REQUEST['title'];
+		$content = @$_REQUEST['content'];
+		$image = @$_REQUEST['image'];
+		$sub_title = @$_REQUEST['sub_title'];
+		$published_date = @$_REQUEST['published_date'];
+		$published_time = @$_REQUEST['published_time'];
+		$expired_date = @$_REQUEST['expired_date'];
+		$expired_time = @$_REQUEST['expired_time'];
+		$author = @$_REQUEST['author'];
+		$is_sticky = @$_REQUEST['is_sticky'];
+		$is_hot = @$_REQUEST['is_hot'];
+		$allow_comments = @$_REQUEST['allow_comments'];
+		$show_comments = @$_REQUEST['show_comments'];
 		
+		$published_on = $expired_on = false;
+		
+		if(!empty($published_date))
+		{
+			if (!empty($published_time))
+				$published_on = $published_date . " " . $published_time;
+			else
+				$published_on = $published_date;
+		}
+		
+		$errors = array();
+		
+		if (empty($errors))
+		{
+			// there is no errors, save the article
+			$a = new Entity\Cms\Article();
+			$a->setTitle($title);
+			$a->setContent($content);
+			$a->setImage($image);
+			$a->setSubTitle($sub_title);
+			$a->setAuthor($author);
+			
+			if($published_on = new \DateTime($published_on) && $published_on instanceof \DateTime) $a->setPublishedOn($published_on);
+			if($expired_on = new \DateTime($expired_on) && $expired_on instanceof \DateTime) $a->setExpiredOn($expired_on);
+			
+			if($is_hot == "1") $a->setHot(true); else $a->setHot(false);
+			if($is_sticky == "1") $a->setSticky(true); else $a->setSticky(false);
+			if($allow_comments == "1") $a->setAllowComments(true); else $a->setAllowComments(false);
+			if($show_comments == "1") $a->setShowComments(true); else $a->setShowComments(false);
+			
+			$em = $this->getManager('doctrine2')->getEntityManager();
+			$em->persist($a);
+			$em->flush();
+		}
 	}
 	/**
 	 * undocumented function

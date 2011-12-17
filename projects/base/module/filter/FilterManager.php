@@ -41,7 +41,7 @@ class FilterManager extends Object {
 	public function getRawRequest($key, $default=null, $type=null){
 		if( isset( $this->rawRequestData[$key] ) )
 			return $this->getValue( $this->rawRequestData[$key], $default, $type );
-		return $default;		
+		return $default;
 	}
 	public function getValue($value, $default=null, $type=null){
 		$type = strtolower($type);

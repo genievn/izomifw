@@ -67,6 +67,10 @@ class ArticleCategory
      * @ORM\OrderBy({"lft" = "ASC"})
      */
     private $children;
+	/**
+     * @ORM\OneToMany(targetEntity="Article", mappedBy="category")
+     */
+    private $articles;
 
     /**
      * @Gedmo\Translatable
