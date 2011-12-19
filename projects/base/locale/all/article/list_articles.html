@@ -1,0 +1,232 @@
+<script type="text/javascript">
+Ext.require([
+    'Ext.data.*',
+	'Ext.panel.*',
+    'Ext.grid.*',
+    'Ext.tree.*',
+    'Ext.util.*',
+    'Ext.toolbar.Paging'
+]);
+Ext.onReady(function(){
+    Ext.QuickTips.init();
+    Ext.form.Field.prototype.msgTarget = 'side';
+	function renderArticle(value, p, record) {
+        return Ext.String.format(
+            '<b><a href="<?php echo config('root.uri');?>article/editArticle/{2}" target="_blank">{0}</a></b>',
+            value,
+            record.data.title,
+            record.getId()
+        );
+    }
+ 	//we want to setup a model and store instead of using dataUrl
+	Ext.define('CategoryModel', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {name: 'title',	type: 'string'}
+			,{name: 'slug',	type: 'string'}
+			, {name: 'id', type: 'string'}
+	    ]
+	});
+	Ext.define('ArticleModel', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+			{name: 'id',	type: 'integer'},
+	        {name: 'title',	type: 'string'},
+			{name: 'description',	type: 'string'}
+			//,{name: 'slug',	type: 'string'}
+	    ]
+	});
+	// category tree store
+	var store = Ext.create('Ext.data.TreeStore', {        
+		model: 'CategoryModel'
+		, root: {
+            title: '/',
+            id: 'root',
+            expanded: true
+		}
+		, proxy: {
+			type: 'rest',
+			url: '/<iz:insert:config path="root.url_json"/>article/categoryTreeJsonData/'
+		}
+	});
+	//store.load();
+	var store2 = Ext.create('Ext.data.JsonStore',{
+		model: 'ArticleModel',
+		pageSize: 100,
+		folderSort: true
+		, proxy: {
+			type: 'rest',
+			url: '/<iz:insert:config path="root.url_json"/>article/articleJsonData/',
+			reader: {
+                root: 'articles',
+                totalProperty: 'totalcount'
+            },
+		}
+	});
+	// grid displays categories in hierachy
+	
+	var categoryTree = Ext.create('Ext.tree.Panel', {
+        title: 'Category',
+		region: 'west',
+		dockedItems: [{
+            xtype: 'toolbar',
+            items: [{
+                text: 'Expand All',
+                handler: function(){
+                    categoryTree.expandAll();
+                }
+            }, {
+                text: 'Collapse All',
+                handler: function(){
+                    categoryTree.collapseAll();
+                }
+            }]
+        }],
+		hideHeaders: true,
+        collapsible: true,
+        useArrows: true,
+        rootVisible: true,
+        store: store,
+        multiSelect: false,
+		width: 200,
+        height: 500,
+		//autoScroll:true,
+		//the 'columns' property is now 'headers'
+        columns: [{
+            xtype: 'treecolumn', //this is so we know which column will show the tree
+            text: 'Category',
+            flex: 1,
+            sortable: true,
+            dataIndex: 'title'
+        }]
+		,tools:[{
+			id: 'expandAll',
+			text: 'Expand All',
+			handler: function(){}
+		}]
+		, listeners: {
+			itemclick : function(view, record, item, index, e) {
+				console.log(record.get('id'));
+				if (record.get('id') == 'root')
+					var url = '<?php echo config('root.url').config('root.url_json');?>article/articleJsonData/';
+				else
+					var url = '<?php echo config('root.url').config('root.url_json');?>article/articleJsonData/' + record.get('id') + '/';
+				store2.load({
+			       url : url
+			   });
+			}
+		}
+    });
+	// paging bar
+	var articlePagingBar = Ext.create('Ext.PagingToolbar', {
+        store: store2,
+        displayInfo: true,
+        displayMsg: 'Displaying topics {0} - {1} of {2}',
+        emptyMsg: "No topics to display",
+        items:[
+            '-', {
+            text: 'Show Preview',
+            //pressed: pluginExpanded,
+            enableToggle: true,
+            toggleHandler: function(btn, pressed) {
+                var preview = Ext.getCmp('gv').getPlugin('preview');
+                preview.toggleExpanded(pressed);
+            }
+        }]
+    });
+
+	var articleGrid = Ext.create('Ext.grid.Panel',{
+		store: store2,
+		region: 'center',
+		loadMask: true,
+		layout: 'fit',
+		dockedItems: [{
+			dock:           'top',
+			items:           [{
+			    handler:     function(){window.location.href = '<?php echo config('root.uri');?>article/createArticle';},
+			    iconCls:    'icon-add',
+			    itemId:     'add',
+			    scope:       this,
+			    text:       'Add'
+			},{
+			    disabled:    false, // To Do: Add control for enable/disable based on selections.
+			    handler:     this.onDeleteClick,
+			    iconCls:    'icon-delete',
+			    itemId:     'delete',
+			    scope:       this,
+			    text:       'Delete'
+			},
+			"-",
+			{
+			    handler:     this.onClearFiltersClick,
+			    iconCls:    'icon-cancel',
+			    itemId:     'clearFilter',
+			    scope:       this,
+			    text:       'Clear Filters'
+			},{
+			    handler:     this.onExportClick,
+			    iconCls:    'icon-floppy',
+			    text:       'Export',
+			    itemId:     'export',
+			    scope:       this
+			},
+			"-",
+			{
+			    fieldLabel: 'Search',                
+			    itemId:     'search',
+			    labelWidth:  40,
+			    name:       'search',
+			    xtype:      'textfield'
+			}],
+			xtype:          'toolbar'
+        }],
+		viewConfig: {
+            id: 'gv',
+            trackOver: false,
+            stripeRows: true,
+			forceFit: true
+        },
+		columns: [{
+            text     : 'Title',
+            flex     : 1,
+            sortable : false,
+            dataIndex: 'title',
+			renderer: renderArticle
+        },
+        {
+            text     : 'Description',
+            width    : 75,
+            dataIndex: 'description'
+        },{
+        	xtype: 'rowactions',
+    		actions: [{ 
+    			iconCls: 'icon-clear-group', 
+    			qtip: 'Action on Row', 
+    			callback: function(grid, record, action, idx, col, e, target) { 
+    				window.location.href = '<?php echo config('root.uri');?>article/createArticleTranslation/' + record.get('id');
+    			} 
+			}]
+		}],
+		//tbar: [],
+		// paging bar on the bottom
+        tbar: articlePagingBar
+		
+	});
+	categoryTree.on("load", function(){categoryTree.expandAll();});
+	
+	store2.loadPage(1);
+	var articlePanel = Ext.create('Ext.panel.Panel',{
+		layout: 'border',
+		height: 500,
+		frame: true,
+		title: 'Articles',
+		items:[categoryTree,articleGrid]
+	});
+	articlePanel.render('articlePanel');
+	
+});
+</script>
+<div class="cpanelWrapper"><iz:insert:module module="article" method="cpanel"/></div>
+<div id="articlePanel"></div>
+<br/>
+<div id="articleGrid"></div>

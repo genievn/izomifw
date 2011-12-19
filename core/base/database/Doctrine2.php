@@ -98,10 +98,16 @@ class izDoctrine extends Object
 		$evm->addEventSubscriber(new \Gedmo\Tree\TreeListener());
 		// sluggable
 		$evm->addEventSubscriber(new \Gedmo\Sluggable\SluggableListener());
+		// loggable
+		$loggableListener = new \Gedmo\Loggable\LoggableListener();
+		$loggableListener->setUsername('admin');
+		$evm->addEventSubscriber($loggableListener);
 		// Tranlatable Listener
 		$translatableListener = new \Gedmo\Translatable\TranslationListener();
-		$translatableListener->setTranslatableLocale(config('root.default_lang'));		
+		$translatableListener->setTranslatableLocale(config('root.default_lang'));
+		$translatableListener->setDefaultLocale(config('root.default_lang'));		
 		$evm->addEventSubscriber($translatableListener);
+		
 		
 		$this->em = EntityManager::create($dbConfig, $this->config, $evm);
 		$this->em->getEventManager()->addEventSubscriber(new MysqlSessionInit('utf8', 'utf8_unicode_ci'));

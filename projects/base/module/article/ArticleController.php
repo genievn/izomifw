@@ -4,15 +4,36 @@ use Entity\Cms\ArticleCategory;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 
 class ArticleController extends Object {
+	public function defaultCall(){
+		return $this->listArticles();
+	}
+	public function testTranslation(){
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$article = $em->find('Entity\Cms\Article',3);
+		/*
+		$article->setTitle('my title in de');
+		$article->setContent('my content in de');
+		$article->setTranslatableLocale('de_de'); // change locale
+		*/
+		// persisting multiple translations, assume default locale is EN
+		$repository = $em->getRepository('Entity\Cms\ArticleTranslation');
+
+		$repository->translate($article, 'title', 'de_de', 'my article de')
+		    ->translate($article, 'content', 'de_de', 'content de');
+		    //->translate($article, 'title', 'ru_ru', 'my article ru')
+		    //->translate($article, 'content', 'ru_ru', 'content ru');
+		$em->persist($article);
+		$em->flush();
+	}
 	/**
 	 * Get the Submodules of this Module
 	 *
 	 * @return void
 	 * @author Thanh Nguyen
 	 **/
-	public function getSubmodules()
+	public function cpanel()
 	{
-		$render = $this->getTemplate('submodules');
+		$render = $this->getTemplate('cpanel');
 		return $render;
 	}
 	/**
@@ -28,6 +49,47 @@ class ArticleController extends Object {
 		$this->getManager( 'html' )->addJs( config('root.url') . 'libs/extjs/ux/treecombo/treecombo.js', true);
 		return $render;
 	}
+	public function createArticleTranslation($articleId)
+	{
+		$render = $this->getTemplate('create_article_translation');
+		//get all the translations of the article
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$article = $em->find('Entity\Cms\Article', $articleId);
+		$repository = $em->getRepository('Entity\Cms\ArticleTranslation');
+		$translations = $repository->findTranslations($article);
+		$render->setDefaultLocale(config('root.default_lang'));
+		$render->setAvailableLangs(config('root.available_lang'));
+		$render->setArticleId($articleId);
+		$render->setTranslations($translations);
+		return $render;
+	}
+	
+	public function saveArticleTranslation($articleId, $lang)
+	{
+		if (!$articleId || !$lang) return false;
+		if (!in_array($lang, config('root.available_lang'))) return false;
+		$render = $this->getTemplate('json');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$article = $em->find('Entity\Cms\Article', $articleId);
+		
+		if ($lang != config('root.default_lang'))
+		{
+			izlog('Setting translatable locale');
+			$article->setTranslatableLocale($lang);
+		}			
+		$article->setTitle(@$_REQUEST['title']);
+		$article->setContent(@$_REQUEST['content']);
+		try{
+			$em->persist($article);
+			$em->flush();
+			$render->setSuccess(true);
+			$render->setMessage('Saving translation ('.$lang.') successfully!');
+		}catch(Exception $e){
+			$render->setSuccess(false);
+			$render->setMessage('Error while saving translation ('.$lang.'): '.$e->getMessage());
+		}
+		return $render;
+	}
 	/**
 	 * undocumented function
 	 *
@@ -37,6 +99,8 @@ class ArticleController extends Object {
 	public function listArticles()
 	{
 		$render = $this->getTemplate('list_articles');
+		$this->getManager( 'html' )->addJs( config('root.url') . 'libs/extjs/ux/rowactions/rowactions.js', true);
+		$this->getManager( 'html' )->addCss( config('root.url') . 'libs/extjs/ux/rowactions/rowactions.css');
 		return $render;
 	}
 	/**
@@ -52,10 +116,19 @@ class ArticleController extends Object {
 		
 		$render = $this->getTemplate('json');
 		$em = $this->getManager('doctrine2')->getEntityManager();
-		$query = $em->createQuery('SELECT COUNT(a.id) FROM Entity\Cms\Article a');;
-		$count = $query->getSingleScalarResult();
 		
-		$query = $em->createQuery('SELECT a.id,a.title,a.description FROM Entity\Cms\Article a ORDER BY a.id DESC');
+		if ($categoryId){
+			$query = $em->createQuery('SELECT COUNT(a.id) FROM Entity\Cms\Article a JOIN a.category b WHERE b.id = ?1');
+			$query->setParameter(1, $categoryId);
+			$count = $query->getSingleScalarResult();
+			$query = $em->createQuery('SELECT a.id,a.title,a.description FROM Entity\Cms\Article a JOIN a.category b WHERE b.id = ?1 ORDER BY a.id DESC');
+			$query->setParameter(1, $categoryId);
+		}else{
+			$query = $em->createQuery('SELECT COUNT(a.id) FROM Entity\Cms\Article a');
+			$count = $query->getSingleScalarResult();
+			$query = $em->createQuery('SELECT a.id,a.title,a.description FROM Entity\Cms\Article a ORDER BY a.id DESC');
+		}
+			
 		$query->setMaxResults($limit);
 		$query->setFirstResult($start);
 		$result = $query->getArrayResult();
@@ -65,6 +138,7 @@ class ArticleController extends Object {
 	}
 	public function saveArticle()
 	{
+		$render = $this->getTemplate('json');
 		$title = @$_REQUEST['title'];
 		$content = @$_REQUEST['content'];
 		$image = @$_REQUEST['image'];
@@ -78,9 +152,9 @@ class ArticleController extends Object {
 		$is_hot = @$_REQUEST['is_hot'];
 		$allow_comments = @$_REQUEST['allow_comments'];
 		$show_comments = @$_REQUEST['show_comments'];
-		
+		$category_id = @$_REQUEST['category_id'];
 		$published_on = $expired_on = false;
-		
+		$em = $this->getManager('doctrine2')->getEntityManager();
 		if(!empty($published_date))
 		{
 			if (!empty($published_time))
@@ -89,7 +163,14 @@ class ArticleController extends Object {
 				$published_on = $published_date;
 		}
 		
+		if (!empty($category_id))
+		{
+			$category = $em->find('Entity\Cms\ArticleCategory', $category_id);
+		}
+		
 		$errors = array();
+		
+		
 		
 		if (empty($errors))
 		{
@@ -108,10 +189,20 @@ class ArticleController extends Object {
 			if($is_sticky == "1") $a->setSticky(true); else $a->setSticky(false);
 			if($allow_comments == "1") $a->setAllowComments(true); else $a->setAllowComments(false);
 			if($show_comments == "1") $a->setShowComments(true); else $a->setShowComments(false);
+			if($category instanceof Entity\Cms\ArticleCategory) $a->setCategory($category);
 			
-			$em = $this->getManager('doctrine2')->getEntityManager();
-			$em->persist($a);
-			$em->flush();
+			
+			try {	
+				$em->persist($a);
+				$em->flush();
+				$render->setSuccess(true);
+				$render->setMessage('Article saved successfully!');
+				return $render;
+			}catch(Exception $e){
+				$render->setSuccess(false);
+				$render->setMessage('Error while saving article: '.$e->getMessage());
+				return $render;
+			}
 		}
 	}
 	/**

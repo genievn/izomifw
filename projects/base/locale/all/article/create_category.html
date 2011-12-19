@@ -42,6 +42,7 @@ Ext.onReady(function(){
     
 	var form = new Ext.FormPanel({
 		//renderTo: 'categoryPanel',
+		iconCls: 'application-form',
 	    labelWidth:  85,
 		collapsible: true,
 	    frame:true,
@@ -77,8 +78,9 @@ Ext.onReady(function(){
 
 	    buttons: [{
 	        text: 'Save',
+			iconCls: 'save',
 			type: 'submit', 
-	        scope: this, 
+	        scope: this,
 	        handler: function() {  
 	            form.submit({ 
 	                method: 'POST', 
@@ -95,6 +97,7 @@ Ext.onReady(function(){
 	        }
 	    },{
 	        text: 'Cancel'
+			, iconCls: 'cancel'
 	    }]
 	});
 	form.render('categoryPanel');
@@ -147,24 +150,26 @@ Ext.onReady(function(){
             xtype: 'toolbar',
             items: [{
                 text: 'Expand All',
+				iconCls: 'arrow-out',
                 handler: function(){
-                    tree.expandAll();
+                    grid.expandAll();
                 }
             }, {
                 text: 'Collapse All',
+				iconCls: 'arrow-in',
                 handler: function(){
-                    tree.collapseAll();
+                    grid.collapseAll();
                 }
             }]
         }],
+		
+		hideHeaders: true,
         collapsible: true,
         useArrows: true,
         rootVisible: true,
         store: store2,
         multiSelect: true,
         singleExpand: false,
-		split: false,
-		expandAll: true,
 		//height: 500,
         height: 500,
 		//autoScroll:true,
@@ -194,6 +199,7 @@ Ext.onReady(function(){
 	
 });
 </script>
+<div class="cpanelWrapper"><iz:insert:module module="article" method="cpanel"/></div>
 <div id="categoryPanel"></div>
 <br/>
 <div id="categoryGrid"></div>

@@ -1,0 +1,32 @@
+<script type="text/javascript">
+Ext.onReady(function(){
+	var tb = Ext.create('Ext.toolbar.Toolbar');
+	tb.suspendLayout = true;
+    //tb.render('articleCpanel');
+	tb.border = false;
+	tb.add({
+        text:'Articles',
+        iconCls: 'article-24',
+		iconAlign: 'top',
+		scale: 'large',
+		autoWidth : true,
+		autoHeight : true,
+		handler: function(){window.location.href = '<iz:insert:uri/>article/listArticles';}
+		
+    },{
+		text: 'Categories',
+		iconCls: 'archive-24',
+		iconAlign: 'top',
+		scale: 'large',
+		handler: function(){ window.location.href = '<iz:insert:uri/>article/createCategory';}
+	});
+	tb.suspendLayout = false;
+	tb.doLayout();
+	
+	var cpanel = Ext.create('Ext.panel.Panel',{title: 'Article Control Panel', frame: false});
+	cpanel.add(tb);
+	cpanel.render('articleCpanel');
+});
+</script>
+<div id="articleCpanel"></div>
+<br/>

@@ -200,15 +200,16 @@ Ext.onReady(function(){
 		buttons: [{
 		    text: "Save",
 		    type: 'submit',
+			iconCls: 'save',
 			scope: this,
 			handler: function() {
 		        form.submit({ 
 	                method: 'POST', 
-	                //url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>article/saveArticle',
-					url: '<iz:insert:uri/>article/saveArticle',  
+	                url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>article/saveArticle',
+					//url: '<iz:insert:uri/>article/saveArticle',  
 	                success: function(f, a) {
 						alert(a.result.message);
-						window.location.href = '<iz:insert:uri/>article/listArticle';
+						window.location.href = '<iz:insert:uri/>article/listArticles';
 	                },             
 	                failure: function(f, a) {  
 	                    switch (a.failureType) {
@@ -229,7 +230,7 @@ Ext.onReady(function(){
 	form.render('articlePanel');
 })
 </script>
-
+<div class="cpanelWrapper"><iz:insert:module module="article" method="cpanel"/></div>
 <div id="articlePanel">
 	
 </div>

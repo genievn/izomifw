@@ -2,11 +2,13 @@
 namespace Entity\Cms;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Translatable\Translatable;
+use Gedmo\Loggable\Loggable;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="cms_articles")
+ * @Gedmo\Loggable(logEntryClass="Entity\Cms\Log\Article")
  * @Gedmo\TranslationEntity(class="Entity\Cms\ArticleTranslation")
  */
 class Article
@@ -19,6 +21,7 @@ class Article
     private $id;
 	/**
 	 * @Gedmo\Translatable
+	 * @Gedmo\Versioned
 	 * @ORM\Column(name="title", type="string", length=128)
 	 */
 	private $title;
@@ -106,6 +109,12 @@ class Article
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $category;
+	/**
+     * @Gedmo\Locale
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    private $locale;
 
 	public function setTitle($title)
 	{
@@ -154,6 +163,14 @@ class Article
 	public function setExpiredOn($expired_on)
 	{
 		$this->expired_on = $expired_on;
+	}
+	public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+	public function setCategory(ArticleCategory $category)
+	{
+		$this->category = $category;
 	}
 /*
 	private $author;

@@ -70,7 +70,7 @@ function minify( $src, $pre='', $post='' )
 {
   $src = str_replace( array( '<?php', '?>' ), '', $src );
   $src = preg_replace( '/((?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:\/\/.*))/', '', $src ); // Remove all comment blocks
-  $src = "<?php ".$pre.$src.$post;
+  $src = "<?php ".$pre.$src.$post."?>";
   $src = preg_replace( '/(\s)+/', '$1', $src); // Remove all white space
   $src = str_replace( array( "\n", "\r" ), ' ', $src);
   
@@ -79,16 +79,16 @@ function minify( $src, $pre='', $post='' )
 
 $dir = dirname( __FILE__ );
 $out = $dir.DIRECTORY_SEPARATOR;
-$lic = file_get_contents( $dir.DIRECTORY_SEPARATOR.'licence.txt' );
+$lic = file_get_contents( $dir.DIRECTORY_SEPARATOR.'license.txt' );
 
-$libs = array( 'ophp_base'=>'o', 'ophp_mysql'=>'o.mysql', 'ophp_frame'=>'o.frame', 'ophp_amazon'=>'o.amazon', 'ophp_locale'=>'o.locale' );
+$libs = array( 'core.base'=>'i');
 
 foreach( $libs as $lib=>$name )
 {
-  $src = combine( $dir.DIRECTORY_SEPARATOR.$lib, isset( $_GET['dev'] ), false );
+  $src = combine( $dir.DIRECTORY_SEPARATOR.str_replace(".",DIRECTORY_SEPARATOR,$lib), isset( $_GET['dev'] ), false );
 	
-  file_put_contents( $out.'builds'.DIRECTORY_SEPARATOR.'dev'.DIRECTORY_SEPARATOR.$name.'.php', $src );
-  file_put_contents( $out.'builds'.DIRECTORY_SEPARATOR.$name.'.php', minify( $src, $lic ) );
+  //file_put_contents( $out.'builds'.DIRECTORY_SEPARATOR.'dev'.DIRECTORY_SEPARATOR.$name.'.php', $src );
+  file_put_contents( $out.'builds'.DIRECTORY_SEPARATOR.$name.'.php', minify( $src/*, $lic */) );
   
   /* Include the new file to check it works */
   require_once( $out.'builds'.DIRECTORY_SEPARATOR.$name.'.php' );

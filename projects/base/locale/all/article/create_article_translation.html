@@ -1,0 +1,168 @@
+<?php
+$articleId = $this->getArticleId();
+$translations = $this->getTranslations();
+function fixLineBreaks($txt) {
+     return str_replace("\r\n", "\\\n", $txt);
+}
+
+function createArticleTranslationForm($articleId, $lang, $translations)
+{
+	try {
+		$title = $translations[$lang]['title'];
+		$content = $translations[$lang]['content'];
+		$content = fixLineBreaks($content);
+		$content = addslashes($content);
+	    $content = preg_replace( "/\n/", '', $content );
+	    $content = str_replace("</", "<\/", $content );
+	}catch(Exception $e){
+		$title = $content = '';
+	}
+	
+	$button = '	buttons: [{
+		    text: "Save",
+		    type: "submit",
+			handler: function() {
+				var form = Ext.getCmp("form-'.$lang.'");
+		        form.submit({ 
+	                method: "POST",
+					waitMsg : "Sending data...",
+	                url: "<iz:insert:url/><iz:insert:config path="root.url_json"/>article/saveArticleTranslation/'.$articleId.'/'.$lang.'",
+	                success: function(f, a) {
+						Ext.Msg.alert("Success", a.result.message);
+						/*Ext.create("widget.uxNotification", {
+							corner: "tr",
+							manager: "fullscreen",
+							iconCls: "ux-notification-icon-information",
+							autoDestroyDelay: 3000,
+							slideDownDelay: 500,
+							slideInAnimation: "bounceOut",
+							slideDownAnimation: "easeIn",
+							html: a.result.message
+						}).show();*/
+	                },             
+	                failure: function(f, a) {  
+	                    switch (a.failureType) {
+                            case Ext.form.action.Action.CLIENT_INVALID:
+                                Ext.Msg.alert("Failure", "Form fields may not be submitted with invalid values");
+                                break;
+                            case Ext.form.action.Action.CONNECT_FAILURE:
+                                Ext.Msg.alert("Failure", "Ajax communication failed");
+                                break;
+                            case Ext.form.action.Action.SERVER_INVALID:
+                                Ext.Msg.alert("Failure", action.result.msg);
+                        }
+	                }             
+	            })
+		    }
+		}]';
+	
+	$item = 	'new Ext.form.FormPanel({';
+	$item .=	'	id: "form-'.$lang.'",';
+	$item .=	'	title: "Article (Language: '.$lang.')",';
+	$item .=	'	frame: true,';
+	$item .=	'	layout: "anchor", defaults:{anchor:"90%"},';
+	$item .=	'	items:[';
+	$item .=	'	{';
+	$item .=	'		fieldLabel:"Title"';
+	$item .=	'		, name: "title"';
+	$item .=	'		, value: "'.$title.'"';
+	$item .=	'		, allowBlank: false';
+	$item .= 	'		, xtype: "textfield"';
+	$item .=	'	},';
+	$item .=	'	{';
+	$item .=	'		fieldLabel:"Content"';
+	$item .=	'		, name: "content"';
+	$item .=	'		, value: "'.$content.'"';
+	$item .= 	'		, xtype: "ckeditor"';
+	$item .= 	'		, CKConfig:{toolbar:"Full",filebrowserBrowseUrl : "<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php"}';
+	$item .=	'		, height: 500';
+	$item .=	'	},';
+	$item .=	'	{';
+	$item .=	'		name: "lang"';
+	$item .= 	'		, xtype: "hidden"';
+	$item .=	'		, value: "'.$lang.'"';
+	$item .=	'	}';
+	$item .=	'	],'.$button;
+	$item .= 	'})';
+	return $item;
+}
+?>
+<script type="text/javascript" src="<iz:insert:url/>libs/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="<iz:insert:url/>libs/ckeditor/ckeditor_ext.js"></script>
+<script type="text/javascript">
+Ext.define('Ext.ux.FileSelector', {
+    extend: 'Ext.form.field.Trigger',
+    alias: 'widget.fileselector',
+    // override onTriggerClick
+    onTriggerClick: function() {
+		var me = this;
+		console.log(me.inputEl);
+		window.open ("<iz:insert:url/>libs/ajaxfilemanager/ajaxfilemanager.php?editor=form&elementId=" + me.inputEl.id);
+    }
+});
+
+Ext.require([
+    'Ext.form.*',
+    'Ext.window.*',
+	'Ext.data.*',
+    'Ext.grid.*',
+    'Ext.tree.*'
+]);
+
+Ext.onReady(function(){
+	Ext.QuickTips.init();
+    Ext.form.Field.prototype.msgTarget = 'side';
+	// a tabpanel to hold all the translations
+	var tabs = Ext.createWidget('tabpanel', {
+        renderTo: 'articlePanel',
+        activeTab: 0,
+		title: 'Article Translations',
+		frame: false,
+		layout:'anchor',
+        defaults :{
+            bodyPadding: 10
+			, anchor: '90%'
+        },
+        items: [
+		<?php 
+		$items = array();
+		foreach($this->getAvailableLangs() as $lang){
+			$item =		'{';
+			$item .=	'	title: "'.$lang.'"';
+			$item .= 	'	, iconCls: "lang-'.$lang.'"';
+			$item .=	'	, items: ['.createArticleTranslationForm($articleId, $lang, $translations).']';
+			$item .=	'}';
+			array_push($items, $item);
+		?>
+		<?php
+		}
+		echo implode($items,",");
+		?>
+		]
+    });
+	
+
+	//model & store for look up category
+	Ext.define('CategoryModel', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {name: 'title',	type: 'string'}
+			,{name: 'slug',	type: 'string'}
+	    ]
+	});
+	var store = Ext.create('Ext.data.TreeStore', {        
+		model: 'CategoryModel',
+		folderSort: true
+		, proxy: {
+			type: 'ajax',
+			url: '/<iz:insert:config path="root.url_json"/>article/categoryTreeJsonData/'
+		}
+	});
+})
+</script>
+<div class="cpanelWrapper"><iz:insert:module module="article" method="cpanel"/></div>
+<div id="articlePanel">
+	
+</div>
+<br/>
+<div id="articleGrid"></div>

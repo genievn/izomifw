@@ -23,8 +23,8 @@ config( '.root.proxy_folder', 'Proxies');
  * Language settings
  */
 config( '.root.default_locale', 'all' );
-config( '.root.default_lang', 'en-US' );
-config( '.root.available_lang', array('en-US'=>'English','vi-VN'=>'Tiếng Việt'));
+config( '.root.default_lang', 'en-us' );
+config( '.root.available_lang', array('en-us','vi-vn'));
 
 /**
  * Boot Plugins to Load

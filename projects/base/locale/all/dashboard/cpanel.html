@@ -1,0 +1,42 @@
+<script type="text/javascript">
+Ext.onReady(function(){
+    
+    new Ext.ToolTip({        
+        title: '<a href="#">Rich Content Tooltip</a>',
+        id: 'content-anchor-tip',
+        target: 'brand',
+        anchor: 'below',
+        html: null,
+		showDelay: 0,
+        width: 415,
+        closable: true,
+        autoHide: false,
+        contentEl: 'content-tip', // load content from the page
+        listeners: {
+            'render': function(){
+                this.header.on('click', function(e){
+                    e.stopEvent();
+                    Ext.Msg.alert('Link', 'Link to something interesting.');
+                    Ext.getCmp('content-anchor-tip').hide();
+                }, this, {delegate:'a'});
+            }
+        }
+    });
+
+    Ext.QuickTips.init();
+
+});
+</script>
+<br/>
+<div style="display:none;">
+    <div id="content-tip">
+        <ul>
+            <li>5 bedrooms</li>
+            <li>2 bathrooms</li>
+            <li>Large backyard</li>
+            <li>Close to transport</li>
+        </ul>
+        <div class="x-clear"></div>
+        <img src="images/house.jpg" alt="Website Thumbnail" />
+    </div>
+</div>
