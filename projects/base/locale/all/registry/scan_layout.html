@@ -7,30 +7,34 @@ $error = $this->getError();
 <script type="text/javascript">
 Ext.onReady(function(){
     
-    
-    var Layout = Ext.data.Record.create([{
-        name: 'codename',
-        type: 'string'
-    }, {
-        name: 'thumbnail',
-        type: 'string'
-    }
-    , {
-        name: 'regions',
-        type: 'string'
-    }, {
-        name: 'app_folder',
-        type: 'string'
-    }, {
-        name: 'directory',
-        type: 'string'
-    },{
-        name: 'has_config',
-        type: 'bool'
-    },{
-        name: 'registered',
-        type: 'bool'
-    }]);
+    var layout = Ext.define('Layout', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {
+		        name: 'codename',
+		        type: 'string'
+		    }, {
+		        name: 'thumbnail',
+		        type: 'string'
+		    }
+		    , {
+		        name: 'regions',
+		        type: 'string'
+		    }, {
+		        name: 'app_folder',
+		        type: 'string'
+		    }, {
+		        name: 'directory',
+		        type: 'string'
+		    },{
+		        name: 'has_config',
+		        type: 'bool'
+		    },{
+		        name: 'registered',
+		        type: 'bool'
+		    }
+	    ]
+	});
     
     var generateData = function(){
         var data = [];
@@ -53,29 +57,27 @@ Ext.onReady(function(){
         return data;
     }
 
-
-    var store = new Ext.data.GroupingStore({
-        reader: new Ext.data.JsonReader({fields: Layout}),
-        data: generateData(),
-        sortInfo: {field: 'codename', direction: 'ASC'},
-        groupField:'registered'  
+	var store = Ext.create('Ext.data.Store', {
+        storeId: 'layout',
+        model: 'Layout',
+        groupField: 'registered',
+		data: generateData()
+	});
+	var groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
+        groupHeaderTpl: 'Status: {[name?"Install":"Uninstall"]} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
     });
-
-
     var grid = new Ext.grid.GridPanel({
         id: 'grid-layout',
         store: store,
         layout: 'fit',
         margins: '0 5 5 5',
         autoExpandColumn: 'directory',
+		features: [groupingFeature],
         autoHeight: true,
-        view: new Ext.grid.GroupingView({
-            markDirty: false
-        }),
         tbar: [
             {
                 text: 'Manage Page Templates'
-                , iconCls: IconManager.getIcon('page_add')
+                //, iconCls: IconManager.getIcon('page_add')
                 , cls: 'x-toolbar-standardbutton'
                 , handler: function()
                 {
@@ -85,7 +87,6 @@ Ext.onReady(function(){
         ],
         stripeRows:true,
         columns: [
-        
         {
             id: 'codename',
             header: 'Layout name',
@@ -109,13 +110,10 @@ Ext.onReady(function(){
             width: 150,
             sortable: true
         },{
-            //xtype: 'booleancolumn',
             header: 'Has config',
             dataIndex: 'has_config',
             align: 'center',
             width: 100,
-            //trueText: 'Yes',
-            //falseText: 'No',
             renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                 if (record.data.has_config)
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/yes.png';?>"/>';
@@ -123,13 +121,10 @@ Ext.onReady(function(){
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/no.png';?>"/>';
             }
         },{
-            //xtype: 'booleancolumn',
             header: 'Registered',
             dataIndex: 'registered',
             align: 'center',
             width: 100,
-            //trueText: 'Yes',
-            //falseText: 'No'
             renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                 if (record.data.registered)
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/yes.png';?>"/>';
@@ -137,28 +132,40 @@ Ext.onReady(function(){
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/no.png';?>"/>';
             }
         },{
-            header: 'Install',
-            align: 'center',
-            renderer: renderInstall,
-            dataIndex: 'has_config',
-            width: 100
-        },{
-            id: 'directory',
-            header: 'Directory',
-            dataIndex: 'directory',
-            sortable: true
-        }]
-    });
+        	xtype: 'rowactions',
+			align: 'center',
+    		actions: [{ 
+    			iconCls: 'icon-add',
+				width: 100,
+    			qtip: 'Register the layout', 
+    			callback: function(grid, record, action, idx, col, e, target) { 
+					Ext.Ajax.request({
+						url: '<?php echo config('root.url').config('root.url_json');?>registry/registerLayout/'+record.data.codename + '/',
+						success: function(result, request){
+							alert(result.message);
+							window.location.href = '<iz:insert:uri/>registry/scanLayout/';
+						},
+						failure: function(result, request){
+							alert(result.message);
+						},
+						params: {
+						    codename: record.data.codename
+						}
+	            	});
+    			} 
+			}]
+    	}]
+	});
     
-    var layout = new Ext.Panel({
+    var panel = new Ext.Panel({
         title: 'Available Layouts',
         renderTo: 'entity-layout',
-        //height: 500,
+        iconCls: 'icon-layout-add',
         layout: 'fit',
         frame: true,
         items: [grid]
     });
-    
+    /*
     grid.getView().getRowClass = function(record, index){
         if (record.data.has_config == true && record.data.registered == false)
         {
@@ -172,7 +179,7 @@ Ext.onReady(function(){
             return 'grid-red-row';
         }
     };
-    
+    */
     function renderInstall(value, id, r)
     {
             var id = Ext.id(); // for the Install button
@@ -191,7 +198,7 @@ Ext.onReady(function(){
     function createGridButtonInstall(value, id, record) {
         new Ext.Button({
             text: value
-            ,iconCls: IconManager.getIcon('package_add')
+            //,iconCls: IconManager.getIcon('package_add')
             ,handler : function(btn, e) {                
                 Ext.Ajax.request({
             	   url: '<iz:insert:uri/>registry/registerLayout/?codename='+record.data.codename + '&app_folder=' + escape(record.data.app_folder),
@@ -213,7 +220,7 @@ Ext.onReady(function(){
     function createGridButtonDelete(value, id, record) {
         new Ext.Button({
             text: value
-            ,iconCls: IconManager.getIcon('package_add')
+            //,iconCls: IconManager.getIcon('package_add')
             ,handler : function(btn, e) {
                 Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete the layout?', function(btn){
                     
@@ -242,7 +249,7 @@ Ext.onReady(function(){
     }
 });
 </script>
-
+<div class="cpanelWrapper"><iz:insert:module module="registry" method="cpanel" /></div>
 <div class="action-container">
     <div class="action-header">
     </div>

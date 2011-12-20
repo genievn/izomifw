@@ -63,10 +63,11 @@ class PageController extends Object
             $em->flush();
             $em->commit();
             $render->setSuccess(true);
-            $render->setRedirect('page/listWidget');
+            $render->setMessage('Widget saved successfully');
         }catch(Exception $e){
             $em->rollback();
             $render->setSuccess(false);
+			$render->setMessage('Error while saving widget: '.$e->getMessage());
         }
         return $render;
     }

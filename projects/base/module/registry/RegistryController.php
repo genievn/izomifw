@@ -1,7 +1,12 @@
 <?php
-
+use Symfony\Component\Yaml\Yaml;
 class RegistryController extends Object
 {
+	public function cpanel()
+	{
+		$render = $this->getTemplate('cpanel');
+		return $render;
+	}
     public function scanModule()
     {
         global $abs, $ds;
@@ -81,6 +86,9 @@ class RegistryController extends Object
         $render->setUnregisteredModules($unregisteredModules);
         $render->setModuleCategories($moduleCategories);
         $render->setError($error);
+
+		$this->getManager( 'html' )->addJs( config('root.url') . 'libs/extjs/ux/rowactions/rowactions.js', true);
+		$this->getManager( 'html' )->addCss( config('root.url') . 'libs/extjs/ux/rowactions/rowactions.css');
         return $render;
     }
 
@@ -89,9 +97,9 @@ class RegistryController extends Object
     {
         $render = $this->getTemplate('json');
 
-        if (!$codename) $codename = $_REQUEST["codename"];
-        if (!$appFolder) $appFolder = $_REQUEST["app_folder"];
-        if (!$moduleCategoryId) $moduleCategoryId = $_REQUEST["category_id"];
+        if (!$codename) $codename = @$_REQUEST["codename"];
+        if (!$appFolder) $appFolder = @$_REQUEST["app_folder"];
+        if (!$moduleCategoryId) $moduleCategoryId = @$_REQUEST["category_id"];
 
         global $abs, $ds;
         # find out module folder
@@ -106,16 +114,15 @@ class RegistryController extends Object
         }
         try{
             # read the YAML-format configuration file
-            $cf = sfYaml::load($configFile);
+            $cf = Yaml::parse($configFile);
         }catch(Exception $e){
 
             $render->setSuccess(false);
             $render->setError('Unabled to parse configuration file');
             return $render;
         }
-
-        $manager = $this->getManager('registry');
-        $em = $manager->getWriter()->getEntityManager();
+		$manager = $this->getManager('registry');
+        $em = $this->getManager('doctrine2')->getEntityManager();
         $em->beginTransaction();
         # find out if the module exist in the system
         $module = $manager->existModule(array('codename'=>$codename));
@@ -143,8 +150,8 @@ class RegistryController extends Object
         # assign module category
         if ($moduleCategoryId)
         {
-            $category = $em->find('Entity\Base\TreeNode', $moduleCategoryId);
-            if ($category) $module->addTreeNode($category);
+			$category = $em->find('Entity\Base\ModuleCategory', $moduleCategoryId);
+			if ($category instanceof Entity\Base\ModuleCategory) $module->setCategory($category);
         }
 
         $em->persist($module);
@@ -183,7 +190,6 @@ class RegistryController extends Object
                 $b->params = '*';
                 $b->addActionDefinition($a);
 
-
                 # check to see if this action appear on the menu
                 if (!empty($attributes["menu"]))
                 {
@@ -210,16 +216,14 @@ class RegistryController extends Object
             $em->flush();
             $em->commit();
             $render->setSuccess(true);
+			$render->setMessage('Module registered successfully');
+			return $render;
         }catch(Exception $e){
             $render->setSuccess(false);
-            $render->setError('Commit error');
+            $render->setMessage('Module registered fail');
             $em->rollback();
             return $render;
         }
-        $render->setSuccess(true);
-        $render->setRedirect('registry/scanModule');
-        //$render->setModuleFolder($moduleFolder);
-        return $render;
     }
 
     public function getActionDefinitions($module = null)
@@ -259,7 +263,7 @@ class RegistryController extends Object
         foreach ($apps as $a)
         {
             # the layout folder
-            $layoutFolder = $abs . $a . $ds . 'locale' . $ds . 'all' . $ds . 'layout';
+            $layoutFolder = $abs . $ds . 'themes';
 
 
 
@@ -327,6 +331,10 @@ class RegistryController extends Object
         $render->setRegisteredLayouts($registeredLayouts);
         $render->setUnregisteredLayouts($unregisteredLayouts);
         $render->setError($error);
+
+
+		$this->getManager( 'html' )->addJs( config('root.url') . 'libs/extjs/ux/rowactions/rowactions.js', true);
+		$this->getManager( 'html' )->addCss( config('root.url') . 'libs/extjs/ux/rowactions/rowactions.css');
         return $render;
     }
 
@@ -378,18 +386,21 @@ class RegistryController extends Object
     }
     public function registerLayout($codename = null)
     {
-        $render = $this->getTemplate('register_layout');
+        $render = $this->getTemplate('json');
 
         if (!$codename) $codename = $_REQUEST["codename"];
-        if (!$appFolder) $appFolder = $_REQUEST["app_folder"];
+        //if (!$appFolder) $appFolder = $_REQUEST["app_folder"];
 
         global $abs, $ds;
 
-        $path = locale( 'layout'.$ds.$codename.$ds.'index.html' );
-
+        //$path = locale( 'layout'.$ds.$codename.$ds.'index.html' );
+		$path = $abs.'themes'.$ds.$codename.$ds.'index.html';
+		
         if( !$path || ( $template = file_get_contents( $path ) ) === false )
         {
-            return false;
+            $render->setSuccess(false);
+			$render->setMessage('Template file not found for layout ('.$codename.')');
+			return $render;
         }
 
         # examine the template to get the regions
@@ -422,12 +433,13 @@ class RegistryController extends Object
             $em->flush();
             $em->commit();
             $render->setSuccess(true);
-
+			$render->setMessage('Layout registration done');
+			return $render;
         }catch(Exception $e){
             $render->setSuccess(false);
+			$render->setMessage('Layout registration failed');
             return $render;
         }
-        $render->setSuccess(true);
         return $render;
     }
 

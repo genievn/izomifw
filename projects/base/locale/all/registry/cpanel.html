@@ -1,0 +1,35 @@
+<script type="text/javascript">
+Ext.onReady(function(){
+	var tb = Ext.create('Ext.toolbar.Toolbar');
+	tb.suspendLayout = true;
+	tb.border = false;
+	tb.add({
+        text:'Modules',
+        iconCls: 'icon-module-32',
+		iconAlign: 'top',
+		scale: 'large',
+		autoWidth : true,
+		autoHeight : true,
+		handler: function(){window.location.href = '<iz:insert:uri/>registry/scanModule';}
+		
+    },	{
+        text:'Layouts',
+        iconCls: 'icon-layout-add-32',
+		iconAlign: 'top',
+		scale: 'large',
+		autoWidth : true,
+		autoHeight : true,
+		handler: function(){window.location.href = '<iz:insert:uri/>registry/scanLayout';}
+
+    });
+	tb.suspendLayout = false;
+	tb.doLayout();
+	
+	//var cpanel = Ext.create('Ext.panel.Panel',{title: 'Registry Control Panel', frame: false});
+	var cpanel = new Ext.Panel({title: 'Registry Control Panel', frame: true, iconCls: 'icon-control-panel'});
+	cpanel.add(tb);
+	cpanel.render('registryCpanel');
+});
+</script>
+<div id="registryCpanel"></div>
+<br/>

@@ -33,35 +33,8 @@ Ext.onReady(function(){
     	var region = layout[1];
     	// convert to array
     	var regionArray = region.split(",");
-    	/*
-    	// holding current layout's regions
-        var fieldsetArray = []
-        
-        for(var j=0; j<regionArray.length; j++) {
-            // get the name of the region
-            var name = regionArray[j];
-            // add to the layout's regions
-            fieldsetArray.push(
-                new Ext.Panel({
-                    title: 'Region: ' + name
-                    , id: 'fs-' + name
-                    , autoHeight: true
-                    //, layout: 'fit'
-                    , items: [
-                        {
-                            xtype: 'button',
-                            text: 'Add widget'
-                        }
-                    ]
-                })
-            );            
-        }
-        // associate the regions to the layout
-        regionFieldsetArray[layout[0]] = fieldsetArray;
-        */
         regionFieldsetArray[layout[0]] = regionArray;
     }
-    //console.log(regionFieldsetArray);
     
     var cbLayout = new Ext.form.ComboBox({
         //readOnly: true,
@@ -82,32 +55,38 @@ Ext.onReady(function(){
         listeners: {
             select: function(combo, value) {
                 var regionPanel = Ext.getCmp('pl-region');
-                
+				
+				var codename = value[0].data.codename;
                 regionPanel.removeAll(true);
                 regionPanel.doLayout();
                 
-                var regionArray = regionFieldsetArray[value.data.codename];
+                var regionArray = regionFieldsetArray[codename];
                 
                 for (var i=0; i<regionArray.length; i++)
                 {
+					/*
+					regionPanel.add(Ext.create('Ext.panel.Panel',{
+						title: 'Panel 1',
+						id: 'pl-' + regionArray[i]
+						
+					}));*/
+					
                     regionPanel.add(
-                        new Ext.Panel({
-                            id: 'pl-'+regionArray[i]
+                        Ext.create('Ext.panel.Panel',{
+                            id: 'pl-' + regionArray[i]
                             , title: 'Region: ' + regionArray[i]
                             , autoHeight: true
                             , border: true
-                            , frame: true                            
-                            , layout: 'form'
-                            , padding: '10px 0 0 0'
+							, layout: 'fit'
                             , tbar: [{
                                 text: 'Add widget'
                                 , region: regionArray[i]
                                 , handler: function(btn, e){
+									
                                     var region = btn.region;
                                     var id = Ext.id();
                                     // get the panel of the region
                                     widgetPanel = Ext.getCmp('pl-'+region);
-                                    
                                     var cbWidget = new Ext.form.ComboBox({
                                         hiddenName: 'widget['+region+']['+id+'][id]'
                                         , allowBlank: false
@@ -125,8 +104,8 @@ Ext.onReady(function(){
                                         , errorMsg: 'You need to select a widget'
                                         
                                     });
-                                    //var boxWidgetId = Ext.id();
-                                    var boxWidget = new Ext.form.CompositeField({
+									
+                                    var boxWidget = new Ext.form.FieldContainer({
                                         id: id,
                                         msgTarget: 'under',
                                         layout: 'hbox',
@@ -137,18 +116,18 @@ Ext.onReady(function(){
                                         [
                                             {xtype: 'displayfield', value: 'Widget:', valign: 'middle'}
                                             ,cbWidget
-                                            ,{xtype: 'displayfield', value: 'Position:'}
+                                            ,{xtype: 'splitter'},{xtype: 'displayfield', value: 'Position:'}
                                             ,{
                                                 xtype: 'textfield'
                                                 , name: 'widget['+region+']['+id+'][position]'
                                                 , allowBlank: false
                                                 , isFormField: true
-                                            },
+                                            },{xtype: 'splitter'},
                                             {
                                                 xtype: 'button'
                                                 , text: 'Remove'
                                                 , cls: 'x-toolbar-standardbutton'
-                                                , iconCls: IconManager.getIcon('plugin_delete')
+                                                //, iconCls: IconManager.getIcon('plugin_delete')
                                                 , handler: function()
                                                 {
                                                     var hbox = Ext.getCmp(id);
@@ -157,22 +136,21 @@ Ext.onReady(function(){
                                                 }
                                             }
                                         ]
-                                    });
+                                    	});
                                     
                                     
                                     if(widgetPanel)
                                     {
                                         widgetPanel.add(boxWidget);
                                         widgetPanel.doLayout();
+										console.log(widgetPanel);
                                     }
                                     
                                     
                                 }
                             }]
-                            , items:[
-                            ]
                         })
-                    );
+                    );// end region.add 
                 }
                 regionPanel.doLayout();
                 // disable the main region
@@ -193,6 +171,7 @@ Ext.onReady(function(){
         url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />page/savePageTemplate/', 
         method: 'POST',
         id: 'form-pagetemplate',
+		layout: 'anchor',
         items: [
             {
                 fieldLabel: 'Title'
@@ -200,26 +179,30 @@ Ext.onReady(function(){
                 , allowBlank: false
             }
             , cbLayout
-            , {
-                xtype: 'panel',
+            , Ext.create('Ext.panel.Panel', {
                 id: 'pl-region',
-                layout:'accordion'
-                , anchor: '100%'
-                , labelWidth: 0
-                //, padding: '0 0 0 110px'
-                
-            }
+                layout:'accordion',
+				frame: false,
+                anchor: '100%',
+				layoutConfig: {
+			        // layout-specific configs go here
+			        titleCollapse: false,
+			        animate: true,
+			        activeOnTop: true
+			    },
+				height: 400
+            })
         ],
         tbar: new Ext.Toolbar({
             //layout: 'anchor'
             items: [
                 {
                     text: 'View All Page Templates'
-                    , iconCls: IconManager.getIcon('text_list_bullets')
+                    //, iconCls: IconManager.getIcon('text_list_bullets')
                     , handler: function()
                     {
                         Ext.getBody().mask();
-                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                        //AlertBox.show('Redirecting', 'Please wait ...', 'smile');
                         window.location.href = '<iz:insert:uri/>page/listPageTemplate/';
                     }
                 }
@@ -227,7 +210,7 @@ Ext.onReady(function(){
         }),
         buttons: [{
             text: 'Save'
-            , iconCls: IconManager.getIcon('database_save')
+            , iconCls: 'icon-save'
             , handler: function()
             {
                 var form = Ext.getCmp('form-pagetemplate').getForm();
@@ -245,7 +228,7 @@ Ext.onReady(function(){
             }
         },{
             text: 'Cancel'
-            , iconCls: IconManager.getIcon('cancel')
+            , iconCls: 'icon-cancel'
             , handler: function()
             {
                 location.href = '<iz:insert:uri/>page/listPageTemplate/';

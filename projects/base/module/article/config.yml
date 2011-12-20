@@ -1,13 +1,18 @@
-module: article
+title: Article
+author: Nguyễn Hữu Thành
+version: 1.0
+date: 10/02/2011
+avatar: images/access.png
 actions:
-    createArticle:
-        default:
-            title: Add a new Article
-            params: 
-                - Category ID
-            context:
-                
-                
-    viewArticle:
-        default      
-                
+    listArticles:
+        title: List all the articles
+        icon: images/list_article.png
+        widget: 1
+        menu:
+            position: 1
+        locales:
+            vi-vn:
+                title: Liệt kê tất cả bài viết
+locales:
+    vi-vn:
+        title: Tin tức

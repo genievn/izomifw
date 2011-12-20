@@ -6,7 +6,7 @@ Ext.onReady(function(){
 	tb.border = false;
 	tb.add({
         text:'Articles',
-        iconCls: 'article-24',
+        iconCls: 'icon-article-32',
 		iconAlign: 'top',
 		scale: 'large',
 		autoWidth : true,
@@ -23,7 +23,7 @@ Ext.onReady(function(){
 	tb.suspendLayout = false;
 	tb.doLayout();
 	
-	var cpanel = Ext.create('Ext.panel.Panel',{title: 'Article Control Panel', frame: false});
+	var cpanel = Ext.create('Ext.panel.Panel',{title: 'Article Control Panel', frame: true, iconCls: 'icon-control-panel'});
 	cpanel.add(tb);
 	cpanel.render('articleCpanel');
 });

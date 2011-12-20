@@ -24,25 +24,28 @@ Ext.onReady(function(){
     }
     ?>
     // record structure to store information about module
-    var Module = Ext.data.Record.create([{
-        name: 'codename',
-        type: 'string'
-    }, {
-        name: 'app_folder',
-        type: 'string'
-    }, {
-        name: 'directory',
-        type: 'string'
-    },{
-        name: 'has_config',
-        type: 'bool'
-    },{
-        name: 'registered',
-        type: 'bool'
-    }]);
+	Ext.define('Module', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {
+		        name: 'codename',
+		        type: 'string'
+		    }, {
+		        name: 'app_folder',
+		        type: 'string'
+		    }, {
+		        name: 'directory',
+		        type: 'string'
+		    },{
+		        name: 'has_config',
+		        type: 'bool'
+		    },{
+		        name: 'registered',
+		        type: 'bool'
+		    }
+	    ]
+	});
 
-
-    // hideous function to generate employee data
     var generateData = function(){
         var data = [];
         <?php
@@ -62,13 +65,12 @@ Ext.onReady(function(){
         return data;
     }
 
-
-    var store = new Ext.data.GroupingStore({
-        reader: new Ext.data.JsonReader({fields: Module}),
-        data: generateData(),
-        sortInfo: {field: 'codename', direction: 'ASC'},
-        groupField:'registered'
-    });
+	var store = Ext.create('Ext.data.Store', {
+        storeId: 'module',
+        model: 'Module',
+        groupField: 'registered',
+		data: generateData()
+	});
     
     store.clearFilter();
     store.filterBy(function(record, id){
@@ -77,32 +79,28 @@ Ext.onReady(function(){
         else if (record.data.registered) return true;
         else return false;
     });
-
-
+	
+	var groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
+        groupHeaderTpl: 'Status: {[name?"Install":"Uninstall"]} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+    });
     var grid = new Ext.grid.GridPanel({
         id: 'grid-module',
         store: store,
         layout: 'fit',
-        margins: '0 5 5 5',
-        autoExpandColumn: 'directory',
+		features: [groupingFeature],
         autoHeight: true,
-        view: new Ext.grid.GroupingView({
-            markDirty: false
-        }),
         tbar: [
             {
                 text: 'Install All'
-                , iconCls: IconManager.getIcon('package_add')
-                , cls: 'x-toolbar-standardbutton'
+                , iconCls: 'icon-add'
                 , handler: function()
                 {
-
+					
                 }
             }
         ],
         stripeRows:true,
         columns: [
-
         {
             id: 'codename',
             header: 'Module name',
@@ -116,13 +114,10 @@ Ext.onReady(function(){
             width: 150,
             sortable: true
         },{
-            //xtype: 'booleancolumn',
             header: 'Has config',
             dataIndex: 'has_config',
             align: 'center',
             width: 100,
-            //trueText: 'Yes',
-            //falseText: 'No',
             renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                 if (record.data.has_config)
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/yes.png';?>"/>';
@@ -130,13 +125,10 @@ Ext.onReady(function(){
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/no.png';?>"/>';
             }
         },{
-            //xtype: 'booleancolumn',
             header: 'Registered',
             dataIndex: 'registered',
             align: 'center',
             width: 100,
-            //trueText: 'Yes',
-            //falseText: 'No'
             renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                 if (record.data.registered)
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/yes.png';?>"/>';
@@ -144,17 +136,84 @@ Ext.onReady(function(){
                     return '<img src="<?php echo $this->getIzLocalePath() . 'images/no.png';?>"/>';
             }
         },{
-            header: 'Install',
-            align: 'center',
-            renderer: renderInstall,
-            dataIndex: 'has_config',
-            width: 100
-        },{
-            id: 'directory',
-            header: 'Directory',
-            dataIndex: 'directory',
-            sortable: true
-        }]
+        	xtype: 'rowactions',
+			align: 'center',
+    		actions: [{ 
+    			iconCls: 'icon-add',
+				width: 100,
+    			qtip: 'Register the module', 
+    			callback: function(grid, record, action, idx, col, e, target) { 
+    				
+					var mcForm = new Ext.form.FormPanel({
+	                    labelWidth:  150,
+	                    frame: true,
+	                    bodyStyle:'padding:10px 10px 0',
+	                    width: 500,
+	                    defaults: {width: 300},
+	                    defaultType: 'textfield',
+	                    url:  '<iz:insert:url/><iz:insert:config path="root.url_json" />registry/registerModule/',
+	                    method: 'POST',
+	                    id: 'form-mc-'+idx,
+	                    items: [
+						
+	                        {
+	                            fieldLabel: 'Module Category',
+	                            id: 'combo-mc',
+	                            xtype: 'combo',
+	                            valueField: 'id',
+	                            hiddenName : 'category_id',
+	                            displayField: 'title',
+	                            allowBlank: true,
+	                            emptyText: 'Please select a category',
+	                            store: new Ext.data.SimpleStore({
+	                                 fields:['id', 'codename', 'title']
+	                                ,data: moduleCategories
+	                            }),
+	                            triggerAction:'all',
+	                            mode:'local'
+	                        },{
+	                            xtype: 'hidden',
+	                            name: 'codename',
+	                            value: record.data.codename
+	                        },{
+	                            xtype: 'hidden',
+	                            name: 'app_folder',
+	                            value: record.data.app_folder
+	                        }
+	                    ],
+	                    buttons: [{
+	                        text: 'Save'
+	                        , iconCls: 'icon-save'
+	                        , handler: function()
+	                        {
+	                            var form = Ext.getCmp('form-mc-'+idx).getForm();
+	                            if(form.isValid()){
+	                                form.submit({
+	                                    loadMask: true,
+	                                    success: function(form,action) {
+	                                        Ext.getBody().mask('Processing ...');
+	                                        window.location.href = '<iz:insert:uri/>registry/scanModule';
+	                                    },
+	                                    failure: function(form,action){
+	                                        Ext.MessageBox.alert('Error',action.result.msg);
+	                                    }
+	                                });
+	                            }
+	                        }
+	                    }]
+	                });
+
+	                // popup window
+					var popup = Ext.create('Ext.window.Window',{
+						items: [mcForm],
+	                    title: 'Select Module Category',
+						//iconCls: 'icon-archive'
+	                    modal: true
+					});
+	                popup.show();
+    			} 
+			}]
+		}]
     });
 
     var layout = new Ext.Panel({
@@ -163,169 +222,12 @@ Ext.onReady(function(){
         //height: 500,
         layout: 'fit',
         frame: true,
+		iconCls: 'icon-module',
         items: [grid]
     });
-
-    grid.getView().getRowClass = function(record, index){
-        if (record.data.has_config == true && record.data.registered == false)
-        {
-            return 'grid-orange-row';
-        }
-        if (record.data.registered == true)
-        {
-            return 'grid-green-row';
-        }else
-        {
-            return 'grid-red-row';
-        }
-    };
-
-    function renderInstall(value, id, r)
-    {
-            var id = Ext.id(); // for the Install button
-            if (r.data.has_config == true && r.data.registered == false)
-            {
-                createGridButtonInstall.defer(1, this, ['Install', id, r]);
-                return('<div id="' + id + '"></div>');
-            }else if (r.data.has_config == true && r.data.registered == true)
-            {
-                var id1 = Ext.id(); // for the UnInstall button
-                createGridButtonInstall.defer(1, this, ['ReInstall', id, r]);
-                createGridButtonDelete.defer(1, this, ['UnInstall', id1, r]);
-                //return('<div id="' + id + '"></div>');
-                return('<div id="' + id + '"></div><div id="' + id1 + '"></div>');
-            }
-    }
-    
-    function createGridButtonDelete(value, id, record) {
-        new Ext.Button({
-            text: value
-            ,iconCls: IconManager.getIcon('package_add')
-            ,handler : function(btn, e) {
-                Ext.MessageBox.confirm('Confirm', 'Are you sure you want to uninstall the module?', function(btn){
-                    
-                    if (btn=='yes')
-                    {
-                        
-                        Ext.Ajax.request({
-                    	   url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>registry/deleteModuleByCodename/' + record.data.codename + '/',
-                    	   success: function(){
-                                Ext.getBody().mask('Processing ...');
-                                AlertBox.show('Redirecting', 'Please wait ...', 'smile');
-                                //window.location.href = '<iz:insert:uri/>' + action.result.redirect;
-                                window.location.href = '<iz:insert:uri/>registry/scanModule/';
-                    	   },
-                    	   failure: function(){},
-                    	   params: {
-                    	       codename: record.data.codename
-                    	       , app_folder: record.data.app_folder
-                    	   }
-                    	});
-                    }
-                    
-                });
-                
-            	
-            	//window.location.href = '<iz:insert:uri/>registry/registerLayout/?codename='+record.data.codename + '&app_folder=' + escape(record.data.app_folder);
-            }
-        }).render(id);
-    }
-    function createGridButtonInstall(value, id, record) {
-        new Ext.Button({
-            text: value
-            ,iconCls: IconManager.getIcon('package_add')
-            ,handler : function(btn, e) {
-
-                // create Module Category Form
-                var mcForm = new Ext.form.FormPanel({
-                    labelWidth:  150,
-                    frame: true,
-                    //title: 'Select Category',
-                    bodyStyle:'padding:10px 10px 0',
-                    width: 500,
-                    defaults: {width: 300},
-                    defaultType: 'textfield',
-                    url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />registry/registerModule/',
-                    method: 'POST',
-                    id: 'form-mc-'+id,
-                    items: [
-                        {
-                            fieldLabel: 'Module Category',
-                            id: 'combo-mc',
-                            xtype: 'combo',
-                            valueField: 'id',
-                            hiddenName : 'module_category_id',
-                            displayField: 'title',
-                            allowBlank: false,
-                            emptyText: 'Please select a category',
-                            store: new Ext.data.SimpleStore({
-                                 fields:['id', 'codename', 'title']
-                                ,data: moduleCategories
-                            }),
-                            triggerAction:'all',
-                            mode:'local'
-                        },{
-                            xtype: 'hidden',
-                            name: 'codename',
-                            value: record.data.codename
-                        },{
-                            xtype: 'hidden',
-                            name: 'app_folder',
-                            value: record.data.app_folder
-                        }
-                    ],
-                    buttons: [{
-                        text: 'Save'
-                        , iconCls: IconManager.getIcon('database_save')
-                        , handler: function()
-                        {
-                            var form = Ext.getCmp('form-mc-'+id).getForm();
-                            if(form.isValid()){
-                                form.submit({
-                                    loadMask: true,
-                                    success: function(form,action) {
-                                        Ext.getBody().mask('Processing ...');
-                                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
-                                        window.location.href = '<iz:insert:uri/>' + action.result.redirect;
-                                    },
-                                    failure: function(form,action){
-                                        Ext.MessageBox.alert('Error',action.result.msg);
-                                    }
-                                });
-                            }
-                        }
-                    }]
-                });
-
-                // popup window
-                var popup = new Ext.Window({
-                    items: [mcForm],
-                    frame: true,
-                    title: 'Select Module Category',
-                    modal: true
-                });
-                popup.show();
-                /*
-                Ext.Ajax.request({
-            	   url: '<iz:insert:url/><?php echo config('root.response.json');?>registry/registerModule/' + record.data.codename,
-            	   success: function(){
-            	       window.location.href = '<iz:insert:uri/>registry/scanModule/';
-            	   },
-            	   failure: function(){},
-            	   params: {
-            	       module: record.data.codename
-            	       , app_folder: record.data.app_folder
-            	   }
-            	});
-            	*/
-            	//window.location.href = '<iz:insert:uri/>registry/registerModule/?codename='+record.data.codename + '&app_folder=' + escape(record.data.app_folder);
-            }
-        }).render(id);
-    }
-
 });
 </script>
-
+<div class="cpanelWrapper"><iz:insert:module module="registry" method="cpanel" /></div>
 <div class="action-container">
     <div class="action-header">
     </div>

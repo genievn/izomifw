@@ -68,13 +68,24 @@ body {
 .lang-vi-vn{
 	background-image: url("../../../libs/icons/flags/vi-vn.png");
 }
-/* icons */
+/* icons 24px */
 .article-24{
 	background-image: url("../../../libs/icons/24/article-24.png");
 }
 .archive-24{
 	background-image: url("../../../libs/icons/24/archive-24.png");
 }
+/* icons 32px */
+.icon-layout-add-32 {
+	background-image: url("../../../libs/icons/32/layout-add.png");
+}
+.icon-article-32 {
+	background-image: url("../../../libs/icons/32/article-pencil.png");
+}
+.icon-module-32 {
+	background-image: url("../../../libs/icons/32/module.png");
+}
+/* icons 16px */
 .arrow-in {
 	background-image: url("../../../libs/icons/16/arrow-in.png");
 }
@@ -84,11 +95,26 @@ body {
 .application-form{
 	background-image: url("../../../libs/icons/16/application-form.png");
 }
-.save {
+.icon-save {
 	background-image: url("../../../libs/icons/16/save.png");
 }
-.cancel {
+.icon-cancel {
 	background-image: url("../../../libs/icons/16/cancel.png");
+}
+.icon-add {
+	background-image: url("../../../libs/icons/16/add.png");
+}
+.icon-module {
+	background-image: url("../../../libs/icons/16/module.png");
+}
+.icon-control-panel{
+	background-image: url("../../../libs/icons/16/control-panel.png");
+}
+.icon-layout-add {
+	background-image: url("../../../libs/icons/16/layout-add.png");
+}
+.icon-widget {
+	background-image: url("../../../libs/icons/16/widget.png");
 }
 /* huge button style */
 .x-btn-noicon .x-btn-huge .x-btn-text{

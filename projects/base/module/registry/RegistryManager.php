@@ -1,5 +1,4 @@
 <?php
-define('TREETYPE_MODULE_CATEGORY','base.module.category');
 
 class RegistryManager extends Object
 {
@@ -23,12 +22,25 @@ class RegistryManager extends Object
 
         return $r;
     }
+	public function getLayouts($asArray = false)
+    {
+        $em = $this->getReader()->getEntityManager();
+        $dql = 'SELECT u FROM Entity\Base\Layout u ORDER BY u.codename';
+        if ($asArray)
+        {
+            $r = $em->createQuery($dql)->getArrayResult();
+        }else{
+            $r = $em->createQuery($dql)->getResult();
+        }
 
+        return $r;
+    }
+	
     public function getModuleCategories($asArray = false)
     {
         $em = $this->getReader()->getEntityManager();
-        $dql = 'SELECT u FROM Entity\Base\TreeNode u JOIN u.tree_type t WHERE t.codename = ?1';
-        $q = $em->createQuery($dql)->setParameter(1, TREETYPE_MODULE_CATEGORY);
+        $dql = 'SELECT u FROM Entity\Base\ModuleCategory u';
+        $q = $em->createQuery($dql);
         if ($asArray)
         {
             $r = $q->getArrayResult();
@@ -100,6 +112,15 @@ class RegistryManager extends Object
 
         if ($i) return $i; else return false;
     }
+	public function existLayout($filterArray)
+    {
+        if (empty($filterArray)) return false;
 
+        $em = $this->getWriter()->getEntityManager();
+
+        $i = $em->getRepository('Entity\Base\Layout')->findOneBy($filterArray);
+
+        if ($i) return $i; else return false;
+    }
 }
 ?>

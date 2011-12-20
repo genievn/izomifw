@@ -14,6 +14,9 @@ $classLoader->register();
 
 $classLoader = new ClassLoader('Doctrine\ORM',$abs.'libs'.$ds.'doctrine2'.$ds.'lib');
 $classLoader->register();
+
+$classLoader = new ClassLoader('Symfony', $abs.'libs'.$ds.'doctrine2'.$ds.'lib'.$ds.'vendor');
+$classLoader->register();
 /*$classLoader = new ClassLoader("DoctrineExtensions", $abs.'libs'.$ds.'extensions');
 $classLoader->register();*/
 $classLoader = new ClassLoader("Entity", config('root.abs'));

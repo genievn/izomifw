@@ -89,7 +89,9 @@ Ext.onReady(function(){
         store: store,
         multiSelect: false,
 		width: 200,
-        height: 500,
+        //height: 500,
+		autoHeight: true,
+		layout: 'fit',
 		//autoScroll:true,
 		//the 'columns' property is now 'headers'
         columns: [{
@@ -140,6 +142,7 @@ Ext.onReady(function(){
 		region: 'center',
 		loadMask: true,
 		layout: 'fit',
+		autoHeight: true,
 		dockedItems: [{
 			dock:           'top',
 			items:           [{
@@ -217,6 +220,7 @@ Ext.onReady(function(){
 	store2.loadPage(1);
 	var articlePanel = Ext.create('Ext.panel.Panel',{
 		layout: 'border',
+		autoHeight: true,
 		height: 500,
 		frame: true,
 		title: 'Articles',

@@ -22,7 +22,7 @@ use Doctrine\ORM\EntityRepository;
  * Description of Policy
  *
  * @author Thanh H. Nguyen
- * @Entity(repositoryClass="Entities\Base\ModuleRepository")
+ * @Entity(repositoryClass="Entity\Base\ModuleRepository")
  * @Table(name="base_modules")
  */
 class Module
@@ -66,10 +66,10 @@ class Module
      */
     protected $action_definitions;
     /**
-     * @ManyToOne(targetEntity="TreeNode")
-     * @JoinColumn(name="treenode_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ManyToOne(targetEntity="ModuleCategory")
+     * @JoinColumn(name="category_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $treenode;
+    protected $category;
     
 
     public function __set($var, $val){
@@ -97,14 +97,14 @@ class Module
         $this->action_definitions[] = $ad;
     }
     
-    public function addTreeNode($treenode)
+    public function setCategory(ModuleCategory $category)
     {
-        $this->treenode = $treenode;
+        $this->category = $category;
     }
     
-    public function getTreeNode()
+    public function getCategory()
     {
-        return $this->treenode;
+        return $this->category;
     }
 }
 

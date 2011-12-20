@@ -51,7 +51,7 @@ function combine( $dir, $dev=false, $useDir=true )
       {
         if( substr( $path, -4 ) == '.php' )
         {
-          $data.= file_get_contents( $path )."\n";
+          $data.= (php_strip_whitespace( $path ))."\n";
         }
       }
       elseif( is_dir( $path ) && ( $dev || $target != '_dev' ) )
@@ -69,9 +69,9 @@ function combine( $dir, $dev=false, $useDir=true )
 function minify( $src, $pre='', $post='' )
 {
   $src = str_replace( array( '<?php', '?>' ), '', $src );
-  $src = preg_replace( '/((?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:\/\/.*))/', '', $src ); // Remove all comment blocks
+  //$src = preg_replace( '/((?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:\/\/.*))/', '', $src ); // Remove all comment blocks
   $src = "<?php ".$pre.$src.$post."?>";
-  $src = preg_replace( '/(\s)+/', '$1', $src); // Remove all white space
+  //$src = preg_replace( '/(\s)+/', '$1', $src); // Remove all white space
   $src = str_replace( array( "\n", "\r" ), ' ', $src);
   
   return $src;
@@ -80,8 +80,10 @@ function minify( $src, $pre='', $post='' )
 $dir = dirname( __FILE__ );
 $out = $dir.DIRECTORY_SEPARATOR;
 $lic = file_get_contents( $dir.DIRECTORY_SEPARATOR.'license.txt' );
-
-$libs = array( 'core.base'=>'i');
+//all the namespace used, to avoid duplicate when combined
+//all the "use namespace" statement should be removed from files, and attach to this ns.php
+$ns = file_get_contents( $dir.DIRECTORY_SEPARATOR.'core'.DIRECTORY_SEPARATOR.'ns.php' );
+$libs = array( 'core'=>'i');
 
 foreach( $libs as $lib=>$name )
 {

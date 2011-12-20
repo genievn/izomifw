@@ -10,8 +10,8 @@ actions:
         menu:
             position: 1
         locales:
-            vi-VN:
+            vi-vn:
                 title: Liệt kê tất cả quyền truy cập
 locales:
-    vi-VN:
+    vi-vn:
         title: Phân Quyền
