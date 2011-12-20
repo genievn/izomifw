@@ -39,7 +39,7 @@ Ext.onReady(function(){
     var cbLayout = new Ext.form.ComboBox({
         //readOnly: true,
         fieldLabel: 'Layout',
-        hiddenName:'layout_codename',
+        name:'layout_codename',
         allowBlank: false,
         id: 'cb-layout',
         store: new Ext.data.SimpleStore({
@@ -88,7 +88,7 @@ Ext.onReady(function(){
                                     // get the panel of the region
                                     widgetPanel = Ext.getCmp('pl-'+region);
                                     var cbWidget = new Ext.form.ComboBox({
-                                        hiddenName: 'widget['+region+']['+id+'][id]'
+                                        name: 'widget['+region+']['+id+'][id]'
                                         , allowBlank: false
                                         , store: new Ext.data.SimpleStore({
                                             fields: ['id', 'title','action_definition_title','module_codename']
@@ -143,7 +143,6 @@ Ext.onReady(function(){
                                     {
                                         widgetPanel.add(boxWidget);
                                         widgetPanel.doLayout();
-										console.log(widgetPanel);
                                     }
                                     
                                     
@@ -168,7 +167,7 @@ Ext.onReady(function(){
         //width: 800,
         defaults: {width: 250},
         defaultType: 'textfield',
-        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />page/savePageTemplate/', 
+        url:  '<?php echo config('root.url').config('root.url_json');?>page/savePageTemplate/', 
         method: 'POST',
         id: 'form-pagetemplate',
 		layout: 'anchor',
@@ -217,11 +216,12 @@ Ext.onReady(function(){
                 if(form.isValid()){
                     form.submit({
                         waitMsg:'Loading...',
-                        success: function(form,action) {
-                            window.location = '<iz:insert:uri/>' + action.result.redirect;
+                        success: function(f,a) {
+							alert(a.result.message);
+                            //window.location = '<iz:insert:uri/>' + action.result.redirect;
                         },
-                        failure: function(form,action){
-                            Ext.MessageBox.alert('Error',action.result.msg);
+                        failure: function(f,a){
+							alert(a.result.message);
                         }
                     });
                 }
@@ -239,6 +239,7 @@ Ext.onReady(function(){
 	
 });
 </script>
+<div class="cpanelWrapper"><iz:insert:module module="registry" method="cpanel" /></div>
 <div class="action-container">
     <div class="action-header">
     </div>

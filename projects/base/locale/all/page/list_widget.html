@@ -1,41 +1,50 @@
 <script type="text/javascript">
 Ext.onReady(function(){
+    Ext.define('WidgetModel', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {
+		        name: 'id',
+		        type: 'string'
+		    },{
+		        name: 'title',
+		        type: 'string'
+		    },{
+		        name: 'action_title',
+		        type: 'string'
+		    },{
+		        name: 'codename',
+		        type: 'string'        
+		    }
+	    ]
+	});
+	
     
-    var Widgets = Ext.data.Record.create([
-    {
-        name: 'id',
-        type: 'string'
-    },{
-        name: 'title',
-        type: 'string'
-    },{
-        name: 'action_title',
-        type: 'string'
-    },{
-        name: 'codename',
-        type: 'string'        
-    }]);
-    
-    var store = new Ext.data.GroupingStore({
-        reader: new Ext.data.JsonReader({root: 'widgets',fields: Widgets}),
-        proxy: new Ext.data.HttpProxy({url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>page/getWidget/',method:'GET'}),
-        autoLoad: true
-        //, sortInfo: {field: '', direction: 'ASC'}
+	var store = Ext.create('Ext.data.JsonStore',{
+		model: 'WidgetModel',
+		//pageSize: 100,
+		groupField: 'codename',
+		folderSort: true
+		, proxy: {
+			type: 'rest',
+			url: '<?php echo config('root.url').config('root.url_json');?>page/getWidgetJsonData/',
+			reader: {
+                root: 'widgets'
+                //, totalProperty: 'totalcount'
+            },
+		}
+	});
+	var groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
+        groupHeaderTpl: 'Module: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
     });
-
-
     var grid = new Ext.grid.GridPanel({
         id: 'grid-access',
         store: store,
         layout: 'fit',
-        margins: '0 5 5 5',
         autoExpandColumn: 'title',
-        autoHeight: true,
         loadMask: true,
-        view: new Ext.grid.GroupingView({
-            markDirty: false
-        }),
         stripeRows:true,
+		features: [groupingFeature],
         tbar: [
             {
                 text: 'Create New Widget'
@@ -44,14 +53,14 @@ Ext.onReady(function(){
                 {
                     //window.location = '<iz:insert:uri/>widget/createWidget/';
                     Ext.getBody().mask('Processing ...');
-                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    //AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
                     window.location.href = '<iz:insert:uri/>page/createWidget/';
                 }
                 , scope: this
             }
             ,{
                 ref: '../editBtn',
-                iconCls: IconManager.getIcon('page_edit'),
+                //iconCls: IconManager.getIcon('page_edit'),
                 text: 'Edit Widget',
                 disabled: true,
                 handler: function(){
@@ -63,7 +72,7 @@ Ext.onReady(function(){
             }
             ,{
                 ref: '../deleteBtn',
-                iconCls: IconManager.getIcon('page_delete'),
+                //iconCls: IconManager.getIcon('page_delete'),
                 text: 'Delete Widget',
                 disabled: true,
                 handler: function(){
@@ -76,12 +85,12 @@ Ext.onReady(function(){
             },'->',
             {
                 text: 'View Page Template'
-                , iconCls: IconManager.getIcon('page')
+                //, iconCls: IconManager.getIcon('page')
                 , handler: function()
                 {
                     //window.location = '<iz:insert:uri/>widget/createWidget/';
                     Ext.getBody().mask('Processing ...');
-                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    //AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
                     window.location.href = '<iz:insert:uri/>page/listPageTemplate/';
                 }
             }
@@ -92,7 +101,7 @@ Ext.onReady(function(){
             id: 'title',
             header: 'Title',
             dataIndex: 'title',
-            width: 100,
+            flex: 1,
             sortable: true
         },
         {
@@ -100,6 +109,7 @@ Ext.onReady(function(){
             header: 'Action Title',
             dataIndex: 'action_title',
             width: 100,
+			flex: 1,
             sortable: true
         },
         {
@@ -115,19 +125,21 @@ Ext.onReady(function(){
         title: 'Widget',
         layout: 'fit',
         items: [grid],
-        iconCls: IconManager.getIcon('brick'),
+		iconCls: 'icon-widget',
         renderTo: 'entity-widget',
         frame: true
     });
 
     grid.getSelectionModel().on('selectionchange', function(sm){
-        grid.editBtn.setDisabled(sm.getCount() != 1);
-        grid.deleteBtn.setDisabled(sm.getCount() <= 0);
+        //grid.editBtn.setDisabled(sm.getCount() != 1);
+        //grid.deleteBtn.setDisabled(sm.getCount() <= 0);
     });
+	
+	store.load();
 });
 </script>
 
-
+<div class="cpanelWrapper"><iz:insert:module module="registry" method="cpanel" /></div>
 <div class="action-container">
     <div class="action-header">
     </div>

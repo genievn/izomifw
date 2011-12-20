@@ -16,28 +16,32 @@ Ext.onReady(function(){
 		    }
 	    ]
 	});
-    var store = Ext.create('Ext.data.Store', {
-        storeId: 'pagetemplate',
-        model: 'PageTemplate',
-		reader: new Ext.data.JsonReader({root: 'pagetemplates',fields: PageTemplate}),
-        groupField: 'registered'
+    
+	var store = Ext.create('Ext.data.JsonStore',{
+		model: 'PageTemplate',
+		//pageSize: 100,
+		groupField: 'codename',
+		folderSort: true
 		, proxy: {
 			type: 'rest',
-			url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>page/getPageTemplate/'
+			url: '<?php echo config('root.url').config('root.url_json');?>page/getPageTemplate/',
+			reader: {
+                root: 'pagetemplates'
+                //, totalProperty: 'totalcount'
+            },
 		}
 	});
-
-
+	var groupingFeature = Ext.create('Ext.grid.feature.Grouping',{
+        groupHeaderTpl: 'Layout: {name} ({rows.length} Item{[values.rows.length > 1 ? "s" : ""]})'
+    });
     var grid = new Ext.grid.GridPanel({
-        //iconCls: IconManager.getIcon('brick'),
         id: 'grid-access',
         store: store,
         layout: 'fit',
-        margins: '0 5 5 5',
-        autoExpandColumn: 'title',
         autoHeight: true,
         loadMask: true,
         stripeRows:true,
+		features: [groupingFeature],
         tbar: [
             {
                 text: 'Add New Page Template'
@@ -98,7 +102,7 @@ Ext.onReady(function(){
             id: 'title',
             header: 'Title',
             dataIndex: 'title',
-            width: 100,
+			flex: 1,
             sortable: true
         },
         {
@@ -117,15 +121,16 @@ Ext.onReady(function(){
         renderTo: 'entity-pagetemplate',
         frame: true
     });
-	/*
+	
     grid.getSelectionModel().on('selectionchange', function(sm){
-        grid.editBtn.setDisabled(sm.getCount() != 1);
-        grid.deleteBtn.setDisabled(sm.getCount() <= 0);
-    });*/
+        //grid.editBtn.setDisabled(sm.getCount() != 1);
+        //grid.deleteBtn.setDisabled(sm.getCount() <= 0);
+    });
+	store.load();
 });
 </script>
 
-
+<div class="cpanelWrapper"><iz:insert:module module="registry" method="cpanel" /></div>
 <div class="action-container">
     <div class="action-header">
     </div>

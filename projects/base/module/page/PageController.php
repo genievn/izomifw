@@ -22,9 +22,9 @@ class PageController extends Object
     {
         $render = $this->getTemplate('json');
         
-        $moduleId = (int)$_REQUEST['module_id'];
-        $actionDefinitionId = (int)$_REQUEST['action_definition_id'];
-        $params = $_REQUEST['params'];
+        $moduleId = (int)@$_REQUEST['module_id'];
+        $actionDefinitionId = (int)@$_REQUEST['action_definition_id'];
+        $params = @$_REQUEST['params'];
         if (empty($params)) $params = '*';
         $em = $this->getManager('doctrine2')->getEntityManager();
         $em->beginTransaction();
@@ -46,7 +46,7 @@ class PageController extends Object
             # create a new action
             $action = new Entity\Base\Action();
             $action->params = $params;
-            $action->addActionDefinition($actionDefinition);
+            $action->setActionDefinition($actionDefinition);
             $em->persist($action);
         }
         
@@ -79,13 +79,13 @@ class PageController extends Object
         return $render;
     }
     
-    public function getWidget()
+    public function getWidgetJsonData()
     {
         $render = $this->getTemplate('json');
         $em = $this->getManager('doctrine2')->getEntityManager();
         # get id, action definition title and the module codename of the widget
         $dql = 'SELECT u.id, u.title, m.codename, d.title as action_title FROM Entity\Base\Widget u JOIN u.action a JOIN a.action_definition d JOIN d.module m';
-        $q = $em->createQuery($dql);        
+        $q = $em->createQuery($dql);
         $widgets = $q->getResult();
         $render->setWidgets($widgets);
         return $render;
@@ -224,18 +224,21 @@ class PageController extends Object
                     }                    
                 }
             }
-            $render->setSuccess(false);
+            //$render->setSuccess(false);
         }else{
             $render->setSuccess(false);
+			$render->setMessage('Layout is not found');
+			return $render;
         }
         try{
             $em->flush();
             $em->commit();
             $render->setSuccess(true);
-            $render->setRedirect('page/listPageTemplate/');      
+            $render->setMessage('PageTemplate saved successfully!');      
         }catch(Exception $e){
             $em->rollback();
             $render->setSuccess(false);
+			$render->setMessage('Error while saving PageTemplate: '.$e->getMessage());
         }
         return $render;
     }

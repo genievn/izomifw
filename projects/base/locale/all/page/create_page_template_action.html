@@ -36,7 +36,7 @@ Ext.onReady(function(){
     ?>
 	
     var fp = new Ext.FormPanel({
-        iconCls: IconManager.getIcon('brick'),
+        //iconCls: IconManager.getIcon('brick'),
         labelWidth:  100,
         renderTo: 'entity-pagetemplateaction',
         frame: true,
@@ -53,11 +53,11 @@ Ext.onReady(function(){
             items: [
                 {
                     text: 'View All Page Templates'
-                    , iconCls: IconManager.getIcon('text_list_bullets')
+                    //, iconCls: IconManager.getIcon('text_list_bullets')
                     , handler: function()
                     {
                         Ext.getBody().mask();
-                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                        //AlertBox.show('Redirecting', 'Please wait ...', 'smile');
                         window.location.href = '<iz:insert:uri/>page/listPageTemplate/';
                     }
                 }
@@ -87,7 +87,7 @@ Ext.onReady(function(){
                         id: 'combo-module',
                         xtype: 'combo',
                         valueField: 'id',
-                        hiddenName: 'module_id',
+                        name: 'module_id',
                         displayField: 'codename',
                         triggerAction: 'all',
                         allowBlank: false,
@@ -115,6 +115,7 @@ Ext.onReady(function(){
                         name: 'all_module',
                         listeners: {
                             check: function(checkbox, checked){
+								console.log(checkbox);
                                 if (checked)
                                 {
                                     Ext.getCmp('combo-module').disable();
@@ -146,7 +147,7 @@ Ext.onReady(function(){
                         displayField: 'method',
                         triggerAction:'all',
                         mode:'local',
-                        hiddenName: 'action_definition_id',
+                        name: 'action_definition_id',
                         store: new Ext.data.SimpleStore({
                              fields:['module_id', 'id', 'method']
                             ,data: actionArray
@@ -192,7 +193,7 @@ Ext.onReady(function(){
 
         buttons: [{
             text: 'Save'
-            , iconCls: IconManager.getIcon('database_save')
+            //, iconCls: IconManager.getIcon('database_save')
             , handler: function()
             {
                 var form = Ext.getCmp('form-pagetemplateaction').getForm();
@@ -201,7 +202,7 @@ Ext.onReady(function(){
                         waitMsg:'Loading...',
                         success: function(form,action) {
                             Ext.getBody().mask();
-                            AlertBox.show('Success', 'Update successfully ...', 'success');
+                            //AlertBox.show('Success', 'Update successfully ...', 'success');
                             window.location.href = '<iz:insert:uri/>'+ action.result.redirect;
                         },
                         failure: function(form,action){
@@ -212,7 +213,7 @@ Ext.onReady(function(){
             }
         },{
             text: 'Cancel'
-            , iconCls: IconManager.getIcon('cancel')
+            //, iconCls: IconManager.getIcon('cancel')
             , handler: function()
             {
                 location.href = '<iz:insert:uri/>menu/listMenu/';

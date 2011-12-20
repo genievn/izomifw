@@ -85,7 +85,7 @@ class Action
 			$this->$association = $collection;
 	}
 	
-	public function addActionDefinition($ad)
+	public function setActionDefinition($ad)
 	{
         $this->action_definition = $ad;
 	}

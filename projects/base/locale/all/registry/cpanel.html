@@ -21,6 +21,24 @@ Ext.onReady(function(){
 		autoHeight : true,
 		handler: function(){window.location.href = '<iz:insert:uri/>registry/scanLayout';}
 
+    },{
+        text:'Page Template',
+        iconCls: 'icon-page-template-32',
+		iconAlign: 'top',
+		scale: 'large',
+		autoWidth : true,
+		autoHeight : true,
+		handler: function(){window.location.href = '<iz:insert:uri/>page/listPageTemplate';}
+
+    },{
+        text:'Widgets',
+        iconCls: 'icon-widget-32',
+		iconAlign: 'top',
+		scale: 'large',
+		autoWidth : true,
+		autoHeight : true,
+		handler: function(){window.location.href = '<iz:insert:uri/>page/listWidget';}
+
     });
 	tb.suspendLayout = false;
 	tb.doLayout();

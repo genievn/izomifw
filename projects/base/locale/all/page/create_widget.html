@@ -55,7 +55,7 @@ Ext.onReady(function(){
                 id: 'combo-module',
                 xtype: 'combo',
                 valueField: 'id',
-                hiddenName: 'module_id',
+                name: 'module_id',
                 displayField: 'codename',
                 triggerAction: 'all',                
                 store: new Ext.data.SimpleStore({
@@ -81,7 +81,7 @@ Ext.onReady(function(){
                 displayField: 'method',
                 triggerAction:'all',
                 mode:'local',
-                hiddenName: 'action_definition_id',
+                name: 'action_definition_id',
                 store: new Ext.data.SimpleStore({
                      fields:['module_id', 'id', 'method']
                     ,data: widgetArray
@@ -147,6 +147,7 @@ Ext.onReady(function(){
 	
 });
 </script>
+<div class="cpanelWrapper"><iz:insert:module module="registry" method="cpanel" /></div>
 <div class="action-container">
     <div class="action-header">
     </div>

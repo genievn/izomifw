@@ -85,6 +85,12 @@ body {
 .icon-module-32 {
 	background-image: url("../../../libs/icons/32/module.png");
 }
+.icon-page-template-32 {
+	background-image: url("../../../libs/icons/32/page-template.png");
+}
+.icon-widget-32 {
+	background-image: url("../../../libs/icons/32/widget.png");
+}
 /* icons 16px */
 .arrow-in {
 	background-image: url("../../../libs/icons/16/arrow-in.png");
