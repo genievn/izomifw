@@ -2,6 +2,11 @@
 
 class MenuController extends Object
 {
+	public function cpanel()
+	{
+		$render = $this->getTemplate('cpanel');
+		return $render;
+	}
     /**
      * createMenu function.
      * 
@@ -18,30 +23,29 @@ class MenuController extends Object
     public function saveMenu()
     {
         $render = $this->getTemplate('json');
+		$name = @$_REQUEST['name'];
         $em = $this->getManager('doctrine2')->getEntityManager();
         
-        $m = new Entity\Base\NavigationMenu();
-        $m->uuid = new_uuid();
-        $m->title = $_REQUEST['title'];
-        $m->codename = $_REQUEST['codename'];
-        
-        # get the parent menu
-        $p = $em->find('Entity\Base\NavigationMenu', $_REQUEST['parent_id']);
-        
-        if ($p)
-        {
-            $m->addParent($p);
-        }
+        $m = new Entity\Base\Menu();
+        $m->setName($name);
         
         try {
             $em->beginTransaction();
             $em->persist($m);
+			// create a root menu item
+			$root = new Entity\Base\MenuItem();
+			$root->setTitle('root');
+			$root->setMenu($m);
+			
+			$em->persist($root);
             $em->flush();
             $em->commit();
             $render->setSuccess(true);
+			$render->setMessage('Menu saved successfully');
         }catch(Exception $e){
             $em->rollback();
             $render->setSuccess(false);
+			$render->setMessage('Error while saving menu');
         }
         return $render;        
     }
@@ -52,12 +56,12 @@ class MenuController extends Object
         
         return $render;
     }
-    public function getMenu()
+    public function getMenuJsonData()
     {
         $render = $this->getTemplate('json');
         
         $em = $this->getManager('doctrine2')->getEntityManager();
-        $dql = "SELECT u FROM Entity\Base\NavigationMenu u";
+        $dql = "SELECT u FROM Entity\Base\Menu u";
         $menus = $em->createQuery($dql)->getArrayResult();
 
         $render->setMenus($menus);
@@ -70,47 +74,71 @@ class MenuController extends Object
     {
         $render = $this->getTemplate('list_menu_item');
         $em = $this->getManager('doctrine2')->getEntityManager();
-        $menu = $em->find('Entity\Base\NavigationMenu', $menu_id);
+        $menu = $em->find('Entity\Base\Menu', $menu_id);
         $render->setMenu($menu);
         return $render;
     }
-    
+
+    public function menuItemJsonData($menu_id = null)
+	{
+		if (!$menu_id) return false;
+		$render = $this->getTemplate('json');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$repo = $em->getRepository('Entity\Base\MenuItem');
+		//find the root of the menu
+		$q = $em->createQuery('SELECT u FROM Entity\Base\MenuItem u JOIN u.menu m WHERE m.id=?1');
+		$q->setParameter(1, $menu_id);
+		$result = $q->getResult();
+		# if more than one action found, get the first one
+        if (count($result) >= 1) $root = $result[0]; else $root = null;
+		
+		if (!$root) return false;
+		
+		$tree = $repo->childrenHierarchy($root);
+		$tree = array('title'=>'/', 'id'=>$root->getId(), 'children'=>$tree);
+		$render->setText('.');
+		$render->setChildren($tree);
+		//$render->setRootId($root->getId());
+		return $render;
+	}
     public function saveMenuItem($id = null)
     {
+		$title = @$_REQUEST['title'];
+		$link = @$_REQUEST['link'];
+		
+		$params = @$_REQUEST['params'];
+		if(!$params) $params = '*';
+
         $em = $this->getManager('doctrine2')->getEntityManager();
         $render = $this->getTemplate('json');
         $em->beginTransaction();
-        $m = $em->find('Entity\Base\NavigationMenu', (int)$_REQUEST['menu_id']);
-        
-        if (!$m)
-        {
-            $render->setSuccess(false);
-            return $render;
-        }
         
         # find parent
-        $p = $em->find('Entity\Base\NavigationMenuItem', (int)$_REQUEST['parent_id']);
+        $p = $em->find('Entity\Base\MenuItem', (int)@$_REQUEST['parent_id']);
+
+		if (!($p instanceof Entity\Base\MenuItem)){
+			$render->setSuccess(false);
+			$render->setMessage('A root menu item must be specified');
+		}
         
-        if ($id) $i = $em->find('Entity\Base\NavigationMenuItem', (int)$id);
-        else $i = new Entity\Base\NavigationMenuItem();
+        if ($id) $i = $em->find('Entity\Base\MenuItem', (int)$id);
+        else $i = new Entity\Base\MenuItem();
         
-        $i->title = $_REQUEST['title'];
-        $i->sequence = (int)$_REQUEST['sequence'];
-        $i->link = $_REQUEST['link'];
+        $i->setTitle($title);
+        $i->setLink($link);
         # if it's INSERT operation (id is null), we add the parent and menu
         if (!$id)
         {
-            if ($m) $i->addNavigationMenu($m);
-            if ($p) $i->addParent($p);
+            if ($p) $i->setParent($p);
         }
         
         # find action definition
-        $d = $em->find('Entity\Base\ActionDefinition', (int)$_REQUEST['action_definition_id']);
+        $d = $em->find('Entity\Base\ActionDefinition', (int)@$_REQUEST['action_definition_id']);
         # find action
         $dql = 'SELECT u FROM Entity\Base\Action u JOIN u.action_definition a WHERE a.id = ?1 AND u.params = ?2';
         $q = $em->createQuery($dql);
-        $q->setParameter(1, (int)$_REQUEST['action_definition_id']);
-        $q->setParameter(2, $_REQUEST['params']);
+        $q->setParameter(1, (int)@$_REQUEST['action_definition_id']);
+        $q->setParameter(2, @$_REQUEST['params']);
         $a = $q->getResult();
         # if more than one action found, get the first one
         if (count($a) >= 1) $a = $a[0]; else $a = null;
@@ -119,12 +147,12 @@ class MenuController extends Object
         {
             # create new action
             $a = new Entity\Base\Action();
-            $a->params = $_REQUEST['params'];
-            $a->addActionDefinition($d);
+            $a->params = $params;
+            $a->setActionDefinition($d);
             $em->persist($a);
         }
         # associate the action
-        if ($a) $i->addAction($a);
+        if ($a) $i->setAction($a);
         
         try {
             
@@ -132,54 +160,95 @@ class MenuController extends Object
             $em->flush();
             $em->commit();
             $render->setSuccess(true);
-            $render->setRedirect('menu/listMenuItemForMenuId/'.$m->id);
+            $render->setMessage('Menu item created successfully!');
         }catch(Exception $e)
         {
             $em->rollback();
             $render->setSuccess(false);
+			$render->setMessage('Error while saving menu item: '. $e->getMessage());
         }
         return $render;
     }
-    /*
-     * Because the TreePanel only take an JSON array, we need to provide a custom
-     * template instead of using the JSON plugin
-     */
-    public function getMenuItemByMenuCodename($codename = null)
-    {
-        $render = $this->getTemplate('json_menu_item');
-        $em = $this->getManager('doctrine2')->getEntityManager();
-        
-        
-        $dql = 'SELECT u,p.id as parent_id FROM Entity\Base\NavigationMenuItem u JOIN u.navigation_menu n LEFT JOIN u.parent p WHERE n.codename = ?1';
-        $q = $em->createQuery($dql)->setParameter(1, $codename);
-        
-        $items = $q->getArrayResult();
-        $render->setMenuItems($items);
-        return $render;
-    }
+	public function reorderMenuItem()
+	{
+		$sourceId = $_REQUEST["sourceId"];
+		$targetId = $_REQUEST["targetId"];
+		$position = $_REQUEST["position"];
+		$render = $this->getTemplate('json');
+		$em = $this->getManager('doctrine2')->getEntityManager();
+		$repo = $em->getRepository('Entity\Base\MenuItem');
+		if ($sourceId) $source = $em->find('Entity\Base\MenuItem', $sourceId);
+		if ($targetId) $target = $em->find('Entity\Base\MenuItem', $targetId);
+		
+		switch ($position) {
+			case 'append':
+				// make target to be source's parent
+				if ($target) $source->setParent($target); else return false;
+				try {					
+					$em->persist($source);
+					$em->flush();
+					
+					$render->setSuccess(true);
+					if ($target)
+						$render->setMessage('Menu item ('.$source->getTitle().') has new parent ('.$target->getTitle().')');
+					return $render;
+				} catch (Exception $e) {
+					$render->setSuccess(false);
+					$render->setMessage('Error while setting new parent ('.$target->getTitle().') for category ('.$source->getTitle().')');
+					return $render;
+				}
+				break;
+			case 'before':
+			case 'after':
+				// move the				
+				try {
+					if ($position == 'after')
+						$repo->persistAsNextSiblingOf($source, $target);				
+					else 
+						$repo->persistAsPrevSiblingOf($source, $target);
+					//$em->persist($source);
+					$em->flush();
+					
+					$render->setSuccess(true);
+					if ($target)
+						$render->setMessage('Menu item ('.$source->getTitle().') has been moved '.$position.' ('.$target->getTitle().')');
+					return $render;
+				} catch (Exception $e) {
+					$render->setSuccess(false);
+					$render->setMessage('Error while moving ('.$source->getTitle().') '.$position.' ('.$target->getTitle().'):'.$e->toString());
+					return $render;
+				} 
+				break;
+			default:
+				# code...
+				break;
+		}
+	}
     
-    public function createMenuItemForMenuId($id, $parentId = null)
+    public function createMenuItem($id, $parentId = null)
     {
         $render = $this->getTemplate('create_menu_item');
         $em = $this->getManager('doctrine2')->getEntityManager();
-        $m = $em->find('Entity\Base\NavigationMenu', $id);
+        $m = $em->find('Entity\Base\Menu', $id);
         
         # find the parent;
-        if ($parentId) $parent = $em->find('Entity\Base\NavigationMenuItem', $parentId);
+        if ($parentId) $parent = $em->find('Entity\Base\MenuItem', $parentId); else $parent = null;
         
         $modules = $this->getManager('registry')->getModules();
         $render->setMenu($m);
-        $render->setParent($parent);
+        if ($parent instanceof Entity\Base\MenuItem) $render->setParent($parent);
         $render->setModules($modules);
+		$render->setMenuId($id);
+		$this->getManager( 'html' )->addJs( config('root.url') . 'libs/extjs/ux/treecombo/treecombo.js', true);
         return $render;
     }
-    
+
     public function editMenuItem($id)
     {
         $render = $this->getTemplate('create_menu_item');
         $em = $this->getManager('doctrine2')->getEntityManager();
         # find the menu item
-        $i = $em->find('Entity\Base\NavigationMenuItem', $id);
+        $i = $em->find('Entity\Base\MenuItem', $id);
         # find the menu
         $m = $i->getMenu();        
         # find the parent;
@@ -208,129 +277,5 @@ class MenuController extends Object
     
     }
     
-    public function reorderNode()
-    {
-        $render = $this->getTemplate('dummy');
-        $r = $_REQUEST;
-        $id = intval($r['node']);
-        $delta = intval($r['delta']);
-        $position = intval($r['position']);
-        $oldPosition = intval($r['oldPosition']);
-        
-
-        $em = $this->getManager('doctrine2')->getEntityManager();
-        $em->beginTransaction();
-        // find the node
-        $node = $em->getRepository('Entity\Base\NavigationMenuItem')->findOneBy(array('id'=>$id));
-        // find all the children of the parent node
-        if ($node->parent) $parentId = $node->parent->id; else $parentId = null;
-        
-        if ($parentId)
-            $children = $em->createQuery('SELECT u FROM Entity\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = '.$parentId.' ORDER BY u.sequence')->getResult();
-        else
-            $children = $em->createQuery('SELECT u FROM Entity\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = NULL ORDER BY u.sequence')->getResult();
-
-        $sequence = 0;
-        
-        
-        if ($delta < 0)
-        {
-            # move node up
-            
-            foreach ($children as $c)
-            {
-                if ($sequence >= $position && $sequence < $oldPosition)
-                {
-                    $c->sequence = $sequence + 1;
-                    $em->persist($c);
-                    $em->flush();
-                }
-                $sequence = $sequence + 1;
-            }
-            $node->sequence = $position;
-            $em->persist($node);
-            $em->flush();
-        } elseif ($delta > 0) {
-            foreach ($children as $c)
-            {
-                if ($sequence > $oldPostion && $sequence <= $position)
-                {
-                    $c->sequence = $sequence - 1;
-                    $em->persist($c);
-                    $em->flush();
-                }
-                $sequence = $sequence + 1;
-            }
-            $node->sequence = $position;
-            $em->persist($node);
-            $em->flush();
-        }
-        try
-        {
-            $em->commit();
-            $render->setSuccess(true);
-        }catch(Exception $e){
-            $em->rollback();
-            $render->setSuccess(false);
-        }
-        return $render;
-    }
-    
-    public function reparentNode()
-    {
-        $r = $_REQUEST;
-        $render = $this->getTemplate('dummy');
-        $id = intval($r['node']);
-        $parentId = intval($r['parent']);
-        $position = intval($r['position']);
-        
-        
-        $em = $this->getManager('doctrine2')->getEntityManager();
-        
-        # find the current node
-        $node = $em->getRepository('Entity\Base\NavigationMenuItem')->findOneBy(array('id'=>$id));
-        
-        # find the parent node
-        $parent = $em->getRepository('Entity\Base\NavigationMenuItem')->findOneBy(array('id'=>$parentId));
-        
-        if ($node && $parent)
-        {
-            $node->addParent($parent);
-            $node->sequence = $position;
-            $em->beginTransaction();
-            $em->persist($node);
-            $em->flush();
-            # select all the children of parent node, except the current node
-            $children = $em->createQuery('SELECT u FROM Entity\Base\NavigationMenuItem u JOIN u.parent p WHERE p.id = '.$parentId.' AND u.id != '.$id.' ORDER BY u.sequence')->getResult();
-            $sequence = 0;
-            if (!empty($children))
-            {
-                foreach($children as $c)
-                {
-                    if ($sequence == $position) $sequence = $sequence + 1;
-                    $c->sequence = $sequence;
-                    $sequence = $sequence + 1;
-                    $em->persist($c);
-                    $em->flush();
-                }
-            }
-            $em->commit();
-            $render->setSuccess(true);            
-        }elseif ($node && $parentId == 0 ){
-            # it becomes the root node
-            $node->removeParent();
-            $em->persist($node);
-            $render->setSuccess(true);
-        }else{
-            $render->setSuccess(false);
-        }
-        return $render;
-    
-    }
-    
-    public function htmlHelp()
-    {
-    
-    }
 }
 ?>

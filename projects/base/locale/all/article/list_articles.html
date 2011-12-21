@@ -72,11 +72,13 @@ Ext.onReady(function(){
             xtype: 'toolbar',
             items: [{
                 text: 'Expand All',
+				iconCls: 'icon-arrow-out',
                 handler: function(){
                     categoryTree.expandAll();
                 }
             }, {
                 text: 'Collapse All',
+				iconCls: 'icon-arrow-in',
                 handler: function(){
                     categoryTree.collapseAll();
                 }
@@ -103,6 +105,7 @@ Ext.onReady(function(){
         }]
 		,tools:[{
 			id: 'expandAll',
+			iconCls: 'icon-arrow-out',
 			text: 'Expand All',
 			handler: function(){}
 		}]

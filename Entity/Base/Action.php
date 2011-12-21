@@ -55,12 +55,12 @@ class Action
      */
     protected $widgets;
     /**
-     * @OneToMany(targetEntity="NavigationMenuItem", mappedBy="action")
+     * @OneToMany(targetEntity="MenuItem", mappedBy="action")
      */
-    protected $navigation_menu_items;
+    protected $menu_items;
     /**
      * @ManyToOne(targetEntity="PageTemplate", inversedBy="actions")
-     * @JoinColumn(name="page_template_id", referencedColumnName="id", onDelete="CASCADE")
+     * @JoinColumn(name="page_template_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $page_template;
     

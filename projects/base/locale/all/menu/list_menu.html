@@ -5,11 +5,7 @@ Ext.onReady(function(){
         name: 'id',
         type: 'integer'
     },{
-        name: 'codename',
-        type: 'string'
-    }
-    ,{
-        name: 'title',
+        name: 'name',
         type: 'string'
     },
     {
@@ -17,39 +13,40 @@ Ext.onReady(function(){
         type: 'string'
     }]);
     
-    var store = new Ext.data.GroupingStore({
-        reader: new Ext.data.JsonReader({root: 'menus',fields: Menu}),
-        proxy: new Ext.data.HttpProxy({url: '<iz:insert:url/><iz:insert:config path="root.response.json"/>menu/getMenu/',method:'GET'}),
-        autoLoad: true,        
-        sortInfo: {field: 'title', direction: 'ASC'}
-    });
-
+	var store = Ext.create('Ext.data.JsonStore',{
+		model: 'WidgetModel',
+		folderSort: true
+		, proxy: {
+			type: 'rest',
+			url: '<?php echo config('root.url').config('root.url_json');?>menu/getMenuJsonData/',
+			reader: {
+                root: 'menus'
+                //, totalProperty: 'totalcount'
+            },
+		}
+	});
     var grid = new Ext.grid.GridPanel({ 
         
         id: 'grid-menu',
         store: store,
         layout: 'fit',
-        margins: '0 5 5 5',
         autoExpandColumn: 'title',
         autoHeight: true,
         loadMask: true,
-        view: new Ext.grid.GroupingView({
-            markDirty: false
-        }),
         tbar: [
             {
                 text: 'Add New Menu'
-                , iconCls: IconManager.getIcon('package_add')
+                //, iconCls: IconManager.getIcon('package_add')
                 , handler: function()
                 {
                     Ext.getBody().mask();
-                    AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
+                    //AlertBox.show('Redirecting', 'Please wait ...', 'smile');                    
                     window.location.href = '<iz:insert:uri/>menu/createMenu/';
                 }
             }
             ,{
                 ref: '../deleteBtn',
-                iconCls: IconManager.getIcon('package_remove'),
+                //iconCls: IconManager.getIcon('package_remove'),
                 text: 'Delete Menu',
                 disabled: true,
                 handler: function(){
@@ -74,16 +71,11 @@ Ext.onReady(function(){
                 sortable: true
             },
             {
-                id: 'codename',
-                header: 'Codename',
-                dataIndex: 'codename',
+                id: 'name',
+                header: 'Name',
+                dataIndex: 'name',
                 width: 100,
                 sortable: true
-            },{
-                id: 'title',
-                header: 'Title',
-                dataIndex: 'title',
-                minWidth: 200
             },{
                 id: 'description',
                 header: 'Description',
@@ -94,7 +86,7 @@ Ext.onReady(function(){
         listeners: {
             rowdblclick: function(grid, index, event){
                 Ext.getBody().mask();
-                AlertBox.show('Redirecting', 'Please wait ...', 'smile');
+                //AlertBox.show('Redirecting', 'Please wait ...', 'smile');
                 var r = grid.getStore().getAt(index);
                 window.location.href = '<iz:insert:uri/>menu/listMenuItemForMenuId/' + r.data.id;                
             }
@@ -102,8 +94,8 @@ Ext.onReady(function(){
     });
 
     var layout = new Ext.Panel({
-        iconCls: IconManager.getIcon('brick'),
-        title: 'Navigation Menus',
+        //iconCls: IconManager.getIcon('brick'),
+        title: 'Menus',
         layout: 'fit',
         items: [grid],
         renderTo: 'entity-menu',
@@ -111,12 +103,12 @@ Ext.onReady(function(){
     });
 
     grid.getSelectionModel().on('selectionchange', function(sm){
-        grid.deleteBtn.setDisabled(sm.getCount() < 1);
+        //grid.deleteBtn.setDisabled(sm.getCount() < 1);
     });
 });
 </script>
 
-
+<div class="cpanelWrapper"><iz:insert:module module="menu" method="cpanel"/></div>
 <div class="action-container">
     <div class="action-header">
     </div>

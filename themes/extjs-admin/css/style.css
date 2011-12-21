@@ -9,7 +9,7 @@ html, body {
 	font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
 }
 body {
-	padding-top: 50px;
+	padding-top: 60px;
 }
 #appLayout {
     height: 100%;
@@ -19,6 +19,10 @@ body {
 }
 #wrapper {
 	border: 1px solid #DDDDDD;
+}
+div#brand {
+	background-color: #000;
+	width: 64px; height: 75px;
 }
 .entityForm .label{
 	font-size: 12px;
@@ -91,11 +95,15 @@ body {
 .icon-widget-32 {
 	background-image: url("../../../libs/icons/32/widget.png");
 }
+.icon-menu-32 {
+	background-image: url("../../../libs/icons/32/menu.png");
+}
+
 /* icons 16px */
-.arrow-in {
+.icon-arrow-in {
 	background-image: url("../../../libs/icons/16/arrow-in.png");
 }
-.arrow-out {
+.icon-arrow-out {
 	background-image: url("../../../libs/icons/16/arrow-out.png");
 }
 .application-form{
@@ -121,6 +129,9 @@ body {
 }
 .icon-widget {
 	background-image: url("../../../libs/icons/16/widget.png");
+}
+.icon-menu {
+	background-image: url("../../../libs/icons/16/menu.png");
 }
 /* huge button style */
 .x-btn-noicon .x-btn-huge .x-btn-text{

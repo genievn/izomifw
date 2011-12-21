@@ -44,8 +44,8 @@ Ext.onReady(function(){
 		features: [groupingFeature],
         tbar: [
             {
-                text: 'Add New Page Template'
-                //, iconCls: IconManager.getIcon('page_add')
+                text: 'New'
+                , iconCls: 'icon-add'
                 , handler: function()
                 {
                     Ext.getBody().mask('Processing ...');                
@@ -56,7 +56,7 @@ Ext.onReady(function(){
             ,{
                 ref: '../editBtn',
                 //iconCls: IconManager.getIcon('page_edit'),
-                text: 'Edit Page Template',
+                text: 'Edit',
                 disabled: true,
                 handler: function(){
                     var s = grid.getSelectionModel().getSelections();
@@ -70,7 +70,7 @@ Ext.onReady(function(){
             ,{
                 ref: '../deleteBtn',
                 //iconCls: IconManager.getIcon('page_delete'),
-                text: 'Delete Page Template',
+                text: 'Delete',
                 disabled: true,
                 handler: function(){
                     var s = grid.getSelectionModel().getSelections();

@@ -9,11 +9,21 @@ $actionModule = $this->getActionModule();
 ?>
 
 <script type="text/javascript">
+Ext.require([
+    'Ext.data.*',
+    'Ext.grid.*',
+    'Ext.tree.*'
+]);
+
 Ext.onReady(function(){
-    var moduleArray = [];
+    Ext.QuickTips.init();
+    Ext.form.Field.prototype.msgTarget = 'side';
+	var moduleArray = [];
     var actionArray = [];
     var ruleArray = [];
     var roleArray = [];
+	var menuId = '<?php echo $this->getMenuId();?>';
+	var rootId = '<?php echo $this->getRootId();?>';
     <?php
     foreach ($modules as $module) {
         $actions = $module->getActionDefinitions();
@@ -26,133 +36,116 @@ Ext.onReady(function(){
             foreach($actions as $action)
             {
                 // if the action definition is not a widget
-                if ($action->method !== '*' && !$action->is_widget)
-                {
+                //if ($action->method !== '*' && !$action->is_widget)
+                //{
     ?>
-                    actionArray.push(['<?php echo $module->id;?>','<?php echo $action->id;?>','<?php echo $action->title;?>']);
+                    actionArray.push(['<?php echo $module->id;?>','<?php echo $action->method;?>','<?php echo $action->title;?>']);
     <?php
-                }
+                //}
             }
         }
     } 
     ?>
-    var nodes = new Ext.ux.TreeCombo({
-            allowBlank: false,
-			fieldLabel : 'Parent Menu Item',
-			treeWidth: 300,
-			hiddenName : 'parent_id',
-			rootVisible : true,  
-            root : new Ext.tree.AsyncTreeNode({  
-                        text :'Root',  
-                        expanded : true,
-                        id: '0'
-                    }),
-			dataUrl : '<iz:insert:url/><iz:insert:config path="root.response.plain"/>menu/getMenuItemByMenuCodename/<?php echo $menu->codename;?>'
-			
-		});
-    //dynamic load children
-    //nodes.treePanel.loader.on('beforeload', function(loader, node) {nodes.treePanel.loader.dataUrl = '<iz:insert:url/><iz:insert:config path="root.response.plain"/>tree/getTreeNode/<?php echo $type->codename;?>';});
-    //select the node after loaded
-    nodes.treePanel.loader.on('beforeload', function(loader, node){nodes.setText('Loading ...');});
-    nodes.treePanel.loader.on('load',function(loader, node){
-        nodes.reset();
-        nodes.setValue('<?php echo $parent->id; ?>');
-    });
-	nodes.treePanel.expandAll();
+ 	//we want to setup a model and store instead of using dataUrl
+	Ext.define('MenuItemModel', {
+	    extend: 'Ext.data.Model',
+	    fields: [
+	        {name: 'title',	type: 'string'}
+			,{name: 'slug',	type: 'string'}
+	    ]
+	});
+	// store for combobox
+	var store = Ext.create('Ext.data.TreeStore', {        
+		model: 'MenuItemModel',
+		
+		folderSort: true
+		, proxy: {
+			type: 'ajax',
+			url: '<?php echo config('root.url').config('root.url_json');?>menu/menuItemJsonData/' + menuId + '/',
+			autoLoad: true
+		}
+	});
 	
-	
-    var fp = new Ext.FormPanel({
-        iconCls: IconManager.getIcon('brick'),
-        labelWidth:  100,
-        renderTo: 'entity-menuitem',
-        frame: true,
-        <?php if ($this->getEdit()) { ?>
-        title: 'Edit Menu Item',
-        <?php }else{ ?>
-        title: 'Create Menu Item',
-        <?php } ?>
-        bodyStyle:'padding:10px 10px 0',
-        //width: 800,
-        defaults: {width: 250},
-        defaultType: 'textfield',
-        <?php if ($this->getEdit()) {?>
-        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />menu/saveMenuItem/<?php echo $item->id;?>/', 
-        <?php } else { ?>
-        url:  '<iz:insert:url/><iz:insert:config path="root.response.json" />menu/saveMenuItem/',
-        <?php } ?>
-        method: 'POST',
-        id: 'form-menuitem',
-        tbar: new Ext.Toolbar({
-            //layout: 'anchor'
-            items: [
-                {
-                    text: 'Menu List'
-                    , iconCls: IconManager.getIcon('text_list_bullets')
-                    , handler: function()
-                    {
-                        Ext.getBody().mask('Processing ...');
-                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
-                        window.location.href = '<iz:insert:uri/>menu/listMenu/';
-                    }
-                }
-                ,{
-                    text: 'View <?php echo $menu->title;?>'
-                    , iconCls: IconManager.getIcon('text_list_bullets')
-                    , handler: function()
-                    {
-                        Ext.getBody().mask('Processing ...');
-                        AlertBox.show('Redirecting', 'Please wait ...', 'smile');
-                        window.location.href = '<iz:insert:uri/>menu/listMenu/';
-                    }
-                }
-            ]
-        }),
-        items: [
-            {
-                xtype: 'hidden'
-                , name: 'menu_id'
-                , value: '<?php echo $menu->id;?>'
-            },
-            {
-                fieldLabel: 'Menu'
-                , xtype: 'label'
-                , text: '<?php echo $menu->title;?>'
-            },
-            {
-                fieldLabel: 'Title',
-                name: 'title',
-                allowBlank: false, 
-                helpText: 'Title of the menu item',
-                value: '<?php echo $item->title;?>'
-            }            
-            ,{
-                fieldLabel: 'Description',
-                xtype: 'textarea',
-                name: 'description',
-                value: '<?php echo $item->description;?>'
-            }/*,{
-                fieldLabel: 'Sequence',
-                name: 'sequence',
-                vtype: 'numeric'
-            }*/,nodes,
-            {
-                fieldLabel: 'Link',
-                name: 'link',
-                value: '<?php echo $item->link;?>'
-            },
+	var store2 = Ext.create('Ext.data.TreeStore', {        
+		model: 'MenuItemModel',
+		folderSort: true
+		, proxy: {
+			type: 'ajax',
+			autoLoad: true,
+			url: '<?php echo config('root.url').config('root.url_json');?>menu/menuItemJsonData/' + menuId + '/'
+		}
+	});
+	var form = new Ext.FormPanel({
+	    frame:true,
+		iconCls: 'icon-menu',
+		layout: 'anchor',
+	    title: 'Menu Item Form',
+	    bodyStyle:'padding:10px 10px 0',
+	    defaults: {width: 250, anchor: '98%'},
+		region: 'center',
+	    items: [
+			{
+				xtype: 'fieldset'
+                , title: 'Appearance'
+				, layout: 'anchor'
+				, flex: 1
+				, collapsible: true
+				, defaults:{anchor: '100%'}
+                , items:[{
+		            fieldLabel: 'Title',
+					id: 'title',
+		            name: 'title',
+		            allowBlank:false,
+					xtype: 'textfield'
+		        },{
+					xtype: 'hidden',
+					name: 'menu_id',
+					id: 'menu_id',
+					value: '<?php echo $this->getMenuId();?>'
+				}, {
+					xtype: 'hidden',
+					name: 'parent_id',
+					id: 'parent_id'
+				}, {
+		            fieldLabel: 'Parent menu item'
+		            , xtype: 'treecombo'				
+					, name: 'parent'
+					, id: 'parent'
+					, width: 240
+					, treeWidth: 240
+					, store: store 
+					, displayField: 'title'
+					, allowBlank: false
+					, valueField: 'id'	
+					, listeners:{
+					    valueSelected: function(picker, value){
+							Ext.getCmp('parentId').setValue(value);
+						}
+					 }
+		        },
+				{
+	                fieldLabel: 'Link',
+	                name: 'link',
+					id: 'link',
+	                value: '<?php echo $item->link;?>',
+					xtype: 'textfield'
+	            }]
+			}
+			,
             {
                 xtype: 'fieldset'
-                , fieldLabel: 'Action'
-                //, title: 'Action'
-                //, collapsible: true
-                , width: 400
+				, flex: 1
+                , title: 'Action'
+                , collapsible: true
+				, layout: 'anchor'
+				, defaults:{anchor: '100%'}
                 , items: [
                     {
                         fieldLabel: 'Module',
                         width: 250,
                         id: 'combo-module',
                         xtype: 'combo',
-                        valueField: 'id',
+                        valueField: 'codename',
                         hiddenName: 'module_id',
                         displayField: 'codename',
                         triggerAction: 'all',
@@ -168,6 +161,7 @@ Ext.onReady(function(){
                         listeners: {
                             select: function(combo, value) {
                                 var comboAction = Ext.getCmp('combo-action');
+								comboAction.store.clearFilter();
                                 comboAction.clearValue();
                             }
                         }
@@ -179,13 +173,13 @@ Ext.onReady(function(){
                         //forceSelection: true,
                         id: 'combo-action',
                         xtype: 'combo',
-                        valueField: 'id',
-                        displayField: 'method',
+                        valueField: 'method',
+                        displayField: 'title',
                         triggerAction:'all',
                         mode:'local',
                         hiddenName: 'action_definition_id',
                         store: new Ext.data.SimpleStore({
-                             fields:['module_id', 'id', 'method']
+                             fields:['module_id', 'method', 'title']
                             ,data: actionArray
                         }),
                         //allowBlank: false,
@@ -193,6 +187,7 @@ Ext.onReady(function(){
                         listeners: {
                             expand: function(combo) {
                                 var comboModule = Ext.getCmp('combo-module');
+								console.log(combo);
                                 combo.store.filter('module_id', comboModule.getValue());
                             }
                         }
@@ -206,45 +201,137 @@ Ext.onReady(function(){
                     }
                 ]
             }
-        ],
+	    ],
 
-        buttons: [{
-            text: 'Save'
-            , iconCls: IconManager.getIcon('database_save')
-            , handler: function()
-            {
-                var form = Ext.getCmp('form-menuitem').getForm();
-                if(form.isValid()){
-                    form.submit({
-                        waitMsg:'Loading...',
-                        success: function(form,action) {
-                            Ext.getBody().mask();
-                            AlertBox.show('Success', 'Update successfully ...', 'success');
-                            window.location.href = '<iz:insert:uri/>'+ action.result.redirect;
-                        },
-                        failure: function(form,action){
-                            Ext.MessageBox.alert('Error',action.result.msg);
-                        }
-                    });
-                }
-            }
-        },{
-            text: 'Cancel'
-            , iconCls: IconManager.getIcon('cancel')
-            , handler: function()
-            {
-                location.href = '<iz:insert:uri/>menu/listMenu/';
-            }
+	    buttons: [{
+	        text: 'Save',
+			iconCls: 'save',
+			type: 'submit', 
+	        scope: this,
+	        handler: function() {  
+	            form.submit({ 
+	                method: 'POST', 
+	                url: '<?php echo config('root.url').config('root.url_json');?>menu/saveMenuItem/', 
+	                success: function(f, a) {
+						alert(a.result.message);
+						window.location.href = '<iz:insert:uri/>menu/createMenuItem/<?php echo $this->getMenuId();?>/';
+	                },             
+	                failure: function(f, a) {  
+	                    //f.markInvalid(a.result.errors);
+						alert(a.result.message);
+	                }             
+	            }) 
+	        }
+	    },{
+	        text: 'Cancel'
+			, iconCls: 'cancel'
+	    }]
+	});
+	//form.render('menuItemPanel');
+	
+	var cmenu = new Ext.menu.Menu({
+        items: [{
+            text: 'Edit'
+			,handler: function(){
+				console.log(grid.getSelectionModel().getLastSelected().data.id);
+			}
         }]
     });
 
+	// grid displays categories in hierachy
+	
+	var grid = Ext.create('Ext.tree.Panel', {
+        title: 'Menu Item',
+		region: 'west',
+		iconCls: 'icon-menu',
+		width: 300,
+		viewConfig: {
+            plugins: {
+                ptype: 'treeviewdragdrop'
+				, enableSort : false
+            }
+			, listeners: {
+	            drop: function (node, data, overModel, dropPosition) {
+					var sourceId = grid.getSelectionModel().getLastSelected().data.id;
+					var targetId = overModel.data.id;
+					console.log('from ' + sourceId);
+					console.log('to ' + targetId);
+					
+					Ext.Ajax.request({ 
+                        url: '<iz:insert:url/><iz:insert:config path="root.url_json"/>menu/reorderMenuItem/',  
+                        method: 'POST', 
+                        params:{sourceId:sourceId, targetId:targetId, position: dropPosition},
+						success: function(response, opts) {
+					    	var obj = Ext.decode(response.responseText);
+					    	console.dir(obj);
+						},
+					   	failure: function(response, opts) {
+					   		console.log('server-side failure with status code ' + response.status);
+					   	}
+                    });
+
+				}
+	        }
+        },
+		dockedItems: [{
+            xtype: 'toolbar',
+            items: [{
+                text: 'Expand All',
+				iconCls: 'icon-arrow-out',
+                handler: function(){
+                    grid.expandAll();
+                }
+            }, {
+                text: 'Collapse All',
+				iconCls: 'icon-arrow-in',
+                handler: function(){
+                    grid.collapseAll();
+                }
+            }]
+        }],
+		
+		hideHeaders: true,
+        collapsible: true,
+        useArrows: true,
+        rootVisible: false, //set to false will let the store autoload
+        store: store2,
+        multiSelect: true,
+        singleExpand: false,
+        height: 500,
+        columns: [{
+            xtype: 'treecolumn', //this is so we know which column will show the tree
+            text: 'Menu Item',
+			flex: 1,
+            sortable: true,
+            dataIndex: 'title'
+        }]
+		,tools:[{
+			id: 'expandAll',
+			iconCls: 'icon-arrow-out',
+			text: 'Expand All',
+			handler: function(){}
+		}]
+		
+    });
+	//grid.render('menuItemGrid');
+	
+	// add context menu to grid
+	
+	grid.on('itemcontextmenu', function(view, record, item, index, event){
+        cmenu.showAt(event.getXY());
+        event.stopEvent();
+    },this);
+
+	var panel = Ext.create('Ext.panel.Panel',{
+		layout: 'border',
+		height: 500,
+		items: [grid, form]
+	});
+	panel.render('menuItemPanel')
 	
 });
 </script>
-<div class="action-container">
-    <div class="action-header">
-    </div>
-    <div class="entity-container" id="entity-menuitem">
-        
-    </div>
-</div>
+<div class="cpanelWrapper"><iz:insert:module module="menu" method="cpanel"/></div>
+<div id="menuItemPanel"></div>
+<br/>
+<div id="menuItemGrid"></div>
