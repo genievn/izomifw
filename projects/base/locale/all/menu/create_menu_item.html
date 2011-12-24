@@ -39,7 +39,7 @@ Ext.onReady(function(){
                 //if ($action->method !== '*' && !$action->is_widget)
                 //{
     ?>
-                    actionArray.push(['<?php echo $module->id;?>','<?php echo $action->method;?>','<?php echo $action->title;?>']);
+                    actionArray.push(['<?php echo $module->codename;?>','<?php echo $action->method;?>','<?php echo $action->title;?>']);
     <?php
                 //}
             }
@@ -98,6 +98,8 @@ Ext.onReady(function(){
 		            allowBlank:false,
 					xtype: 'textfield'
 		        },{
+					xtype: 'hidden', name:'id', id: 'id'
+				},{
 					xtype: 'hidden',
 					name: 'menu_id',
 					id: 'menu_id',
@@ -119,7 +121,7 @@ Ext.onReady(function(){
 					, valueField: 'id'	
 					, listeners:{
 					    valueSelected: function(picker, value){
-							Ext.getCmp('parentId').setValue(value);
+							Ext.getCmp('parent_id').setValue(value);
 						}
 					 }
 		        },
@@ -179,7 +181,7 @@ Ext.onReady(function(){
                         mode:'local',
                         hiddenName: 'action_definition_id',
                         store: new Ext.data.SimpleStore({
-                             fields:['module_id', 'method', 'title']
+                             fields:['module_codename', 'method', 'title']
                             ,data: actionArray
                         }),
                         //allowBlank: false,
@@ -188,13 +190,14 @@ Ext.onReady(function(){
                             expand: function(combo) {
                                 var comboModule = Ext.getCmp('combo-module');
 								console.log(combo);
-                                combo.store.filter('module_id', comboModule.getValue());
+                                combo.store.filter('module_codename', comboModule.getValue());
                             }
                         }
                         , value: '<?php echo $actionDefinition->id;?>'
                     },
                     {
                         fieldLabel: 'Params',
+						id: 'params',
                         xtype: 'textfield',
                         name: 'params',
                         value: '<?php echo $action->params;?>'
@@ -205,7 +208,7 @@ Ext.onReady(function(){
 
 	    buttons: [{
 	        text: 'Save',
-			iconCls: 'save',
+			iconCls: 'icon-save',
 			type: 'submit', 
 	        scope: this,
 	        handler: function() {  
@@ -224,7 +227,7 @@ Ext.onReady(function(){
 	        }
 	    },{
 	        text: 'Cancel'
-			, iconCls: 'cancel'
+			, iconCls: 'icon-cancel'
 	    }]
 	});
 	//form.render('menuItemPanel');
@@ -270,7 +273,20 @@ Ext.onReady(function(){
 					   	}
                     });
 
-				}
+				},
+				itemclick: function(view,rec,item,index,eventObj) {
+					console.log(item);
+					console.log(index);
+					console.log(rec);            
+		            Ext.getCmp('title').setValue(rec.get('title'));
+		   			Ext.getCmp('parent_id').setValue(rec.get('parentId'));
+					Ext.getCmp('parent').setValue(rec.parentNode.get('title'));
+					Ext.getCmp('link').setValue(rec.get('link'));
+					Ext.getCmp('title').setValue(rec.get('title'));
+					Ext.getCmp('combo-module').setValue(rec.get('module'));
+					Ext.getCmp('combo-action').setValue(rec.get('method'));
+					Ext.getCmp('params').setValue(rec.get('params'));
+		        }
 	        }
         },
 		dockedItems: [{

@@ -103,8 +103,12 @@ class MenuController extends Object
 	}
     public function saveMenuItem($id = null)
     {
+		if (!$id) $id = @$_REQUEST['id'];
 		$title = @$_REQUEST['title'];
 		$link = @$_REQUEST['link'];
+		$module = @$_REQUEST['module'];
+		$method = @$_REQUEST['method'];
+		$params = @$_REQUEST['params'];
 		
 		$params = @$_REQUEST['params'];
 		if(!$params) $params = '*';
@@ -126,12 +130,15 @@ class MenuController extends Object
         
         $i->setTitle($title);
         $i->setLink($link);
+		$i->setModule($module);
+		$i->setMethod($method);
+		$i->setParams($params);
         # if it's INSERT operation (id is null), we add the parent and menu
         if (!$id)
         {
             if ($p) $i->setParent($p);
         }
-        
+        /*
         # find action definition
         $d = $em->find('Entity\Base\ActionDefinition', (int)@$_REQUEST['action_definition_id']);
         # find action
@@ -153,7 +160,7 @@ class MenuController extends Object
         }
         # associate the action
         if ($a) $i->setAction($a);
-        
+        */
         try {
             
             $em->persist($i);

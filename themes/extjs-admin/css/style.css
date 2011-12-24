@@ -20,10 +20,6 @@ body {
 #wrapper {
 	border: 1px solid #DDDDDD;
 }
-div#brand {
-	background-color: #000;
-	width: 64px; height: 75px;
-}
 .entityForm .label{
 	font-size: 12px;
 	text-transform: none;
